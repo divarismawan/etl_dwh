@@ -1,38 +1,117 @@
-import pymysql
+
 import Connection
 
 db_perpus    = Connection.connect('db_perpus')
 db_dimension = Connection.connect('db_dimensional_perpus')
 
 # ----------------- Functions ----------------- #
+# for get all data in table
 def function_select(db,query):
     cursor = db.cursor()
     cursor.execute(query)
     result = cursor.fetchall()
     return result
 
+# for get one data in table
+def function_select_max(db,q):
+    cursor = db.cursor()
+    cursor.execute(q)
+    result = cursor.fetchone()
+    return result
+
+# for insert data to table
 def function_instert(db_dimensi,query):
     cursor = db_dimensi.cursor()
     cursor.execute(query)
     db_dimensi.commit()
 
-# ----------------- SQL Query ----------------- #
-sql_selectBuku    = "SELECT id_buku,title_buku, ISBN FROM tb_buku"
-sql_selectMember  = "SELECT id_member,nama FROM tb_member"
-sql_selectPegawai = "SELECT id_pegawai,nama_pegawai FROM tb_pegawai"
-sql_penerbit      = "SELECT id_penerbit, nama_perusahaan FROM tb_penerbit"
-sql_penulis       = "SELECT id_penulis,nama_penulis FROM tb_penulis"
-sql_perpus        = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus"
+# for check different data in both database
+def function_condition(val_rel, val_dim, tbl_name):
+    print("Data in table %s"%tbl_name)
+    if(val_rel > val_dim):
+        val_newRel = val_rel[0]
+        val_newDim = val_dim[0] +1
+        result = val_newRel - val_newDim +1
+        print("Jumlah data baru = %d"%result)
+        print("Tambah data mulai dari = %d"%val_newDim)
+    else:
+        val_newDim = val_rel[0]+1
+        print("Nilai sama")
+    return val_newDim
+
+# ----------------- SQL Query Get Value Max----------------- #
+# Buku
+getRel_buku = "SELECT MAX(id_buku) from tb_buku"
+rel_idBuku = function_select_max(db_perpus,getRel_buku)
+
+getDim_buku = "SELECT MAX(id_buku) from dim_buku"
+dim_idBuku = function_select_max(db_dimension,getDim_buku)
+
+# Member
+getRel_member = "SELECT MAX(id_member) from tb_member"
+rel_idMember  = function_select_max(db_perpus,getRel_member)
+
+getDim_member = "SELECT MAX(id_member) from dim_member"
+dim_idMember  = function_select_max(db_dimension,getDim_member)
+
+# Pegawai
+getRel_pegawai = "SELECT MAX(id_pegawai) from tb_pegawai "
+rel_idPegawai  = function_select_max(db_perpus,getRel_pegawai)
+
+getDim_pegawai = "SELECT MAX(id_pegawai) from dim_pegawai"
+dim_idPegawai  = function_select_max(db_dimension,getDim_pegawai)
+
+# penerbit
+getRel_penerbit = "SELECT MAX(id_penerbit) from tb_penerbit"
+rel_idPenerbit  = function_select_max(db_perpus,getRel_penerbit)
+
+getDim_penerbit = "SELECT MAX(id_penerbit) from dim_penerbit"
+dim_idPenerbit  = function_select_max(db_dimension,getDim_penerbit)
+
+#penulis
+getRel_penulis = "SELECT MAX(id_penulis) from tb_penulis"
+rel_idPenulis  = function_select_max(db_perpus,getRel_penulis)
+
+getDim_penulis = "SELECT MAX(id_penulis) from dim_penulis"
+dim_idPenulis  = function_select_max(db_dimension,getDim_penulis)
+
+#perpus
+getRel_perpus = "SELECT MAX(id_perpus) from tb_perpus"
+rel_idPerpus  = function_select_max(db_perpus,getRel_perpus)
+
+getDim_perpus = "SELECT MAX(id_perpus) from dim_perpus"
+dim_idPerpus  = function_select_max(db_dimension,getDim_perpus)
+
+# ----------------- Check Condition -----------------#
+val_buku     = function_condition(rel_idBuku, dim_idBuku, 'Buku')
+val_member   = function_condition(rel_idMember, dim_idMember, "Member")
+val_pegawai  = function_condition(rel_idPegawai, dim_idPegawai, "Pegawai")
+val_penerbit = function_condition(rel_idPenerbit,dim_idPenerbit,"Penerbit")
+val_penulis  = function_condition(rel_idPenulis,dim_idPenulis,"Penulis")
+val_perpus   = function_condition(rel_idPerpus,dim_idPerpus,"Perpus")
+
+
+# ----------------- SQL Query SELECT----------------- #
+sql_buku        = "SELECT id_buku,title_buku, ISBN FROM tb_buku WHERE id_buku >= %d" %val_buku
+sql_member      = "SELECT id_member,nama FROM tb_member WHERE id_member >=%d" %val_member
+sql_pegawai     = "SELECT id_pegawai,nama_pegawai FROM tb_pegawai WHERE id_pegawai >=%d" %val_pegawai
+sql_penerbit    = "SELECT id_penerbit, nama_perusahaan FROM tb_penerbit WHERE id_penerbit >=%d" %val_penerbit
+sql_penulis     = "SELECT id_penulis,nama_penulis FROM tb_penulis WHERE id_penulis >=%d" %val_penulis
+sql_perpus      = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus WHERE id_perpus >=%d" %val_perpus
+
 
 #----------------- Use function SELECT -----------------#
-select_buku     = function_select(db_perpus,sql_selectBuku)
-select_member   = function_select(db_perpus, sql_selectMember)
-select_pegawai  = function_select(db_perpus, sql_selectPegawai)
+
+select_buku     = function_select(db_perpus, sql_buku)
+select_member   = function_select(db_perpus, sql_member)
+select_pegawai  = function_select(db_perpus, sql_pegawai)
 select_penerbit = function_select(db_perpus, sql_penerbit)
 select_penulis  = function_select(db_perpus, sql_penulis)
 select_perpus   = function_select(db_perpus,sql_perpus)
 
+
 # ----------------- Use function INSERT -----------------#
+
 for x in select_buku:
     val_a,val_b,val_c  = x
     query_insert = ("INSERT INTO dim_buku SET id_buku = {0}, nama_buku = '{1}', ISBN = '{2}'".format(val_a, val_b, val_c))
