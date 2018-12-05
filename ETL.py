@@ -1,3 +1,4 @@
+from numpy.distutils.fcompiler import none
 
 import Connection
 
@@ -28,24 +29,30 @@ def function_instert(db_dimensi,query):
 # for check different data in both database
 def function_condition(val_rel, val_dim, tbl_name):
     print("Data in table %s"%tbl_name)
-    if(val_rel > val_dim):
-        val_newRel = val_rel[0]
-        val_newDim = val_dim[0] +1
-        result = val_newRel - val_newDim +1
-        print("Jumlah data baru = %d"%result)
-        print("Tambah data mulai dari = %d"%val_newDim)
+    if(val_dim[0] != None):
+        if(val_rel > val_dim):
+            val_newRel = val_rel[0]
+            val_newDim = val_dim[0] +1
+            result = val_newRel - val_newDim +1
+            print("Jumlah data baru = %d"%result)
+            print("Tambah data mulai dari = %d"%val_newDim)
+            return val_newDim
+        else:
+            val_newDim = val_rel[0]+1
+            print("Nilai sama")
+            return val_newDim
     else:
-        val_newDim = val_rel[0]+1
-        print("Nilai sama")
-    return val_newDim
+        val_newDim = 1
+        return val_newDim
+
 
 # ----------------- SQL Query Get Value Max----------------- #
 # Buku
 getRel_buku = "SELECT MAX(id_buku) from tb_buku"
-rel_idBuku = function_select_max(db_perpus,getRel_buku)
+rel_idBuku  = function_select_max(db_perpus,getRel_buku)
 
 getDim_buku = "SELECT MAX(id_buku) from dim_buku"
-dim_idBuku = function_select_max(db_dimension,getDim_buku)
+dim_idBuku  = function_select_max(db_dimension,getDim_buku)
 
 # Member
 getRel_member = "SELECT MAX(id_member) from tb_member"
@@ -82,6 +89,11 @@ rel_idPerpus  = function_select_max(db_perpus,getRel_perpus)
 getDim_perpus = "SELECT MAX(id_perpus) from dim_perpus"
 dim_idPerpus  = function_select_max(db_dimension,getDim_perpus)
 
+#mont
+getDim_month = "SELECT MAX(id_perpus) from dim_perpus"
+dim_idMonth  = function_select_max(db_dimension,getDim_month)
+
+
 # ----------------- Check Condition -----------------#
 val_buku     = function_condition(rel_idBuku, dim_idBuku, 'Buku')
 val_member   = function_condition(rel_idMember, dim_idMember, "Member")
@@ -101,7 +113,6 @@ sql_perpus      = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus WH
 
 
 #----------------- Use function SELECT -----------------#
-
 select_buku     = function_select(db_perpus, sql_buku)
 select_member   = function_select(db_perpus, sql_member)
 select_pegawai  = function_select(db_perpus, sql_pegawai)
@@ -109,9 +120,7 @@ select_penerbit = function_select(db_perpus, sql_penerbit)
 select_penulis  = function_select(db_perpus, sql_penulis)
 select_perpus   = function_select(db_perpus,sql_perpus)
 
-
-# ----------------- Use function INSERT -----------------#
-
+# ----------------- INSERT data to Data Warehouse -----------------#
 for x in select_buku:
     val_a,val_b,val_c  = x
     query_insert = ("INSERT INTO dim_buku SET id_buku = {0}, nama_buku = '{1}', ISBN = '{2}'".format(val_a, val_b, val_c))
@@ -141,11 +150,16 @@ for x in select_perpus:
     val_a, val_b, val_c = x
     query_insert = ("INSERT INTO dim_perpus SET id_perpus = {0}, nama_perpus = '{1}', alamat_perpus = '{2}'".format(val_a, val_b, val_c))
     function_instert(db_dimension, query_insert)
-
-month = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember']
-for x in month:
+if(dim_idMonth[0] != 12):
+    month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober','November', 'Desember']
+    for x in month:
         query_insert = ("INSERT INTO dim_waktu SET bulan = '{0}'".format(x))
-        function_instert(db_dimension,query_insert)
+        function_instert(db_dimension, query_insert)
+else:
+    print("Data Bulan Sama")
+
+
 
 # disconnect from server
 db_perpus.close()
+db_dimension.close()
