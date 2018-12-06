@@ -36,14 +36,19 @@ def function_condition(val_rel, val_dim, tbl_name):
             result = val_newRel - val_newDim +1
             print("Jumlah data baru = %d"%result)
             print("Tambah data mulai dari = %d"%val_newDim)
+            print("")
             return val_newDim
         else:
             val_newDim = val_rel[0]+1
             print("Nilai sama")
+            print("")
             return val_newDim
     else:
         val_newDim = 1
+        print("Tambah data sebanyak : {0}".format(val_rel[0]))
+        print("")
         return val_newDim
+
 
 
 # ----------------- SQL Query Get Value Max----------------- #
@@ -93,6 +98,13 @@ dim_idPerpus  = function_select_max(db_dimension,getDim_perpus)
 getDim_month = "SELECT MAX(id_perpus) from dim_perpus"
 dim_idMonth  = function_select_max(db_dimension,getDim_month)
 
+#trans
+getRel_detail = "SELECT MAX(id_detail) from tb_detail_trans"
+rel_idDetail  = function_select_max(db_perpus,getRel_detail)
+
+getDim_trans  = "SELECT MAX(id_transaksi) from dim_transaksi"
+dim_idTrans   = function_select_max(db_dimension,getDim_trans)
+
 
 # ----------------- Check Condition -----------------#
 val_buku     = function_condition(rel_idBuku, dim_idBuku, 'Buku')
@@ -101,15 +113,16 @@ val_pegawai  = function_condition(rel_idPegawai, dim_idPegawai, "Pegawai")
 val_penerbit = function_condition(rel_idPenerbit,dim_idPenerbit,"Penerbit")
 val_penulis  = function_condition(rel_idPenulis,dim_idPenulis,"Penulis")
 val_perpus   = function_condition(rel_idPerpus,dim_idPerpus,"Perpus")
-
+val_trans    = function_condition(rel_idDetail,dim_idTrans,"Transaksi")
 
 # ----------------- SQL Query SELECT----------------- #
-sql_buku        = "SELECT id_buku,title_buku, ISBN FROM tb_buku WHERE id_buku >= %d" %val_buku
-sql_member      = "SELECT id_member,nama FROM tb_member WHERE id_member >=%d" %val_member
-sql_pegawai     = "SELECT id_pegawai,nama_pegawai FROM tb_pegawai WHERE id_pegawai >=%d" %val_pegawai
-sql_penerbit    = "SELECT id_penerbit, nama_perusahaan FROM tb_penerbit WHERE id_penerbit >=%d" %val_penerbit
-sql_penulis     = "SELECT id_penulis,nama_penulis FROM tb_penulis WHERE id_penulis >=%d" %val_penulis
-sql_perpus      = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus WHERE id_perpus >=%d" %val_perpus
+sql_buku        = "SELECT id_buku,title_buku, ISBN FROM tb_buku WHERE id_buku >= {0}".format(val_buku)
+sql_member      = "SELECT id_member,nama FROM tb_member WHERE id_member >={0}".format(val_member)
+sql_pegawai     = "SELECT id_pegawai,nama_pegawai FROM tb_pegawai WHERE id_pegawai >={0}".format(val_pegawai)
+sql_penerbit    = "SELECT id_penerbit, nama_perusahaan FROM tb_penerbit WHERE id_penerbit >={0}".format(val_penerbit)
+sql_penulis     = "SELECT id_penulis,nama_penulis FROM tb_penulis WHERE id_penulis >={0}".format(val_penulis)
+sql_perpus      = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus WHERE id_perpus >={0}".format(val_perpus)
+sql_trans       = "SELECT id_trans FROM tb_detail_trans WHERE id_detail >={0}".format(val_trans)
 
 
 #----------------- Use function SELECT -----------------#
@@ -119,6 +132,7 @@ select_pegawai  = function_select(db_perpus, sql_pegawai)
 select_penerbit = function_select(db_perpus, sql_penerbit)
 select_penulis  = function_select(db_perpus, sql_penulis)
 select_perpus   = function_select(db_perpus,sql_perpus)
+select_trans    = function_select(db_perpus,sql_trans)
 
 # ----------------- INSERT data to Data Warehouse -----------------#
 for x in select_buku:
@@ -150,6 +164,7 @@ for x in select_perpus:
     val_a, val_b, val_c = x
     query_insert = ("INSERT INTO dim_perpus SET id_perpus = {0}, nama_perpus = '{1}', alamat_perpus = '{2}'".format(val_a, val_b, val_c))
     function_instert(db_dimension, query_insert)
+
 if(dim_idMonth[0] != 12):
     month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober','November', 'Desember']
     for x in month:
@@ -158,7 +173,13 @@ if(dim_idMonth[0] != 12):
 else:
     print("Data Bulan Sama")
 
-
+for x in select_trans:
+    print("Loading...")
+    val_a = x[0]
+    query_insert = "INSERT INTO dim_transaksi SET nomor_transaksi = {0}".format(val_a)
+    print("Load")
+    function_instert(db_dimension,query_insert)
+    print("Sukses")
 
 # disconnect from server
 db_perpus.close()
