@@ -102,7 +102,7 @@ dim_idMonth  = function_select_max(db_dimension,getDim_month)
 getRel_detail = "SELECT MAX(id_detail) from tb_detail_trans"
 rel_idDetail  = function_select_max(db_perpus,getRel_detail)
 
-getDim_trans  = "SELECT MAX(id_transaksi) from dim_transaksi"
+getDim_trans  = "SELECT MAX(id_fakta_trans) from fakta_trans"
 dim_idTrans   = function_select_max(db_dimension,getDim_trans)
 
 
@@ -176,7 +176,7 @@ else:
 for x in select_trans:
     print("Loading...")
     val_a = x[0]
-    query_insert = "INSERT INTO dim_transaksi SET nomor_transaksi = {0}".format(val_a)
+    query_insert = "INSERT INTO fakta_trans SET id_trans = {0}".format(val_a)
     print("Load")
     function_instert(db_dimension,query_insert)
     print("Sukses")
