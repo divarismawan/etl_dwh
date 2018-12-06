@@ -94,10 +94,6 @@ rel_idPerpus  = function_select_max(db_perpus,getRel_perpus)
 getDim_perpus = "SELECT MAX(id_perpus) from dim_perpus"
 dim_idPerpus  = function_select_max(db_dimension,getDim_perpus)
 
-#mont
-getDim_month = "SELECT MAX(id_perpus) from dim_perpus"
-dim_idMonth  = function_select_max(db_dimension,getDim_month)
-
 #trans
 getRel_detail = "SELECT MAX(id_detail) from tb_detail_trans"
 rel_idDetail  = function_select_max(db_perpus,getRel_detail)
@@ -164,14 +160,6 @@ for x in select_perpus:
     val_a, val_b, val_c = x
     query_insert = ("INSERT INTO dim_perpus SET id_perpus = {0}, nama_perpus = '{1}', alamat_perpus = '{2}'".format(val_a, val_b, val_c))
     function_instert(db_dimension, query_insert)
-
-if(dim_idMonth[0] != 12):
-    month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober','November', 'Desember']
-    for x in month:
-        query_insert = ("INSERT INTO dim_waktu SET bulan = '{0}'".format(x))
-        function_instert(db_dimension, query_insert)
-else:
-    print("Data Bulan Sama")
 
 for x in select_trans:
     print("Loading...")
