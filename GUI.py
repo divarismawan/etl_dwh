@@ -25,7 +25,7 @@ class GUI_DWH(wx.Frame):
 
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, id=wx.ID_ANY, title=wx.EmptyString, pos=wx.DefaultPosition,
-                          size=wx.Size(841, 392), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
+                          size=wx.Size(772, 392), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.SetSizeHintsSz(wx.DefaultSize, wx.DefaultSize)
 
@@ -85,32 +85,32 @@ class GUI_DWH(wx.Frame):
 
         # Cell Defaults
         self.grid_showResult.SetDefaultCellAlignment(wx.ALIGN_LEFT, wx.ALIGN_TOP)
-        bSizer4.Add(self.grid_showResult, 0, wx.ALL, 5)
+        bSizer4.Add(self.grid_showResult, 1, wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
         bSizer3.Add(bSizer4, 0, wx.ALIGN_CENTER_HORIZONTAL, 5)
 
         self.m_panel1.SetSizer(bSizer3)
         self.m_panel1.Layout()
         bSizer3.Fit(self.m_panel1)
-        self.panel_pinjam.AddPage(self.m_panel1, u"Peminjaman", True)
+        self.panel_pinjam.AddPage(self.m_panel1, u"Peminjaman", False)
         self.m_panel2 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer6 = wx.BoxSizer(wx.VERTICAL)
 
         self.m_grid2 = wx.grid.Grid(self.m_panel2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
 
         # Grid
-        self.m_grid2.CreateGrid(10, 5)
+        self.m_grid2.CreateGrid(12, 5)
         self.m_grid2.EnableEditing(True)
         self.m_grid2.EnableGridLines(True)
         self.m_grid2.EnableDragGridSize(False)
         self.m_grid2.SetMargins(0, 0)
 
         # Columns
-        self.m_grid2.SetColSize(0, 200)
-        self.m_grid2.SetColSize(1, 150)
-        self.m_grid2.SetColSize(2, 150)
-        self.m_grid2.SetColSize(3, 100)
-        self.m_grid2.SetColSize(4, 70)
+        self.m_grid2.SetColSize(0, 117)
+        self.m_grid2.SetColSize(1, 132)
+        self.m_grid2.SetColSize(2, 123)
+        self.m_grid2.SetColSize(3, 115)
+        self.m_grid2.SetColSize(4, 103)
         self.m_grid2.EnableDragColMove(True)
         self.m_grid2.EnableDragColSize(True)
         self.m_grid2.SetColLabelSize(30)
@@ -118,7 +118,7 @@ class GUI_DWH(wx.Frame):
         self.m_grid2.SetColLabelValue(1, u"Penulis")
         self.m_grid2.SetColLabelValue(2, u"Penerbit")
         self.m_grid2.SetColLabelValue(3, u"Perpus")
-        self.m_grid2.SetColLabelValue(4, u"Jumlah")
+        self.m_grid2.SetColLabelValue(4, u"Transaksi")
         self.m_grid2.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
 
         # Rows
@@ -130,12 +130,12 @@ class GUI_DWH(wx.Frame):
 
         # Cell Defaults
         self.m_grid2.SetDefaultCellAlignment(wx.ALIGN_LEFT, wx.ALIGN_TOP)
-        bSizer6.Add(self.m_grid2, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        bSizer6.Add(self.m_grid2, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
         self.m_panel2.SetSizer(bSizer6)
         self.m_panel2.Layout()
         bSizer6.Fit(self.m_panel2)
-        self.panel_pinjam.AddPage(self.m_panel2, u"ETL", False)
+        self.panel_pinjam.AddPage(self.m_panel2, u"ETL", True)
 
         bSizer1.Add(self.panel_pinjam, 1, wx.EXPAND | wx.ALL, 5)
 

@@ -36,11 +36,12 @@ def function_instert(db_dimensi,query):
 # for check different data in both database
 def function_condition(val_rel, val_dim, countRel, countDim, tbl_name):
     print("Data in table %s"%tbl_name)
+    result = countRel - countDim
+    print("Jumlah data baru = %d" % result)
     if(val_dim != None):
         if(countRel > countDim):
             # val_newRel = val_rel
-            result = countRel - countDim
-            print("Jumlah data baru = %d"%result)
+
             print("Tambah data mulai dari = %d"%val_dim)
             print("")
             return val_dim+1
@@ -51,7 +52,7 @@ def function_condition(val_rel, val_dim, countRel, countDim, tbl_name):
             return val_newDim
     else:
         val_newDim = 1
-        print("Tambah data sebanyak : {0}".format(countRel))
+        print("Tambah data sebanyak : {0}".format(result))
         print("")
         return val_newDim
 
