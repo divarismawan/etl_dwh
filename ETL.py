@@ -55,7 +55,6 @@ def function_condition(val_rel, val_dim, tbl_name):
         return val_newDim
 
 
-
 # ----------------- SQL Query Get Value Max----------------- #
 # Buku
 getRel_buku = functiom_count("id_buku","tb_buku")
