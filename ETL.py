@@ -14,10 +14,16 @@ def function_select(db,query):
     return result
 
 # for get one data in table
-def function_select_max(db,q):
+def fun_lastId(id_table, tb_name,db):
     cursor = db.cursor()
-    cursor.execute(q)
-    result = cursor.fetchone()
+    cursor.execute("SELECT MAX({0}) FROM {1}".format(id_table,tb_name))
+    result = cursor.fetchone()[0]
+    return result
+
+def fun_count(id_table, tb_name,db):
+    cursor = db.cursor()
+    cursor.execute("SELECT COUNT({0}) FROM {1}".format(id_table,tb_name))
+    result = cursor.fetchone()[0]
     return result
 
 # for insert data to table
@@ -26,94 +32,91 @@ def function_instert(db_dimensi,query):
     cursor.execute(query)
     db_dimensi.commit()
 
-# for get count table by id
-def functiom_count(id_table,name_table):
-    query_insert = "SELECT COUNT({0}) FROM {1}".format(id_table,name_table)
-    return query_insert
 
 # for check different data in both database
-def function_condition(val_rel, val_dim, tbl_name):
+def function_condition(val_rel, val_dim, countRel, countDim, tbl_name):
     print("Data in table %s"%tbl_name)
-    if(val_dim[0] != None):
-        if(val_rel > val_dim):
-            val_newRel = val_rel[0]
-            val_newDim = val_dim[0] +1
-            result = val_newRel - val_newDim +1
+    if(val_dim != None):
+        if(countRel > countDim):
+            # val_newRel = val_rel
+            result = countRel - countDim
             print("Jumlah data baru = %d"%result)
-            print("Tambah data mulai dari id : %d"%val_newDim)
+            print("Tambah data mulai dari = %d"%val_dim)
             print("")
-            return val_newDim
+            return val_dim+1
         else:
-            val_newDim = val_rel[0]+1
+            val_newDim = val_rel+1
             print("Nilai sama")
             print("")
             return val_newDim
     else:
         val_newDim = 1
-        print("Tambah data sebanyak : {0}".format(val_rel[0]))
+        print("Tambah data sebanyak : {0}".format(countRel))
         print("")
         return val_newDim
 
 
+
 # ----------------- SQL Query Get Value Max----------------- #
 # Buku
-getRel_buku = functiom_count("id_buku","tb_buku")
-rel_idBuku  = function_select_max(db_perpus,getRel_buku)
 
-getDim_buku = functiom_count("id_buku","dim_buku")
-dim_idBuku  = function_select_max(db_dimension,getDim_buku)
+rel_idBuku     = fun_lastId("id_buku","tb_buku",db_perpus)
+countRel_buku  = fun_count("id_buku","tb_buku",db_perpus)
+
+dim_idBuku     = fun_lastId("id_buku","dim_buku",db_dimension)
+countDim_buku  = fun_count("id_buku","dim_buku",db_dimension)
 
 # Member
-getRel_member = functiom_count("id_member","tb_member")
-rel_idMember  = function_select_max(db_perpus,getRel_member)
+rel_idMember     = fun_lastId("id_member","tb_member",db_perpus)
+countRel_Member  = fun_count("id_member","tb_member",db_perpus)
 
-getDim_member = functiom_count("id_member","dim_member")
-dim_idMember  = function_select_max(db_dimension,getDim_member)
+dim_idMember     = fun_lastId("id_member","dim_member",db_dimension)
+countDim_Member  = fun_count("id_member","dim_member",db_dimension)
 
 # Pegawai
-getRel_pegawai = functiom_count("id_pegawai","tb_pegawai")
-rel_idPegawai  = function_select_max(db_perpus,getRel_pegawai)
+rel_idPegawai     = fun_lastId("id_pegawai","tb_pegawai",db_perpus)
+countRel_Pegawai  = fun_count("id_pegawai","tb_pegawai",db_perpus)
 
-getDim_pegawai = functiom_count("id_pegawai","dim_pegawai")
-dim_idPegawai  = function_select_max(db_dimension,getDim_pegawai)
+dim_idPegawai     = fun_lastId("id_pegawai","dim_pegawai",db_dimension)
+countDim_Pegawai  = fun_count("id_pegawai","dim_pegawai",db_dimension)
 
 # penerbit
-getRel_penerbit = functiom_count("id_penerbit","tb_penerbit")
-rel_idPenerbit  = function_select_max(db_perpus,getRel_penerbit)
+rel_idPenerbit     = fun_lastId("id_penerbit","tb_penerbit",db_perpus)
+countRel_Penerbit  = fun_count("id_penerbit","tb_penerbit",db_perpus)
 
-getDim_penerbit = functiom_count("id_penerbit","dim_penerbit")
-dim_idPenerbit  = function_select_max(db_dimension,getDim_penerbit)
+dim_idPenerbit    = fun_lastId("id_penerbit","dim_penerbit",db_dimension)
+countDim_Penerbit = fun_count("id_penerbit","dim_penerbit",db_dimension)
 
 #penulis
-getRel_penulis = functiom_count("id_penulis","tb_penulis")
-rel_idPenulis  = function_select_max(db_perpus,getRel_penulis)
+rel_idPenulis     = fun_lastId("id_penulis","tb_penulis",db_perpus)
+countRel_Penulis  = fun_count("id_penulis","tb_penulis",db_perpus)
 
-getDim_penulis = functiom_count("id_penulis","dim_penulis")
-dim_idPenulis  = function_select_max(db_dimension,getDim_penulis)
+dim_idPenulis    = fun_lastId("id_penulis","dim_penulis",db_dimension)
+countDim_Penulis = fun_count("id_penulis","dim_penulis",db_dimension)
 
 #perpus
-getRel_perpus = functiom_count("id_perpus","tb_perpus")
-rel_idPerpus  = function_select_max(db_perpus,getRel_perpus)
+rel_idPerpus     = fun_lastId("id_perpus","tb_perpus",db_perpus)
+countRel_Perpus  = fun_count("id_perpus","tb_perpus",db_perpus)
 
-getDim_perpus = functiom_count("id_perpus","dim_perpus")
-dim_idPerpus  = function_select_max(db_dimension,getDim_perpus)
+dim_idPerpus    = fun_lastId("id_perpus","dim_perpus",db_dimension)
+countDim_Perpus = fun_count("id_perpus","dim_perpus",db_dimension)
 
 #trans
-getRel_detail = functiom_count("id_detail","tb_detail_trans")
-rel_idDetail  = function_select_max(db_perpus,getRel_detail)
+rel_idDetail    = fun_lastId("id_detail","tb_detail_trans",db_perpus)
+countRel_Trans  = fun_count("id_detail","tb_detail_trans",db_perpus)
 
-getDim_trans  = functiom_count("id_fakta_trans","fakta_trans")
-dim_idTrans   = function_select_max(db_dimension,getDim_trans)
+dim_idTrans    = fun_lastId("id_fakta_trans","fakta_trans",db_dimension)
+countDim_Trans = fun_count("id_fakta_trans","fakta_trans",db_dimension)
 
 
 # ----------------- Check Condition -----------------#
-val_buku     = function_condition(rel_idBuku, dim_idBuku, 'Buku')
-val_member   = function_condition(rel_idMember, dim_idMember, "Member")
-val_pegawai  = function_condition(rel_idPegawai, dim_idPegawai, "Pegawai")
-val_penerbit = function_condition(rel_idPenerbit,dim_idPenerbit,"Penerbit")
-val_penulis  = function_condition(rel_idPenulis,dim_idPenulis,"Penulis")
-val_perpus   = function_condition(rel_idPerpus,dim_idPerpus,"Perpus")
-val_trans    = function_condition(rel_idDetail,dim_idTrans,"Transaksi")
+val_buku     = function_condition(rel_idBuku, dim_idBuku, countRel_buku,countDim_buku, 'Buku')
+val_member   = function_condition(rel_idMember, dim_idMember, countRel_Member,countDim_Member, "Member")
+val_pegawai  = function_condition(rel_idPegawai, dim_idPegawai, countRel_Pegawai,countDim_Pegawai, "Pegawai")
+val_penerbit = function_condition(rel_idPenerbit,dim_idPenerbit,countRel_Penerbit, countDim_Penerbit,"Penerbit")
+val_penulis  = function_condition(rel_idPenulis,dim_idPenulis,countRel_Penulis,countDim_Penulis,"Penulis")
+val_perpus   = function_condition(rel_idPerpus,dim_idPerpus,countRel_Perpus,countDim_Perpus,"Perpus")
+val_trans    = function_condition(rel_idDetail,dim_idTrans,countRel_Trans,countDim_Trans,"Transaksi")
 
 # ----------------- SQL Query SELECT----------------- #
 sql_buku        = "SELECT id_buku,title_buku, ISBN FROM tb_buku WHERE id_buku >= {0}".format(val_buku)
@@ -125,9 +128,7 @@ sql_perpus      = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus WH
 sql_trans       = "SELECT tb_detail_trans.`id_trans`, tb_transaksi.`id_pegawai`, id_member, " \
                   "tb_transaksi.`tgl_pinjam`, tb_transaksi.`tgl_kembali`, tb_pegawai.`id_perpus`, " \
                   "tb_detail_trans.`id_buku`, tb_buku.`id_penerbit`, tb_buku.`id_penulis` " \
-                  "FROM tb_transaksi " \
-                  "JOIN tb_detail_trans " \
-                  "JOIN tb_pegawai " \
+                  "FROM tb_transaksi JOIN tb_detail_trans JOIN tb_pegawai " \
                   "JOIN tb_buku WHERE tb_detail_trans.`id_trans` = tb_transaksi.`id_trans` " \
                   "AND tb_transaksi.`id_pegawai` = tb_pegawai.`id_pegawai` " \
                   "AND tb_buku.`id_buku` = tb_detail_trans.`id_buku` " \
