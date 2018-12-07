@@ -87,6 +87,13 @@ class GUI_DWH(wx.Frame):
         self.grid_showResult.SetDefaultCellAlignment(wx.ALIGN_LEFT, wx.ALIGN_TOP)
         bSizer4.Add(self.grid_showResult, 1, wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
+        bSizer61 = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.button_pinjam = wx.Button(self.m_panel1, wx.ID_ANY, u"Peminjaman", wx.DefaultPosition, wx.DefaultSize, 0)
+        bSizer61.Add(self.button_pinjam, 0, wx.ALL, 5)
+
+        bSizer4.Add(bSizer61, 0, wx.ALIGN_RIGHT, 5)
+
         bSizer3.Add(bSizer4, 0, wx.ALIGN_CENTER_HORIZONTAL, 5)
 
         self.m_panel1.SetSizer(bSizer3)
@@ -95,6 +102,8 @@ class GUI_DWH(wx.Frame):
         self.panel_pinjam.AddPage(self.m_panel1, u"Peminjaman", False)
         self.m_panel2 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer6 = wx.BoxSizer(wx.VERTICAL)
+
+        bSizer41 = wx.BoxSizer(wx.VERTICAL)
 
         self.m_grid2 = wx.grid.Grid(self.m_panel2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
 
@@ -130,7 +139,16 @@ class GUI_DWH(wx.Frame):
 
         # Cell Defaults
         self.m_grid2.SetDefaultCellAlignment(wx.ALIGN_LEFT, wx.ALIGN_TOP)
-        bSizer6.Add(self.m_grid2, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        bSizer41.Add(self.m_grid2, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+
+        bSizer612 = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.button_etl = wx.Button(self.m_panel2, wx.ID_ANY, u"Show ETL", wx.DefaultPosition, wx.DefaultSize, 0)
+        bSizer612.Add(self.button_etl, 0, wx.ALL, 5)
+
+        bSizer41.Add(bSizer612, 0, wx.ALIGN_RIGHT, 5)
+
+        bSizer6.Add(bSizer41, 1, wx.EXPAND, 5)
 
         self.m_panel2.SetSizer(bSizer6)
         self.m_panel2.Layout()
