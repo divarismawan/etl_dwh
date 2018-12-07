@@ -26,6 +26,11 @@ def function_instert(db_dimensi,query):
     cursor.execute(query)
     db_dimensi.commit()
 
+# for get count table by id
+def functiom_count(id_table,name_table):
+    query_insert = "SELECT COUNT({0}) FROM {1}".format(id_table,name_table)
+    return query_insert
+
 # for check different data in both database
 def function_condition(val_rel, val_dim, tbl_name):
     print("Data in table %s"%tbl_name)
@@ -35,7 +40,7 @@ def function_condition(val_rel, val_dim, tbl_name):
             val_newDim = val_dim[0] +1
             result = val_newRel - val_newDim +1
             print("Jumlah data baru = %d"%result)
-            print("Tambah data mulai dari = %d"%val_newDim)
+            print("Tambah data mulai dari id : %d"%val_newDim)
             print("")
             return val_newDim
         else:
@@ -53,52 +58,52 @@ def function_condition(val_rel, val_dim, tbl_name):
 
 # ----------------- SQL Query Get Value Max----------------- #
 # Buku
-getRel_buku = "SELECT MAX(id_buku) from tb_buku"
+getRel_buku = functiom_count("id_buku","tb_buku")
 rel_idBuku  = function_select_max(db_perpus,getRel_buku)
 
-getDim_buku = "SELECT MAX(id_buku) from dim_buku"
+getDim_buku = functiom_count("id_buku","dim_buku")
 dim_idBuku  = function_select_max(db_dimension,getDim_buku)
 
 # Member
-getRel_member = "SELECT MAX(id_member) from tb_member"
+getRel_member = functiom_count("id_member","tb_member")
 rel_idMember  = function_select_max(db_perpus,getRel_member)
 
-getDim_member = "SELECT MAX(id_member) from dim_member"
+getDim_member = functiom_count("id_member","dim_member")
 dim_idMember  = function_select_max(db_dimension,getDim_member)
 
 # Pegawai
-getRel_pegawai = "SELECT MAX(id_pegawai) from tb_pegawai "
+getRel_pegawai = functiom_count("id_pegawai","tb_pegawai")
 rel_idPegawai  = function_select_max(db_perpus,getRel_pegawai)
 
-getDim_pegawai = "SELECT MAX(id_pegawai) from dim_pegawai"
+getDim_pegawai = functiom_count("id_pegawai","dim_pegawai")
 dim_idPegawai  = function_select_max(db_dimension,getDim_pegawai)
 
 # penerbit
-getRel_penerbit = "SELECT MAX(id_penerbit) from tb_penerbit"
+getRel_penerbit = functiom_count("id_penerbit","tb_penerbit")
 rel_idPenerbit  = function_select_max(db_perpus,getRel_penerbit)
 
-getDim_penerbit = "SELECT MAX(id_penerbit) from dim_penerbit"
+getDim_penerbit = functiom_count("id_penerbit","dim_penerbit")
 dim_idPenerbit  = function_select_max(db_dimension,getDim_penerbit)
 
 #penulis
-getRel_penulis = "SELECT MAX(id_penulis) from tb_penulis"
+getRel_penulis = functiom_count("id_penulis","tb_penulis")
 rel_idPenulis  = function_select_max(db_perpus,getRel_penulis)
 
-getDim_penulis = "SELECT MAX(id_penulis) from dim_penulis"
+getDim_penulis = functiom_count("id_penulis","dim_penulis")
 dim_idPenulis  = function_select_max(db_dimension,getDim_penulis)
 
 #perpus
-getRel_perpus = "SELECT MAX(id_perpus) from tb_perpus"
+getRel_perpus = functiom_count("id_perpus","tb_perpus")
 rel_idPerpus  = function_select_max(db_perpus,getRel_perpus)
 
-getDim_perpus = "SELECT MAX(id_perpus) from dim_perpus"
+getDim_perpus = functiom_count("id_perpus","dim_perpus")
 dim_idPerpus  = function_select_max(db_dimension,getDim_perpus)
 
 #trans
-getRel_detail = "SELECT MAX(id_detail) from tb_detail_trans"
+getRel_detail = functiom_count("id_detail","tb_detail_trans")
 rel_idDetail  = function_select_max(db_perpus,getRel_detail)
 
-getDim_trans  = "SELECT MAX(id_fakta_trans) from fakta_trans"
+getDim_trans  = functiom_count("id_fakta_trans","fakta_trans")
 dim_idTrans   = function_select_max(db_dimension,getDim_trans)
 
 
@@ -118,7 +123,16 @@ sql_pegawai     = "SELECT id_pegawai,nama_pegawai FROM tb_pegawai WHERE id_pegaw
 sql_penerbit    = "SELECT id_penerbit, nama_perusahaan FROM tb_penerbit WHERE id_penerbit >={0}".format(val_penerbit)
 sql_penulis     = "SELECT id_penulis,nama_penulis FROM tb_penulis WHERE id_penulis >={0}".format(val_penulis)
 sql_perpus      = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus WHERE id_perpus >={0}".format(val_perpus)
-sql_trans       = "SELECT tb_detail_trans.`id_trans`, tb_transaksi.`id_pegawai`, id_member, tb_transaksi.`tgl_pinjam`, tb_transaksi.`tgl_kembali`, tb_pegawai.`id_perpus`, tb_detail_trans.`id_buku`, tb_buku.`id_penerbit`, tb_buku.`id_penulis` FROM tb_transaksi JOIN tb_detail_trans JOIN tb_pegawai JOIN tb_buku WHERE tb_detail_trans.`id_trans` = tb_transaksi.`id_trans` AND tb_transaksi.`id_pegawai` = tb_pegawai.`id_pegawai` AND tb_buku.`id_buku` = tb_detail_trans.`id_buku` AND tb_detail_trans.`id_detail` >={0}".format(val_trans)
+sql_trans       = "SELECT tb_detail_trans.`id_trans`, tb_transaksi.`id_pegawai`, id_member, " \
+                  "tb_transaksi.`tgl_pinjam`, tb_transaksi.`tgl_kembali`, tb_pegawai.`id_perpus`, " \
+                  "tb_detail_trans.`id_buku`, tb_buku.`id_penerbit`, tb_buku.`id_penulis` " \
+                  "FROM tb_transaksi " \
+                  "JOIN tb_detail_trans " \
+                  "JOIN tb_pegawai " \
+                  "JOIN tb_buku WHERE tb_detail_trans.`id_trans` = tb_transaksi.`id_trans` " \
+                  "AND tb_transaksi.`id_pegawai` = tb_pegawai.`id_pegawai` " \
+                  "AND tb_buku.`id_buku` = tb_detail_trans.`id_buku` " \
+                  "AND tb_detail_trans.`id_detail` >={0}".format(val_trans)
 
 
 #----------------- Use function SELECT -----------------#
