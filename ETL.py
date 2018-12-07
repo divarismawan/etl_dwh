@@ -118,7 +118,7 @@ sql_pegawai     = "SELECT id_pegawai,nama_pegawai FROM tb_pegawai WHERE id_pegaw
 sql_penerbit    = "SELECT id_penerbit, nama_perusahaan FROM tb_penerbit WHERE id_penerbit >={0}".format(val_penerbit)
 sql_penulis     = "SELECT id_penulis,nama_penulis FROM tb_penulis WHERE id_penulis >={0}".format(val_penulis)
 sql_perpus      = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus WHERE id_perpus >={0}".format(val_perpus)
-sql_trans       = "SELECT id_trans FROM tb_detail_trans WHERE id_detail >={0}".format(val_trans)
+sql_trans       = "SELECT tb_detail_trans.`id_trans`, tb_transaksi.`id_pegawai`, id_member, tb_transaksi.`tgl_pinjam`, tb_transaksi.`tgl_kembali`, tb_pegawai.`id_perpus`, tb_detail_trans.`id_buku`, tb_buku.`id_penerbit`, tb_buku.`id_penulis` FROM tb_transaksi JOIN tb_detail_trans JOIN tb_pegawai JOIN tb_buku WHERE tb_detail_trans.`id_trans` = tb_transaksi.`id_trans` AND tb_transaksi.`id_pegawai` = tb_pegawai.`id_pegawai` AND tb_buku.`id_buku` = tb_detail_trans.`id_buku` AND tb_detail_trans.`id_detail` >={0}".format(val_trans)
 
 
 #----------------- Use function SELECT -----------------#
@@ -127,8 +127,8 @@ select_member   = function_select(db_perpus, sql_member)
 select_pegawai  = function_select(db_perpus, sql_pegawai)
 select_penerbit = function_select(db_perpus, sql_penerbit)
 select_penulis  = function_select(db_perpus, sql_penulis)
-select_perpus   = function_select(db_perpus,sql_perpus)
-select_trans    = function_select(db_perpus,sql_trans)
+select_perpus   = function_select(db_perpus, sql_perpus)
+select_trans    = function_select(db_perpus, sql_trans)
 
 # ----------------- INSERT data to Data Warehouse -----------------#
 for x in select_buku:
@@ -161,13 +161,12 @@ for x in select_perpus:
     query_insert = ("INSERT INTO dim_perpus SET id_perpus = {0}, nama_perpus = '{1}', alamat_perpus = '{2}'".format(val_a, val_b, val_c))
     function_instert(db_dimension, query_insert)
 
+print("Loading...")
 for x in select_trans:
-    print("Loading...")
-    val_a = x[0]
-    query_insert = "INSERT INTO fakta_trans SET id_trans = {0}".format(val_a)
-    print("Load")
+    val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i = x
+    query_insert = "INSERT INTO fakta_trans SET id_trans = {0}, id_pegawai = '{1}', id_member = '{2}', tanggal_pinjam = '{3}', tanggal_kembali = '{4}', id_perpus = '{5}', id_buku = '{6}', id_penerbit = '{7}', id_penulis = '{8}'".format(val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i)
     function_instert(db_dimension,query_insert)
-    print("Sukses")
+print("Sukses")
 
 # disconnect from server
 db_perpus.close()
