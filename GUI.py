@@ -25,13 +25,72 @@ class GUI_DWH(wx.Frame):
 
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, id=wx.ID_ANY, title=wx.EmptyString, pos=wx.DefaultPosition,
-                          size=wx.Size(772, 392), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
+                          size=wx.Size(783, 392), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.SetSizeHintsSz(wx.DefaultSize, wx.DefaultSize)
 
         bSizer1 = wx.BoxSizer(wx.VERTICAL)
 
         self.panel_pinjam = wx.Notebook(self, panel_pinjam, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_panel4 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        bSizer11 = wx.BoxSizer(wx.VERTICAL)
+
+        bSizer13 = wx.BoxSizer(wx.VERTICAL)
+
+        self.m_panel61 = wx.Panel(self.m_panel4, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        bSizer13.Add(self.m_panel61, 1, wx.ALL | wx.EXPAND, 5)
+
+        self.m_grid3 = wx.grid.Grid(self.m_panel4, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
+
+        # Grid
+        self.m_grid3.CreateGrid(3, 7)
+        self.m_grid3.EnableEditing(True)
+        self.m_grid3.EnableGridLines(True)
+        self.m_grid3.EnableDragGridSize(False)
+        self.m_grid3.SetMargins(0, 0)
+
+        # Columns
+        self.m_grid3.EnableDragColMove(True)
+        self.m_grid3.EnableDragColSize(True)
+        self.m_grid3.SetColLabelSize(30)
+        self.m_grid3.SetColLabelValue(0, u"Buku")
+        self.m_grid3.SetColLabelValue(1, u"Penulis")
+        self.m_grid3.SetColLabelValue(2, u"Penerbit")
+        self.m_grid3.SetColLabelValue(3, u"Member")
+        self.m_grid3.SetColLabelValue(4, u"Pegawai")
+        self.m_grid3.SetColLabelValue(5, u"Perpus")
+        self.m_grid3.SetColLabelValue(6, u"Transaksi")
+        self.m_grid3.SetColLabelValue(7, wx.EmptyString)
+        self.m_grid3.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
+
+        # Rows
+        self.m_grid3.AutoSizeRows()
+        self.m_grid3.EnableDragRowSize(True)
+        self.m_grid3.SetRowLabelSize(80)
+        self.m_grid3.SetRowLabelValue(0, u"Data awal")
+        self.m_grid3.SetRowLabelValue(1, u"Penambahan data")
+        self.m_grid3.SetRowLabelValue(2, u"Total Data")
+        self.m_grid3.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
+
+        # Label Appearance
+
+        # Cell Defaults
+        self.m_grid3.SetDefaultCellAlignment(wx.ALIGN_LEFT, wx.ALIGN_TOP)
+        bSizer13.Add(self.m_grid3, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.EXPAND, 5)
+
+        bSizer15 = wx.BoxSizer(wx.VERTICAL)
+
+        self.m_button5 = wx.Button(self.m_panel4, wx.ID_ANY, u"Extrack Data", wx.DefaultPosition, wx.DefaultSize, 0)
+        bSizer15.Add(self.m_button5, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+
+        bSizer13.Add(bSizer15, 1, wx.EXPAND | wx.ALIGN_RIGHT, 5)
+
+        bSizer11.Add(bSizer13, 1, wx.ALIGN_CENTER_HORIZONTAL, 5)
+
+        self.m_panel4.SetSizer(bSizer11)
+        self.m_panel4.Layout()
+        bSizer11.Fit(self.m_panel4)
+        self.panel_pinjam.AddPage(self.m_panel4, u"ETL", True)
         self.m_panel1 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer3 = wx.BoxSizer(wx.VERTICAL)
 
@@ -67,7 +126,7 @@ class GUI_DWH(wx.Frame):
         self.grid_showResult.SetColSize(0, 150)
         self.grid_showResult.SetColSize(1, 300)
         self.grid_showResult.SetColSize(2, 70)
-        self.grid_showResult.EnableDragColMove(True)
+        self.grid_showResult.EnableDragColMove(False)
         self.grid_showResult.EnableDragColSize(True)
         self.grid_showResult.SetColLabelSize(30)
         self.grid_showResult.SetColLabelValue(0, u"Perpustakaan")
@@ -143,9 +202,6 @@ class GUI_DWH(wx.Frame):
 
         bSizer612 = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.button_etl = wx.Button(self.m_panel2, wx.ID_ANY, u"Show ETL", wx.DefaultPosition, wx.DefaultSize, 0)
-        bSizer612.Add(self.button_etl, 0, wx.ALL, 5)
-
         bSizer41.Add(bSizer612, 0, wx.ALIGN_RIGHT, 5)
 
         bSizer6.Add(bSizer41, 1, wx.EXPAND, 5)
@@ -153,7 +209,7 @@ class GUI_DWH(wx.Frame):
         self.m_panel2.SetSizer(bSizer6)
         self.m_panel2.Layout()
         bSizer6.Fit(self.m_panel2)
-        self.panel_pinjam.AddPage(self.m_panel2, u"ETL", True)
+        self.panel_pinjam.AddPage(self.m_panel2, u"Data Masuk", False)
 
         bSizer1.Add(self.panel_pinjam, 1, wx.EXPAND | wx.ALL, 5)
 
@@ -166,23 +222,3 @@ class GUI_DWH(wx.Frame):
         pass
 
 
-class OpenGui(wx.App):
-
-    def OnInit(self):
-        myframe = GUI_DWH(None)
-        myframe.Show(True)
-        return True
-
-
-
-def main():
-
-    app = OpenGui()
-    app.MainLoop()
-    # dummy_word ="   "
-    #clean_word = TrainingData.clean_words(dummy_word)
-    #print(clean_word)
-
-
-if __name__ == "__main__":
-    main()

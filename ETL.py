@@ -1,6 +1,10 @@
 from numpy.distutils.fcompiler import none
+import wx
 
 import Connection
+import GUI
+
+
 
 db_perpus    = Connection.connect('db_perpus')
 db_dimension = Connection.connect('db_dimensional_perpus')
@@ -47,94 +51,228 @@ def fun_all(id_rel, tb_rel, id_dim, tb_dim, table_name):
     if (getId_dim != None):
         print("Jumlah data baru = %d" % result)
         if (countRel > countDim):
-            getId_dim +=1
-            print("Tambah data mulai dari = %d" % getId_dim)
-            print("")
+            # getId_dim +=1
+            # print("Tambah data mulai dari = %d" % getId_dim)
+            # print("")
             return getId_dim
         else:
             print("Value data sama")
             print("")
-            return getId_rel+1
+            return getId_rel
     else:
-        val_newDim = 1
+        val_newDim = 0
         print("Tambah data sebanyak : {0}".format(result))
         print("")
         return val_newDim
 
+# for check different data in both database
+def function_condition(val_rel, val_dim, countRel, countDim, tbl_name, tb_dim, id_dim):
+    print("Data in table %s"%tbl_name)
+    result = countRel - countDim
+    print("Jumlah data baru = %d" % result)
+    if(val_dim != None):
+        if(countRel > countDim):
+            # val_newRel = val_rel
+            return val_dim
+        else:
+            val_newDim = val_rel
+            print("Nilai sama")
+            print("")
+            return val_newDim
+    else:
+        val_newDim = 0
+        print("Tambah data sebanyak : {0}".format(result))
+        print("")
+        return val_newDim
 
-# ----------------- SQL Query Get Value Max----------------- #
-val_buku       = fun_all("id_buku","tb_buku","id_buku","dim_buku","Buku")
-val_member     = fun_all("id_member","tb_member","id_member","dim_member","Member")
-val_pegawai    = fun_all("id_pegawai","tb_pegawai","id_pegawai","dim_pegawai","Pegawai")
-val_penerbit   = fun_all("id_penerbit","tb_penerbit","id_penerbit","dim_penerbit","Penerbit")
-val_penulis    = fun_all("id_penulis","tb_penulis","id_penulis","dim_penulis","Penulis")
-val_perpus     = fun_all("id_perpus","tb_perpus","id_perpus","dim_perpus","Perpus")
-val_trans      = fun_all("id_detail","tb_detail_trans","id_fakta_trans","fakta_trans","Transaksi")
+class GuiShow(GUI.GUI_DWH):
 
-# ----------------- SQL Query SELECT----------------- #
-sql_buku        = "SELECT id_buku,title_buku, ISBN FROM tb_buku WHERE id_buku >= {0}".format(val_buku)
-sql_member      = "SELECT id_member,nama FROM tb_member WHERE id_member >={0}".format(val_member)
-sql_pegawai     = "SELECT id_pegawai,nama_pegawai FROM tb_pegawai WHERE id_pegawai >={0}".format(val_pegawai)
-sql_penerbit    = "SELECT id_penerbit, nama_perusahaan FROM tb_penerbit WHERE id_penerbit >={0}".format(val_penerbit)
-sql_penulis     = "SELECT id_penulis,nama_penulis FROM tb_penulis WHERE id_penulis >={0}".format(val_penulis)
-sql_perpus      = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus WHERE id_perpus >={0}".format(val_perpus)
-sql_trans       = "SELECT tb_detail_trans.`id_trans`, tb_transaksi.`id_pegawai`, id_member, " \
-                  "tb_transaksi.`tgl_pinjam`, tb_transaksi.`tgl_kembali`, tb_pegawai.`id_perpus`, " \
-                  "tb_detail_trans.`id_buku`, tb_buku.`id_penerbit`, tb_buku.`id_penulis` " \
-                  "FROM tb_transaksi JOIN tb_detail_trans JOIN tb_pegawai " \
-                  "JOIN tb_buku WHERE tb_detail_trans.`id_trans` = tb_transaksi.`id_trans` " \
-                  "AND tb_transaksi.`id_pegawai` = tb_pegawai.`id_pegawai` " \
-                  "AND tb_buku.`id_buku` = tb_detail_trans.`id_buku` " \
-                  "AND tb_detail_trans.`id_detail` >={0}".format(val_trans)
+    def __init__(self):
+        GUI.GUI_DWH.__init__(self,parent=None)
+        self.m_button5.Bind(wx.EVT_BUTTON,self.show_etl)
+        self.show_transaksi()
 
 
-#----------------- Use function SELECT -----------------#
-select_buku     = function_select(db_perpus, sql_buku)
-select_member   = function_select(db_perpus, sql_member)
-select_pegawai  = function_select(db_perpus, sql_pegawai)
-select_penerbit = function_select(db_perpus, sql_penerbit)
-select_penulis  = function_select(db_perpus, sql_penulis)
-select_perpus   = function_select(db_perpus, sql_perpus)
-select_trans    = function_select(db_perpus, sql_trans)
+    def show_etl(self,event):
+        # ----------------- SQL Query Get Value Max----------------- #
+        val_buku = fun_all("id_buku", "tb_buku", "id_buku", "dim_buku", "Buku")
+        val_member = fun_all("id_member", "tb_member", "id_member", "dim_member", "Member")
+        val_pegawai = fun_all("id_pegawai", "tb_pegawai", "id_pegawai", "dim_pegawai", "Pegawai")
+        val_penerbit = fun_all("id_penerbit", "tb_penerbit", "id_penerbit", "dim_penerbit", "Penerbit")
+        val_penulis = fun_all("id_penulis", "tb_penulis", "id_penulis", "dim_penulis", "Penulis")
+        val_perpus = fun_all("id_perpus", "tb_perpus", "id_perpus", "dim_perpus", "Perpus")
+        val_trans = fun_all("id_detail", "tb_detail_trans", "id_detail_trans", "fakta_trans", "Transaksi")
 
-# ----------------- INSERT data to Data Warehouse -----------------#
-print("Loading...")
-for x in select_buku:
-    val_a,val_b,val_c  = x
-    query_insert = ("INSERT INTO dim_buku SET id_buku = {0}, nama_buku = '{1}', ISBN = '{2}'".format(val_a, val_b, val_c))
-    function_instert(db_dimension, query_insert)
+        # ----------------- SQL Query SELECT----------------- #
+        sql_buku = "SELECT id_buku,title_buku, ISBN FROM tb_buku WHERE id_buku > {0}".format(val_buku)
+        sql_member = "SELECT id_member,nama FROM tb_member WHERE id_member >{0}".format(val_member)
+        sql_pegawai = "SELECT id_pegawai,nama_pegawai FROM tb_pegawai WHERE id_pegawai >{0}".format(val_pegawai)
+        sql_penerbit = "SELECT id_penerbit, nama_perusahaan FROM tb_penerbit WHERE id_penerbit >{0}".format(
+            val_penerbit)
+        sql_penulis = "SELECT id_penulis,nama_penulis FROM tb_penulis WHERE id_penulis >{0}".format(val_penulis)
+        sql_perpus = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus WHERE id_perpus >{0}".format(
+            val_perpus)
+        sql_trans = "SELECT tb_detail_trans.`id_detail`, tb_detail_trans.`id_trans`, tb_transaksi.`id_pegawai`, id_member, " \
+                    "tb_transaksi.`tgl_pinjam`, tb_transaksi.`tgl_kembali`, tb_pegawai.`id_perpus`, " \
+                    "tb_detail_trans.`id_buku`, tb_buku.`id_penerbit`, tb_buku.`id_penulis` " \
+                    "FROM tb_transaksi JOIN tb_detail_trans JOIN tb_pegawai " \
+                    "JOIN tb_buku WHERE tb_detail_trans.`id_trans` = tb_transaksi.`id_trans` " \
+                    "AND tb_transaksi.`id_pegawai` = tb_pegawai.`id_pegawai` " \
+                    "AND tb_buku.`id_buku` = tb_detail_trans.`id_buku` " \
+                    "AND tb_detail_trans.`id_detail` > {0} ORDER BY tb_detail_trans.`id_detail`".format(val_trans)
 
-for x in select_member:
-    val_a, val_b = x
-    query_insert =("INSERT INTO dim_member SET id_member ={0},nama_member='{1}'".format(val_a,val_b))
-    function_instert(db_dimension,query_insert)
+        # ----------------- Count -----------------#
+        # Buku
+        countRel_buku = fun_count("id_buku", "tb_buku", db_perpus)
+        countDim_buku = fun_count("id_buku", "dim_buku", db_dimension)
 
-for x in select_pegawai:
-    val_a, val_b = x
-    query_insert =("INSERT INTO dim_pegawai SET id_pegawai={0},nama_pegawai='{1}'".format(val_a,val_b))
-    function_instert(db_dimension,query_insert)
+        add_buku = countRel_buku - countDim_buku
+        data_buku = [countDim_buku,add_buku,countDim_buku+add_buku]
 
-for x in select_penerbit:
-    val_a, val_b = x
-    query_insert =("INSERT INTO dim_penerbit SET id_penerbit = {0}, nama_perusahaan = '{1}'".format(val_a,val_b))
-    function_instert(db_dimension,query_insert)
+        for x in range(0,len(data_buku)):
+            self.m_grid3.SetCellValue(x,0,str(data_buku[x]))
 
-for x in select_penulis:
-    val_a, val_b = x
-    query_insert = ("INSERT INTO dim_penulis SET id_penulis = {0}, nama_penulis='{1}'".format(val_a,val_b))
-    function_instert(db_dimension,query_insert)
+        # penulis
+        countRel_Penulis = fun_count("id_penulis", "tb_penulis", db_perpus)
+        countDim_Penulis = fun_count("id_penulis", "dim_penulis", db_dimension)
 
-for x in select_perpus:
-    val_a, val_b, val_c = x
-    query_insert = ("INSERT INTO dim_perpus SET id_perpus = {0}, nama_perpus = '{1}', alamat_perpus = '{2}'".format(val_a, val_b, val_c))
-    function_instert(db_dimension, query_insert)
+        add_penulis  = countRel_Penulis - countDim_Penulis
+        data_penulis = [countDim_Penulis, add_penulis, countDim_Penulis + add_penulis]
 
-for x in select_trans:
-    val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i = x
-    query_insert = "INSERT INTO fakta_trans SET id_trans = {0}, id_pegawai = '{1}', id_member = '{2}', tanggal_pinjam = '{3}', tanggal_kembali = '{4}', id_perpus = '{5}', id_buku = '{6}', id_penerbit = '{7}', id_penulis = '{8}'".format(val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i)
-    function_instert(db_dimension,query_insert)
-print("Sukses")
+        for x in range(0, len(data_penulis)):
+            self.m_grid3.SetCellValue(x, 1, str(data_penulis[x]))
 
-# disconnect from server
-db_perpus.close()
-db_dimension.close()
+
+        # penerbit
+        countRel_Penerbit = fun_count("id_penerbit", "tb_penerbit", db_perpus)
+        countDim_Penerbit = fun_count("id_penerbit", "dim_penerbit", db_dimension)
+
+        add_penerbit  = countRel_Penerbit - countDim_Penerbit
+        data_penerbit = [countDim_Penerbit, add_penerbit, countDim_Penerbit + add_penerbit]
+
+        for x in range(0, len(data_penerbit)):
+            self.m_grid3.SetCellValue(x, 2, str(data_penerbit[x]))
+
+        # Member
+        countRel_Member = fun_count("id_member", "tb_member", db_perpus)
+        countDim_Member = fun_count("id_member", "dim_member", db_dimension)
+
+        add_member = countRel_Member - countDim_Member
+        data_member = [countDim_Member, add_member, countDim_Member + add_member]
+
+        for x in range(0, len(data_member)):
+            self.m_grid3.SetCellValue(x, 3, str(data_member[x]))
+
+        # Pegawai
+        countRel_Pegawai = fun_count("id_pegawai", "tb_pegawai", db_perpus)
+        countDim_Pegawai = fun_count("id_pegawai", "dim_pegawai", db_dimension)
+
+        add_pegawai = countRel_Pegawai - countDim_Pegawai
+        data_pegawai = [countDim_Pegawai, add_pegawai, countDim_Pegawai + add_pegawai]
+
+        for x in range(0, len(data_pegawai)):
+            self.m_grid3.SetCellValue(x, 4, str(data_pegawai[x]))
+
+        # perpus
+        countRel_Perpus = fun_count("id_perpus", "tb_perpus", db_perpus)
+        countDim_Perpus = fun_count("id_perpus", "dim_perpus", db_dimension)
+
+        add_perpus = countRel_Perpus - countDim_Perpus
+        data_perpus = [countDim_Perpus, add_perpus, countDim_Perpus + add_perpus]
+
+        for x in range(0, len(data_perpus)):
+            self.m_grid3.SetCellValue(x, 5, str(data_perpus[x]))
+
+        # trans
+        countRel_Trans = fun_count("id_detail", "tb_detail_trans", db_perpus)
+        countDim_Trans = fun_count("id_fakta_trans", "fakta_trans", db_dimension)
+
+        add_trans = countRel_Trans - countDim_Trans
+        data_trans = [countDim_Trans, add_trans, countDim_Trans + add_trans]
+
+        for x in range(0, len(data_trans)):
+            self.m_grid3.SetCellValue(x, 6, str(data_trans[x]))
+
+
+        # ----------------- Use function SELECT -----------------#
+        select_buku = function_select(db_perpus, sql_buku)
+        select_member = function_select(db_perpus, sql_member)
+        select_pegawai = function_select(db_perpus, sql_pegawai)
+        select_penerbit = function_select(db_perpus, sql_penerbit)
+        select_penulis = function_select(db_perpus, sql_penulis)
+        select_perpus = function_select(db_perpus, sql_perpus)
+        select_trans = function_select(db_perpus, sql_trans)
+
+        # ----------------- INSERT data to Data Warehouse -----------------#
+        print("Loading...")
+        for x in select_buku:
+            val_a, val_b, val_c = x
+            query_insert = (
+                "INSERT INTO dim_buku SET id_buku = {0}, nama_buku = '{1}', ISBN = '{2}'".format(val_a, val_b, val_c))
+            function_instert(db_dimension, query_insert)
+
+        for x in select_member:
+            val_a, val_b = x
+            query_insert = ("INSERT INTO dim_member SET id_member ={0},nama_member='{1}'".format(val_a, val_b))
+            function_instert(db_dimension, query_insert)
+
+        for x in select_pegawai:
+            val_a, val_b = x
+            query_insert = ("INSERT INTO dim_pegawai SET id_pegawai={0},nama_pegawai='{1}'".format(val_a, val_b))
+            function_instert(db_dimension, query_insert)
+
+        for x in select_penerbit:
+            val_a, val_b = x
+            query_insert = (
+                "INSERT INTO dim_penerbit SET id_penerbit = {0}, nama_perusahaan = '{1}'".format(val_a, val_b))
+            function_instert(db_dimension, query_insert)
+
+        for x in select_penulis:
+            val_a, val_b = x
+            query_insert = ("INSERT INTO dim_penulis SET id_penulis = {0}, nama_penulis='{1}'".format(val_a, val_b))
+            function_instert(db_dimension, query_insert)
+
+        for x in select_perpus:
+            val_a, val_b, val_c = x
+            query_insert = (
+                "INSERT INTO dim_perpus SET id_perpus = {0}, "
+                "nama_perpus = '{1}', "
+                "alamat_perpus = '{2}'".format(val_a,val_b,val_c))
+            function_instert(db_dimension, query_insert)
+
+        for x in select_trans:
+            val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i, val_j = x
+            query_insert = "INSERT INTO fakta_trans SET id_detail_trans = {0}, id_trans = {1}, id_pegawai = '{2}', " \
+                           "id_member = '{3}', tanggal_pinjam = '{4}', tanggal_kembali = '{5}', id_perpus = '{6}', " \
+                           "id_buku = '{7}', id_penerbit = '{8}', id_penulis = '{9}'".format(
+                val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i, val_j)
+            function_instert(db_dimension, query_insert)
+        print("Sukses")
+
+    def show_transaksi(self):
+        cursor = db_dimension.cursor()
+        query = "SELECT COUNT(id_trans) AS trans FROM fakta_trans GROUP BY EXTRACT(MONTH FROM tanggal_kembali)"
+        cursor.execute(query)
+        row = cursor.fetchall()
+        for x in range (0,len(row)):
+            self.m_grid2.SetCellValue(x,4,str(row[x][0]))
+        pass
+
+class OpenGui(wx.App):
+
+    def OnInit(self):
+        myframe = GuiShow()
+        myframe.Show(True)
+        return True
+
+
+def main():
+
+    app = OpenGui()
+    app.MainLoop()
+
+if __name__ == "__main__":
+    main()
+    # disconnect from server
+    db_perpus.close()
+    db_dimension.close()
