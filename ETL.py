@@ -32,24 +32,29 @@ def function_instert(db_dimensi,query):
     cursor.execute(query)
     db_dimensi.commit()
 
-
 # for check different data in both database
-def function_condition(val_rel, val_dim, countRel, countDim, tbl_name):
-    print("Data in table %s"%tbl_name)
-    result = countRel - countDim
-    print("Jumlah data baru = %d" % result)
-    if(val_dim != None):
-        if(countRel > countDim):
-            # val_newRel = val_rel
+def fun_all(id_rel, tb_rel, id_dim, tb_dim, table_name):
+    print("Data in table %s" % table_name)
+    # Relational db
+    getId_rel = fun_lastId(id_rel,tb_rel,db_perpus)
+    countRel  = fun_count(id_rel,tb_rel,db_perpus)
 
-            print("Tambah data mulai dari = %d"%val_dim)
+    #Dimensional db
+    getId_dim = fun_lastId(id_dim, tb_dim, db_dimension)
+    countDim = fun_count(id_dim, tb_dim, db_dimension)
+
+    result = countRel - countDim
+    if (getId_dim != None):
+        print("Jumlah data baru = %d" % result)
+        if (countRel > countDim):
+            getId_dim +=1
+            print("Tambah data mulai dari = %d" % getId_dim)
             print("")
-            return val_dim+1
+            return getId_dim
         else:
-            val_newDim = val_rel+1
-            print("Nilai sama")
+            print("Value data sama")
             print("")
-            return val_newDim
+            return getId_rel+1
     else:
         val_newDim = 1
         print("Tambah data sebanyak : {0}".format(result))
@@ -57,67 +62,14 @@ def function_condition(val_rel, val_dim, countRel, countDim, tbl_name):
         return val_newDim
 
 
-
 # ----------------- SQL Query Get Value Max----------------- #
-# Buku
-
-rel_idBuku     = fun_lastId("id_buku","tb_buku",db_perpus)
-countRel_buku  = fun_count("id_buku","tb_buku",db_perpus)
-
-dim_idBuku     = fun_lastId("id_buku","dim_buku",db_dimension)
-countDim_buku  = fun_count("id_buku","dim_buku",db_dimension)
-
-# Member
-rel_idMember     = fun_lastId("id_member","tb_member",db_perpus)
-countRel_Member  = fun_count("id_member","tb_member",db_perpus)
-
-dim_idMember     = fun_lastId("id_member","dim_member",db_dimension)
-countDim_Member  = fun_count("id_member","dim_member",db_dimension)
-
-# Pegawai
-rel_idPegawai     = fun_lastId("id_pegawai","tb_pegawai",db_perpus)
-countRel_Pegawai  = fun_count("id_pegawai","tb_pegawai",db_perpus)
-
-dim_idPegawai     = fun_lastId("id_pegawai","dim_pegawai",db_dimension)
-countDim_Pegawai  = fun_count("id_pegawai","dim_pegawai",db_dimension)
-
-# penerbit
-rel_idPenerbit     = fun_lastId("id_penerbit","tb_penerbit",db_perpus)
-countRel_Penerbit  = fun_count("id_penerbit","tb_penerbit",db_perpus)
-
-dim_idPenerbit    = fun_lastId("id_penerbit","dim_penerbit",db_dimension)
-countDim_Penerbit = fun_count("id_penerbit","dim_penerbit",db_dimension)
-
-#penulis
-rel_idPenulis     = fun_lastId("id_penulis","tb_penulis",db_perpus)
-countRel_Penulis  = fun_count("id_penulis","tb_penulis",db_perpus)
-
-dim_idPenulis    = fun_lastId("id_penulis","dim_penulis",db_dimension)
-countDim_Penulis = fun_count("id_penulis","dim_penulis",db_dimension)
-
-#perpus
-rel_idPerpus     = fun_lastId("id_perpus","tb_perpus",db_perpus)
-countRel_Perpus  = fun_count("id_perpus","tb_perpus",db_perpus)
-
-dim_idPerpus    = fun_lastId("id_perpus","dim_perpus",db_dimension)
-countDim_Perpus = fun_count("id_perpus","dim_perpus",db_dimension)
-
-#trans
-rel_idDetail    = fun_lastId("id_detail","tb_detail_trans",db_perpus)
-countRel_Trans  = fun_count("id_detail","tb_detail_trans",db_perpus)
-
-dim_idTrans    = fun_lastId("id_fakta_trans","fakta_trans",db_dimension)
-countDim_Trans = fun_count("id_fakta_trans","fakta_trans",db_dimension)
-
-
-# ----------------- Check Condition -----------------#
-val_buku     = function_condition(rel_idBuku, dim_idBuku, countRel_buku,countDim_buku, 'Buku')
-val_member   = function_condition(rel_idMember, dim_idMember, countRel_Member,countDim_Member, "Member")
-val_pegawai  = function_condition(rel_idPegawai, dim_idPegawai, countRel_Pegawai,countDim_Pegawai, "Pegawai")
-val_penerbit = function_condition(rel_idPenerbit,dim_idPenerbit,countRel_Penerbit, countDim_Penerbit,"Penerbit")
-val_penulis  = function_condition(rel_idPenulis,dim_idPenulis,countRel_Penulis,countDim_Penulis,"Penulis")
-val_perpus   = function_condition(rel_idPerpus,dim_idPerpus,countRel_Perpus,countDim_Perpus,"Perpus")
-val_trans    = function_condition(rel_idDetail,dim_idTrans,countRel_Trans,countDim_Trans,"Transaksi")
+val_buku       = fun_all("id_buku","tb_buku","id_buku","dim_buku","Buku")
+val_member     = fun_all("id_member","tb_member","id_member","dim_member","Member")
+val_pegawai    = fun_all("id_pegawai","tb_pegawai","id_pegawai","dim_pegawai","Pegawai")
+val_penerbit   = fun_all("id_penerbit","tb_penerbit","id_penerbit","dim_penerbit","Penerbit")
+val_penulis    = fun_all("id_penulis","tb_penulis","id_penulis","dim_penulis","Penulis")
+val_perpus     = fun_all("id_perpus","tb_perpus","id_perpus","dim_perpus","Perpus")
+val_trans      = fun_all("id_detail","tb_detail_trans","id_fakta_trans","fakta_trans","Transaksi")
 
 # ----------------- SQL Query SELECT----------------- #
 sql_buku        = "SELECT id_buku,title_buku, ISBN FROM tb_buku WHERE id_buku >= {0}".format(val_buku)
@@ -146,6 +98,7 @@ select_perpus   = function_select(db_perpus, sql_perpus)
 select_trans    = function_select(db_perpus, sql_trans)
 
 # ----------------- INSERT data to Data Warehouse -----------------#
+print("Loading...")
 for x in select_buku:
     val_a,val_b,val_c  = x
     query_insert = ("INSERT INTO dim_buku SET id_buku = {0}, nama_buku = '{1}', ISBN = '{2}'".format(val_a, val_b, val_c))
@@ -176,7 +129,6 @@ for x in select_perpus:
     query_insert = ("INSERT INTO dim_perpus SET id_perpus = {0}, nama_perpus = '{1}', alamat_perpus = '{2}'".format(val_a, val_b, val_c))
     function_instert(db_dimension, query_insert)
 
-print("Loading...")
 for x in select_trans:
     val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i = x
     query_insert = "INSERT INTO fakta_trans SET id_trans = {0}, id_pegawai = '{1}', id_member = '{2}', tanggal_pinjam = '{3}', tanggal_kembali = '{4}', id_perpus = '{5}', id_buku = '{6}', id_penerbit = '{7}', id_penulis = '{8}'".format(val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i)
