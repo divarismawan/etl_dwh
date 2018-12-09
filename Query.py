@@ -134,7 +134,7 @@ def show_fact(self):
         self.m_dataView_fact.AppendItem(y)
 
 def show_member(self):
-    member = self.m_choice_member.GetStringSelection()
+    member = self.m_text_member.GetValue()
     sql = "SELECT dim_buku.`nama_buku`, dim_perpus.`nama_perpus`, " \
           "DAY(tanggal_pinjam) AS tanggal, MONTH(tanggal_pinjam) AS bulan, YEAR(tanggal_pinjam) AS tahun " \
           "FROM fakta_trans " \
