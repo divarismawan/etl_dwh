@@ -96,26 +96,6 @@ def show_by_year(self):
         print(y)
         self.m_dataViewList_tahun.AppendItem(y)
 
-def show_fact(self):
-    sql = "SELECT dim_member.`nama_member`, dim_buku.`nama_buku`, dim_penulis.`nama_penulis`, " \
-          "dim_penerbit.`nama_perusahaan`,  dim_perpus.`nama_perpus`, dim_pegawai.`nama_pegawai`, " \
-          "tanggal_pinjam, tanggal_kembali FROM fakta_trans  JOIN dim_buku ON dim_buku.`id_buku` = fakta_trans.`id_buku` " \
-          "JOIN dim_member ON dim_member.`id_member` = fakta_trans.`id_member` " \
-          "JOIN dim_perpus ON dim_perpus.`id_perpus` = fakta_trans.`id_perpus` " \
-          "JOIN dim_penerbit ON dim_penerbit.`id_penerbit` = fakta_trans.`id_penerbit` " \
-          "JOIN dim_penulis ON dim_penulis.`id_penulis` = fakta_trans.`id_penulis` " \
-          "JOIN dim_pegawai ON dim_pegawai.`id_pegawai` = fakta_trans.`id_pegawai` ORDER BY tanggal_pinjam DESC"
-    cursor.execute(sql)
-    rows = cursor.fetchall()
-    for x, item in enumerate(rows, start=1):
-        y = list(item)
-        y.insert(0,x)
-        y[7] = str(y[7])
-        y[8] = str(y[8])
-        print(y)
-        self.m_dataView_fact.AppendItem(y)
-
-
 def show_data_perpus(self):
     library = self.m_choice_library.GetStringSelection()
     library = select_library(library)
@@ -134,3 +114,40 @@ def show_data_perpus(self):
         print(y)
         self.m_dataViewList_perpus.AppendItem(y)
 
+def show_fact(self):
+    sql = "SELECT dim_member.`nama_member`, dim_buku.`nama_buku`, dim_penulis.`nama_penulis`, " \
+          "dim_penerbit.`nama_perusahaan`,  dim_perpus.`nama_perpus`, dim_pegawai.`nama_pegawai`, " \
+          "tanggal_pinjam, tanggal_kembali FROM fakta_trans  JOIN dim_buku ON dim_buku.`id_buku` = fakta_trans.`id_buku` " \
+          "JOIN dim_member ON dim_member.`id_member` = fakta_trans.`id_member` " \
+          "JOIN dim_perpus ON dim_perpus.`id_perpus` = fakta_trans.`id_perpus` " \
+          "JOIN dim_penerbit ON dim_penerbit.`id_penerbit` = fakta_trans.`id_penerbit` " \
+          "JOIN dim_penulis ON dim_penulis.`id_penulis` = fakta_trans.`id_penulis` " \
+          "JOIN dim_pegawai ON dim_pegawai.`id_pegawai` = fakta_trans.`id_pegawai` ORDER BY tanggal_pinjam ASC"
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    for x, item in enumerate(rows, start=1):
+        y = list(item)
+        y.insert(0,x)
+        y[7] = str(y[7])
+        y[8] = str(y[8])
+        print(y)
+        self.m_dataView_fact.AppendItem(y)
+
+def show_member(self):
+    member = self.m_choice_member.GetStringSelection()
+    sql = "SELECT dim_buku.`nama_buku`, dim_perpus.`nama_perpus`, " \
+          "DAY(tanggal_pinjam) AS tanggal, MONTH(tanggal_pinjam) AS bulan, YEAR(tanggal_pinjam) AS tahun " \
+          "FROM fakta_trans " \
+          "JOIN dim_buku ON dim_buku.`id_buku` = fakta_trans.`id_buku` " \
+          "JOIN dim_member ON dim_member.`id_member` = fakta_trans.`id_member` " \
+          "JOIN dim_perpus ON dim_perpus.`id_perpus` = fakta_trans.`id_perpus` " \
+          "WHERE dim_member.`nama_member` = '{0}' " \
+          "ORDER BY tanggal_pinjam".format(member)
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    for x, item in enumerate(rows, start=1):
+        y = list(item)
+        y.insert(0, x)
+        y[4] = str(select_month_int(y[4]))
+        print(y)
+        self.m_dataViewList_member.AppendItem(y)

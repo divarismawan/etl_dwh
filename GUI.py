@@ -238,6 +238,47 @@ class GUI_DWH(wx.Frame):
         self.m_panel_perpus.Layout()
         bSizer17.Fit(self.m_panel_perpus)
         self.panel_pinjam.AddPage(self.m_panel_perpus, u"Peminjaman Perperpustakaan", False)
+        self.m_panel_member = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                       wx.TAB_TRAVERSAL)
+        bSizer31 = wx.BoxSizer(wx.VERTICAL)
+
+        bSizer32 = wx.BoxSizer(wx.VERTICAL)
+
+        bSizer33 = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.m_staticText8 = wx.StaticText(self.m_panel_member, wx.ID_ANY, u"Nama Member", wx.DefaultPosition,
+                                           wx.Size(100, -1), 0)
+        self.m_staticText8.Wrap(-1)
+        bSizer33.Add(self.m_staticText8, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+
+        m_choice_memberChoices = [u"Kayla", u"Vanessa", u"Lisa", u"Braham", u"Scott", u"Amelia", u"Maria", u"Tesla",
+                                  u"Candra"]
+        self.m_choice_member = wx.Choice(self.m_panel_member, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                         m_choice_memberChoices, 0)
+        self.m_choice_member.SetSelection(0)
+        bSizer33.Add(self.m_choice_member, 0, wx.ALL, 5)
+
+        bSizer32.Add(bSizer33, 0, 0, 5)
+
+        self.m_dataViewList_member = wx.dataview.DataViewListCtrl(self.m_panel_member, wx.ID_ANY, wx.DefaultPosition,
+                                                                  wx.DefaultSize, 0)
+        self.m_dataViewListColumn26 = self.m_dataViewList_member.AppendTextColumn(u"No")
+        self.m_dataViewListColumn27 = self.m_dataViewList_member.AppendTextColumn(u"Buku")
+        self.m_dataViewListColumn28 = self.m_dataViewList_member.AppendTextColumn(u"Perpustakaan")
+        self.m_dataViewListColumn29 = self.m_dataViewList_member.AppendTextColumn(u"Tanggal")
+        self.m_dataViewListColumn30 = self.m_dataViewList_member.AppendTextColumn(u"Bulam")
+        self.m_dataViewListColumn31 = self.m_dataViewList_member.AppendTextColumn(u"Tahun")
+        bSizer32.Add(self.m_dataViewList_member, 1, wx.ALL | wx.EXPAND, 5)
+
+        self.m_button_member = wx.Button(self.m_panel_member, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
+        bSizer32.Add(self.m_button_member, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+
+        bSizer31.Add(bSizer32, 1, wx.EXPAND, 5)
+
+        self.m_panel_member.SetSizer(bSizer31)
+        self.m_panel_member.Layout()
+        bSizer31.Fit(self.m_panel_member)
+        self.panel_pinjam.AddPage(self.m_panel_member, u"Member", False)
         self.m_panel_fact = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer261 = wx.BoxSizer(wx.VERTICAL)
 

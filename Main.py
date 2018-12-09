@@ -13,6 +13,7 @@ class GuiShow(GUI.GUI_DWH):
         self.m_button_tahunan.Bind(wx.EVT_BUTTON,self.show_by_year)
         self.m_button_fact.Bind(wx.EVT_BUTTON,self.show_fact)
         self.m_button_perpus.Bind(wx.EVT_BUTTON,self.show_by_perpus)
+        self.m_button_member.Bind(wx.EVT_BUTTON,self.show_by_member)
 
 
     def show_etl(self,event):
@@ -26,13 +27,19 @@ class GuiShow(GUI.GUI_DWH):
         self.m_dataViewList_tahun.DeleteAllItems()
         Query.show_by_year(self)
 
+    def show_by_perpus(self, event):
+        self.m_dataViewList_perpus.DeleteAllItems()
+        Query.show_data_perpus(self)
+
+    def show_by_member(self,event):
+        self.m_dataViewList_member.DeleteAllItems()
+        Query.show_member(self)
+
     def show_fact(self,event):
         self.m_dataView_fact.DeleteAllItems()
         Query.show_fact(self)
 
-    def show_by_perpus(self, event):
-        self.m_dataViewList_perpus.DeleteAllItems()
-        Query.show_data_perpus(self)
+
 
 
 class OpenGui(wx.App):
