@@ -59,7 +59,6 @@ def fun_all(id_rel, tb_rel, id_dim, tb_dim, table_name):
         print("")
         return val_newDim
 
-
 def show_etl(self):
     # ----------------- SQL Query Get Value Max----------------- #
     val_buku     = fun_all("id_buku", "tb_buku", "id_buku", "dim_buku", "Buku")
@@ -216,6 +215,6 @@ def show_etl(self):
         function_instert(db_dimension, query_insert)
     print("Sukses")
 
-# disconnect from server
-db_perpus.close()
-db_dimension.close()
+    # disconnect from server
+    db_perpus.close()
+    db_dimension.close()
