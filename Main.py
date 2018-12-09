@@ -2,10 +2,7 @@ import wx
 
 import ETL
 import GUI
-import Show_data
-import Connection
-
-db_dimension = Connection.connect('db_dimensional_perpus')
+import Query
 
 class GuiShow(GUI.GUI_DWH):
 
@@ -21,18 +18,16 @@ class GuiShow(GUI.GUI_DWH):
 
     def show_by_month(self,event):
         self.grid_showResult.ClearGrid()
-        Show_data.show_by_month(self)
+        Query.show_by_month(self)
 
     def show_by_year(self, event):
         self.grid_showResult1.ClearGrid()
-        Show_data.show_by_year(self)
+        Query.show_by_year(self)
 
     def show_fact(self,event):
         self.m_grid7.ClearGrid()
-        Show_data.show_fact(self)
+        Query.show_fact(self)
 
-
-       
 
 class OpenGui(wx.App):
 

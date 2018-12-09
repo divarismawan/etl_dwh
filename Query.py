@@ -44,7 +44,9 @@ def show_by_month(self):
             self.grid_showResult.SetCellValue(i, j, str(rows[i][j]))
 
 def show_by_year(self):
-    sql = "SELECT COUNT(DISTINCT id_buku), COUNT(fakta_trans.`id_buku`) FROM fakta_trans GROUP BY MONTH(tanggal_pinjam)"
+    year = self.m_choice4.GetStringSelection()
+    sql = "SELECT COUNT(DISTINCT fakta_trans.`id_buku`), COUNT(fakta_trans.`id_buku`), MONTH(tanggal_pinjam)" \
+          "FROM fakta_trans WHERE YEAR(tanggal_pinjam) = {0} GROUP BY MONTH(tanggal_pinjam)".format(year)
     cursor.execute(sql)
     rows = cursor.fetchall()
     for i in range(0, len(rows)):

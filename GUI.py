@@ -98,7 +98,7 @@ class GUI_DWH(wx.Frame):
         self.m_panelETL.SetSizer(bSizer9)
         self.m_panelETL.Layout()
         bSizer9.Fit(self.m_panelETL)
-        self.panel_pinjam.AddPage(self.m_panelETL, u"ETL", True)
+        self.panel_pinjam.AddPage(self.m_panelETL, u"ETL", False)
         self.m_panel1 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer3 = wx.BoxSizer(wx.VERTICAL)
 
@@ -174,10 +174,15 @@ class GUI_DWH(wx.Frame):
 
         bSizer42 = wx.BoxSizer(wx.VERTICAL)
 
+        m_choice4Choices = [u"2017", u"2018"]
+        self.m_choice4 = wx.Choice(self.m_panel7, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, m_choice4Choices, 0)
+        self.m_choice4.SetSelection(0)
+        bSizer42.Add(self.m_choice4, 0, wx.ALL, 5)
+
         self.grid_showResult1 = wx.grid.Grid(self.m_panel7, grid_showResult, wx.DefaultPosition, wx.DefaultSize, 0)
 
         # Grid
-        self.grid_showResult1.CreateGrid(12, 2)
+        self.grid_showResult1.CreateGrid(12, 3)
         self.grid_showResult1.EnableEditing(True)
         self.grid_showResult1.EnableGridLines(True)
         self.grid_showResult1.EnableDragGridSize(False)
@@ -191,24 +196,13 @@ class GUI_DWH(wx.Frame):
         self.grid_showResult1.SetColLabelSize(30)
         self.grid_showResult1.SetColLabelValue(0, u"Buku")
         self.grid_showResult1.SetColLabelValue(1, u"Jumlah")
+        self.grid_showResult1.SetColLabelValue(2, u"Bulan")
         self.grid_showResult1.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
 
         # Rows
         self.grid_showResult1.AutoSizeRows()
         self.grid_showResult1.EnableDragRowSize(True)
         self.grid_showResult1.SetRowLabelSize(90)
-        self.grid_showResult1.SetRowLabelValue(0, u"Januari")
-        self.grid_showResult1.SetRowLabelValue(1, u"Februari")
-        self.grid_showResult1.SetRowLabelValue(2, u"Maret")
-        self.grid_showResult1.SetRowLabelValue(3, u"April")
-        self.grid_showResult1.SetRowLabelValue(4, u"Mei")
-        self.grid_showResult1.SetRowLabelValue(5, u"Juni")
-        self.grid_showResult1.SetRowLabelValue(6, u"Juli")
-        self.grid_showResult1.SetRowLabelValue(7, u"Agustus")
-        self.grid_showResult1.SetRowLabelValue(8, u"September")
-        self.grid_showResult1.SetRowLabelValue(9, u"Oktober")
-        self.grid_showResult1.SetRowLabelValue(10, u"November")
-        self.grid_showResult1.SetRowLabelValue(11, u"Desember")
         self.grid_showResult1.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
 
         # Label Appearance
@@ -231,7 +225,7 @@ class GUI_DWH(wx.Frame):
         self.m_panel7.SetSizer(bSizer14)
         self.m_panel7.Layout()
         bSizer14.Fit(self.m_panel7)
-        self.panel_pinjam.AddPage(self.m_panel7, u"Per Tahun", False)
+        self.panel_pinjam.AddPage(self.m_panel7, u"Per Tahun", True)
         self.m_panel8 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer24 = wx.BoxSizer(wx.VERTICAL)
 

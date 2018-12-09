@@ -2,8 +2,6 @@ from numpy.distutils.fcompiler import none
 import wx
 
 import Connection
-import GUI
-import Show_data
 
 db_perpus    = Connection.connect('db_perpus')
 db_dimension = Connection.connect('db_dimensional_perpus')
@@ -50,9 +48,6 @@ def fun_all(id_rel, tb_rel, id_dim, tb_dim, table_name):
     if (getId_dim != None):
         print("Jumlah data baru = %d" % result)
         if (countRel > countDim):
-            # getId_dim +=1
-            # print("Tambah data mulai dari = %d" % getId_dim)
-            # print("")
             return getId_dim
         else:
             print("Value data sama")
@@ -63,14 +58,6 @@ def fun_all(id_rel, tb_rel, id_dim, tb_dim, table_name):
         print("Tambah data sebanyak : {0}".format(result))
         print("")
         return val_newDim
-
-# class GuiShow(GUI.GUI_DWH):
-#
-#     def __init__(self):
-#         GUI.GUI_DWH.__init__(self,parent=None)
-#         self.m_buttonSmt.Bind(wx.EVT_BUTTON,self.show_etl)
-#         # self.button_penambahan.Bind(wx.EVT_BUTTON, Show_data.show_transaksi)
-#         self.button_penambahan.Bind(wx.EVT_BUTTON,self.show_transaksi)
 
 
 def show_etl(self):
@@ -229,21 +216,6 @@ def show_etl(self):
         function_instert(db_dimension, query_insert)
     print("Sukses")
 
-# class OpenGui(wx.App):
-#
-#     def OnInit(self):
-#         myframe = GuiShow()
-#         myframe.Show(True)
-#         return True
-#
-#
-# def main():
-#
-#     app = OpenGui()
-#     app.MainLoop()
-#
-# if __name__ == "__main__":
-#     main()
-    # disconnect from server
-    db_perpus.close()
-    db_dimension.close()
+# disconnect from server
+db_perpus.close()
+db_dimension.close()
