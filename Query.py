@@ -29,6 +29,33 @@ def select_month(month):
     elif month == "Desember":
         return 12
 
+def select_month_int(month):
+    if month == 1:
+        return "Januari"
+    elif month == 2:
+        return "Februari"
+    elif month == 3:
+        return "Maret"
+    elif month == 4:
+        return "April"
+    elif month == 5:
+        return "Mei"
+    elif month == 6:
+        return "Juni"
+    elif month == 7:
+        return "Juli"
+    elif month == 8:
+        return "Agustus"
+    elif month == 9:
+        return "September"
+    elif month == 10:
+        return "Oktober"
+    elif month == 11:
+        return "November"
+    elif month == 12:
+        return "Desember"
+
+
 def select_library(library):
     if library == "Tianjin Binhai Library":
         return 1
@@ -55,13 +82,17 @@ def show_by_month(self):
 
 def show_by_year(self):
     year = self.m_choice_tahunan.GetStringSelection()
-    sql = "SELECT COUNT(DISTINCT fakta_trans.`id_buku`), COUNT(fakta_trans.`id_buku`), MONTH(tanggal_pinjam)" \
-          "FROM fakta_trans WHERE YEAR(tanggal_pinjam) = {0} GROUP BY MONTH(tanggal_pinjam)".format(year)
+    sql = "SELECT dim_buku.`nama_buku`, COUNT(fakta_trans.`id_buku`) AS jumlah_terpinjam, " \
+          "MONTH(tanggal_pinjam) AS bulan " \
+          "FROM fakta_trans " \
+          "JOIN dim_buku ON dim_buku.`id_buku` = fakta_trans.`id_buku` " \
+          "WHERE YEAR(tanggal_pinjam) = {0} GROUP BY MONTH(tanggal_pinjam),fakta_trans.`id_buku`".format(year)
     cursor.execute(sql)
     rows = cursor.fetchall()
     for x, item in enumerate(rows, start=1):
         y = list(item)
         y.insert(0,x)
+        y[3] = str(select_month_int(y[3]))
         print(y)
         self.m_dataViewList_tahun.AppendItem(y)
 
