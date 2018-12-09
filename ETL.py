@@ -214,7 +214,3 @@ def show_etl(self):
             val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i, val_j)
         function_instert(db_dimension, query_insert)
     print("Sukses")
-
-    # disconnect from server
-    db_perpus.close()
-    db_dimension.close()
