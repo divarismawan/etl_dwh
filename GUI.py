@@ -10,10 +10,9 @@
 import wx
 import wx.xrc
 import wx.grid
+import wx.dataview
 
 panel_pinjam = 1000
-sp_month = 1001
-grid_showResult = 1002
 
 
 ###########################################################################
@@ -24,22 +23,22 @@ class GUI_DWH(wx.Frame):
 
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, id=wx.ID_ANY, title=wx.EmptyString, pos=wx.DefaultPosition,
-                          size=wx.Size(999, 538), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
+                          size=wx.Size(828, 538), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.SetSizeHintsSz(wx.DefaultSize, wx.DefaultSize)
 
         bSizer1 = wx.BoxSizer(wx.VERTICAL)
 
         self.panel_pinjam = wx.Notebook(self, panel_pinjam, wx.DefaultPosition, wx.DefaultSize, 0)
-        self.m_panelETL = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        self.m_panel_ETL = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer9 = wx.BoxSizer(wx.VERTICAL)
 
         bSizer10 = wx.BoxSizer(wx.VERTICAL)
 
-        self.m_panel5 = wx.Panel(self.m_panelETL, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        self.m_panel5 = wx.Panel(self.m_panel_ETL, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer10.Add(self.m_panel5, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.EXPAND, 5)
 
-        self.m_grid3 = wx.grid.Grid(self.m_panelETL, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_grid3 = wx.grid.Grid(self.m_panel_ETL, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
 
         # Grid
         self.m_grid3.CreateGrid(3, 7)
@@ -88,207 +87,184 @@ class GUI_DWH(wx.Frame):
 
         bSizer12 = wx.BoxSizer(wx.VERTICAL)
 
-        self.m_buttonSmt = wx.Button(self.m_panelETL, wx.ID_ANY, u"Submit", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_buttonSmt = wx.Button(self.m_panel_ETL, wx.ID_ANY, u"Submit", wx.DefaultPosition, wx.DefaultSize, 0)
         bSizer12.Add(self.m_buttonSmt, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
         bSizer10.Add(bSizer12, 0, wx.ALIGN_RIGHT, 5)
 
         bSizer9.Add(bSizer10, 0, wx.ALIGN_CENTER_HORIZONTAL, 5)
 
-        self.m_panelETL.SetSizer(bSizer9)
-        self.m_panelETL.Layout()
-        bSizer9.Fit(self.m_panelETL)
-        self.panel_pinjam.AddPage(self.m_panelETL, u"ETL", False)
-        self.m_panel1 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        bSizer3 = wx.BoxSizer(wx.VERTICAL)
+        self.m_panel_ETL.SetSizer(bSizer9)
+        self.m_panel_ETL.Layout()
+        bSizer9.Fit(self.m_panel_ETL)
+        self.panel_pinjam.AddPage(self.m_panel_ETL, u"ETL", True)
+        self.m_panel_peminjaman = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                           wx.TAB_TRAVERSAL)
+        bSizer21 = wx.BoxSizer(wx.VERTICAL)
 
-        bSizer13 = wx.BoxSizer(wx.VERTICAL)
+        bSizer22 = wx.BoxSizer(wx.VERTICAL)
 
-        bSizer5 = wx.BoxSizer(wx.HORIZONTAL)
+        bSizer241 = wx.BoxSizer(wx.HORIZONTAL)
 
-        sp_monthChoices = [u"Januari", u"Februari", u"Maret", u"April", u"Mei", u"Juni", u"Juli", u"Agustus",
-                           u"September", u"Oktober", u"November", u"Desember"]
-        self.sp_month = wx.Choice(self.m_panel1, sp_month, wx.DefaultPosition, wx.DefaultSize, sp_monthChoices, 0)
-        self.sp_month.SetSelection(0)
-        bSizer5.Add(self.sp_month, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gSizer1 = wx.GridSizer(0, 2, 0, 0)
 
-        sp_yearChoices = [u"2017", u"2018"]
-        self.sp_year = wx.Choice(self.m_panel1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, sp_yearChoices, 0)
-        self.sp_year.SetSelection(1)
-        bSizer5.Add(self.sp_year, 0, wx.ALL, 5)
+        self.m_staticText3 = wx.StaticText(self.m_panel_peminjaman, wx.ID_ANY, u"Bulan", wx.DefaultPosition,
+                                           wx.DefaultSize, 0)
+        self.m_staticText3.Wrap(-1)
+        gSizer1.Add(self.m_staticText3, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        bSizer13.Add(bSizer5, 0, 0, 5)
+        m_choice_monthChoices = [u"Januari", u"Februari", u"Maret", u"April", u"Mei", u"Juni", u"Juli", u"Agustus",
+                                 u"September", u"Oktober", u"November", u"Desember"]
+        self.m_choice_month = wx.Choice(self.m_panel_peminjaman, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                        m_choice_monthChoices, 0)
+        self.m_choice_month.SetSelection(0)
+        gSizer1.Add(self.m_choice_month, 0, wx.ALL, 5)
 
-        bSizer4 = wx.BoxSizer(wx.VERTICAL)
+        self.m_staticText4 = wx.StaticText(self.m_panel_peminjaman, wx.ID_ANY, u"Tahun", wx.DefaultPosition,
+                                           wx.DefaultSize, 0)
+        self.m_staticText4.Wrap(-1)
+        gSizer1.Add(self.m_staticText4, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.grid_showResult = wx.grid.Grid(self.m_panel1, grid_showResult, wx.DefaultPosition, wx.DefaultSize, 0)
+        m_choice_yearChoices = [u"2017", u"2018"]
+        self.m_choice_year = wx.Choice(self.m_panel_peminjaman, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                       m_choice_yearChoices, 0)
+        self.m_choice_year.SetSelection(1)
+        gSizer1.Add(self.m_choice_year, 0, wx.ALL, 5)
 
-        # Grid
-        self.grid_showResult.CreateGrid(10, 2)
-        self.grid_showResult.EnableEditing(True)
-        self.grid_showResult.EnableGridLines(True)
-        self.grid_showResult.EnableDragGridSize(False)
-        self.grid_showResult.SetMargins(0, 0)
+        bSizer241.Add(gSizer1, 1, wx.EXPAND, 5)
 
-        # Columns
-        self.grid_showResult.SetColSize(0, 300)
-        self.grid_showResult.SetColSize(1, 100)
-        self.grid_showResult.EnableDragColMove(True)
-        self.grid_showResult.EnableDragColSize(True)
-        self.grid_showResult.SetColLabelSize(30)
-        self.grid_showResult.SetColLabelValue(0, u"Buku")
-        self.grid_showResult.SetColLabelValue(1, u"Jumlah")
-        self.grid_showResult.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
+        bSizer22.Add(bSizer241, 0, 0, 5)
 
-        # Rows
-        self.grid_showResult.AutoSizeRows()
-        self.grid_showResult.EnableDragRowSize(True)
-        self.grid_showResult.SetRowLabelSize(90)
-        self.grid_showResult.SetRowLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
+        self.m_dataViewList_peminjaman = wx.dataview.DataViewListCtrl(self.m_panel_peminjaman, wx.ID_ANY,
+                                                                      wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_dataViewListColumn6 = self.m_dataViewList_peminjaman.AppendTextColumn(u"No")
+        self.m_dataViewListColumn7 = self.m_dataViewList_peminjaman.AppendTextColumn(u"Buku")
+        self.m_dataViewListColumn8 = self.m_dataViewList_peminjaman.AppendTextColumn(u"Jumlah")
+        bSizer22.Add(self.m_dataViewList_peminjaman, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.EXPAND, 5)
 
-        # Label Appearance
+        self.m_button_peminjaman = wx.Button(self.m_panel_peminjaman, wx.ID_ANY, u"Show", wx.DefaultPosition,
+                                             wx.DefaultSize, 0)
+        bSizer22.Add(self.m_button_peminjaman, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
-        # Cell Defaults
-        self.grid_showResult.SetDefaultCellAlignment(wx.ALIGN_LEFT, wx.ALIGN_TOP)
-        bSizer4.Add(self.grid_showResult, 1, wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        bSizer21.Add(bSizer22, 1, wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
-        bSizer61 = wx.BoxSizer(wx.HORIZONTAL)
+        self.m_panel_peminjaman.SetSizer(bSizer21)
+        self.m_panel_peminjaman.Layout()
+        bSizer21.Fit(self.m_panel_peminjaman)
+        self.panel_pinjam.AddPage(self.m_panel_peminjaman, u"Peminjaman Perbulan", False)
+        self.m_panel_tahun = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                      wx.TAB_TRAVERSAL)
+        bSizer28 = wx.BoxSizer(wx.VERTICAL)
 
-        self.button_pinjam = wx.Button(self.m_panel1, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
-        bSizer61.Add(self.button_pinjam, 0, wx.ALL, 5)
+        bSizer29 = wx.BoxSizer(wx.VERTICAL)
 
-        bSizer4.Add(bSizer61, 0, wx.ALIGN_RIGHT, 5)
+        bSizer30 = wx.BoxSizer(wx.HORIZONTAL)
 
-        bSizer13.Add(bSizer4, 0, wx.ALIGN_CENTER_HORIZONTAL, 5)
+        self.m_staticText5 = wx.StaticText(self.m_panel_tahun, wx.ID_ANY, u"Tahun", wx.DefaultPosition, wx.Size(80, -1),
+                                           0)
+        self.m_staticText5.Wrap(-1)
+        bSizer30.Add(self.m_staticText5, 0, wx.ALL, 5)
 
-        bSizer3.Add(bSizer13, 1, wx.ALIGN_CENTER_HORIZONTAL, 5)
+        m_choice_tahunanChoices = [u"2017", u"2018"]
+        self.m_choice_tahunan = wx.Choice(self.m_panel_tahun, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                          m_choice_tahunanChoices, 0)
+        self.m_choice_tahunan.SetSelection(0)
+        bSizer30.Add(self.m_choice_tahunan, 0, wx.ALL, 5)
 
-        self.m_panel1.SetSizer(bSizer3)
-        self.m_panel1.Layout()
-        bSizer3.Fit(self.m_panel1)
-        self.panel_pinjam.AddPage(self.m_panel1, u"Peminjaman ", False)
-        self.m_panel7 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        bSizer14 = wx.BoxSizer(wx.VERTICAL)
+        bSizer29.Add(bSizer30, 0, wx.EXPAND, 5)
 
-        bSizer15 = wx.BoxSizer(wx.VERTICAL)
+        self.m_dataViewList_tahun = wx.dataview.DataViewListCtrl(self.m_panel_tahun, wx.ID_ANY, wx.DefaultPosition,
+                                                                 wx.DefaultSize, 0)
+        self.m_dataViewListColumn22 = self.m_dataViewList_tahun.AppendTextColumn(u"No")
+        self.m_dataViewListColumn23 = self.m_dataViewList_tahun.AppendTextColumn(u"Buku")
+        self.m_dataViewListColumn24 = self.m_dataViewList_tahun.AppendTextColumn(u"Jumlah")
+        self.m_dataViewListColumn25 = self.m_dataViewList_tahun.AppendTextColumn(u"Bulan")
+        bSizer29.Add(self.m_dataViewList_tahun, 1, wx.ALL | wx.EXPAND, 5)
 
-        bSizer42 = wx.BoxSizer(wx.VERTICAL)
+        self.m_button_tahunan = wx.Button(self.m_panel_tahun, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
+        bSizer29.Add(self.m_button_tahunan, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
-        m_choice4Choices = [u"2017", u"2018"]
-        self.m_choice4 = wx.Choice(self.m_panel7, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, m_choice4Choices, 0)
-        self.m_choice4.SetSelection(0)
-        bSizer42.Add(self.m_choice4, 0, wx.ALL, 5)
+        bSizer28.Add(bSizer29, 1, wx.EXPAND, 5)
 
-        self.grid_showResult1 = wx.grid.Grid(self.m_panel7, grid_showResult, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_panel_tahun.SetSizer(bSizer28)
+        self.m_panel_tahun.Layout()
+        bSizer28.Fit(self.m_panel_tahun)
+        self.panel_pinjam.AddPage(self.m_panel_tahun, u"Peminjaman Pertahun", False)
+        self.m_panel_perpus = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                       wx.TAB_TRAVERSAL)
+        bSizer17 = wx.BoxSizer(wx.VERTICAL)
 
-        # Grid
-        self.grid_showResult1.CreateGrid(12, 3)
-        self.grid_showResult1.EnableEditing(True)
-        self.grid_showResult1.EnableGridLines(True)
-        self.grid_showResult1.EnableDragGridSize(False)
-        self.grid_showResult1.SetMargins(0, 0)
+        bSizer18 = wx.BoxSizer(wx.HORIZONTAL)
 
-        # Columns
-        self.grid_showResult1.SetColSize(0, 150)
-        self.grid_showResult1.SetColSize(1, 100)
-        self.grid_showResult1.EnableDragColMove(True)
-        self.grid_showResult1.EnableDragColSize(True)
-        self.grid_showResult1.SetColLabelSize(30)
-        self.grid_showResult1.SetColLabelValue(0, u"Buku")
-        self.grid_showResult1.SetColLabelValue(1, u"Jumlah")
-        self.grid_showResult1.SetColLabelValue(2, u"Bulan")
-        self.grid_showResult1.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
+        self.m_staticText7 = wx.StaticText(self.m_panel_perpus, wx.ID_ANY, u"Nama Perpustakaan", wx.DefaultPosition,
+                                           wx.DefaultSize, 0)
+        self.m_staticText7.Wrap(-1)
+        bSizer18.Add(self.m_staticText7, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        # Rows
-        self.grid_showResult1.AutoSizeRows()
-        self.grid_showResult1.EnableDragRowSize(True)
-        self.grid_showResult1.SetRowLabelSize(90)
-        self.grid_showResult1.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
+        m_choice_libraryChoices = [u"Tianjin Binhai Library", u"Seattle Public Library", u"Library of Birmingham"]
+        self.m_choice_library = wx.Choice(self.m_panel_perpus, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                          m_choice_libraryChoices, 0)
+        self.m_choice_library.SetSelection(0)
+        bSizer18.Add(self.m_choice_library, 0, wx.ALL, 5)
 
-        # Label Appearance
+        self.m_staticText1 = wx.StaticText(self.m_panel_perpus, wx.ID_ANY, u"Tahun", wx.DefaultPosition,
+                                           wx.Size(50, -1), 0)
+        self.m_staticText1.Wrap(-1)
+        bSizer18.Add(self.m_staticText1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        # Cell Defaults
-        self.grid_showResult1.SetDefaultCellAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
-        bSizer42.Add(self.grid_showResult1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        m_choice_tahunChoices = [u"2017", u"2018"]
+        self.m_choice_tahun = wx.Choice(self.m_panel_perpus, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                        m_choice_tahunChoices, 0)
+        self.m_choice_tahun.SetSelection(0)
+        bSizer18.Add(self.m_choice_tahun, 0, wx.ALL, 5)
 
-        bSizer611 = wx.BoxSizer(wx.HORIZONTAL)
+        bSizer17.Add(bSizer18, 0, wx.EXPAND, 5)
 
-        self.button_pinjam1 = wx.Button(self.m_panel7, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
-        bSizer611.Add(self.button_pinjam1, 0, wx.ALL, 5)
+        bSizer19 = wx.BoxSizer(wx.VERTICAL)
 
-        bSizer42.Add(bSizer611, 0, wx.ALIGN_RIGHT, 5)
+        self.m_dataViewList_perpus = wx.dataview.DataViewListCtrl(self.m_panel_perpus, wx.ID_ANY, wx.DefaultPosition,
+                                                                  wx.DefaultSize, 0)
+        self.m_dataViewListColumn1 = self.m_dataViewList_perpus.AppendTextColumn(u"No")
+        self.m_dataViewListColumn2 = self.m_dataViewList_perpus.AppendTextColumn(u"Buku")
+        self.m_dataViewListColumn3 = self.m_dataViewList_perpus.AppendTextColumn(u"Jumlah Peminjaman")
+        bSizer19.Add(self.m_dataViewList_perpus, 1, wx.ALIGN_CENTER_HORIZONTAL | wx.ALL | wx.EXPAND, 5)
 
-        bSizer15.Add(bSizer42, 1, wx.EXPAND, 5)
+        bSizer17.Add(bSizer19, 1, wx.EXPAND, 5)
 
-        bSizer14.Add(bSizer15, 0, wx.ALIGN_CENTER_HORIZONTAL, 5)
+        self.m_button_perpus = wx.Button(self.m_panel_perpus, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
+        bSizer17.Add(self.m_button_perpus, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, 5)
 
-        self.m_panel7.SetSizer(bSizer14)
-        self.m_panel7.Layout()
-        bSizer14.Fit(self.m_panel7)
-        self.panel_pinjam.AddPage(self.m_panel7, u"Per Tahun", True)
-        self.m_panel8 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        bSizer24 = wx.BoxSizer(wx.VERTICAL)
+        self.m_panel_perpus.SetSizer(bSizer17)
+        self.m_panel_perpus.Layout()
+        bSizer17.Fit(self.m_panel_perpus)
+        self.panel_pinjam.AddPage(self.m_panel_perpus, u"Peminjaman Perperpustakaan", False)
+        self.m_panel_fact = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        bSizer261 = wx.BoxSizer(wx.VERTICAL)
 
-        bSizer25 = wx.BoxSizer(wx.VERTICAL)
+        bSizer27 = wx.BoxSizer(wx.VERTICAL)
 
-        self.m_panel9 = wx.Panel(self.m_panel8, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        bSizer25.Add(self.m_panel9, 1, wx.EXPAND | wx.ALL, 5)
+        self.m_dataView_fact = wx.dataview.DataViewListCtrl(self.m_panel_fact, wx.ID_ANY, wx.DefaultPosition,
+                                                            wx.DefaultSize, 0)
+        self.m_dataViewListColumn12 = self.m_dataView_fact.AppendTextColumn(u"No")
+        self.m_dataViewListColumn13 = self.m_dataView_fact.AppendTextColumn(u"Member")
+        self.m_dataViewListColumn14 = self.m_dataView_fact.AppendTextColumn(u"Buku")
+        self.m_dataViewListColumn15 = self.m_dataView_fact.AppendTextColumn(u"Penulis")
+        self.m_dataViewListColumn16 = self.m_dataView_fact.AppendTextColumn(u"Penerbit")
+        self.m_dataViewListColumn17 = self.m_dataView_fact.AppendTextColumn(u"Perpustakann")
+        self.m_dataViewListColumn18 = self.m_dataView_fact.AppendTextColumn(u"Pegawai")
+        self.m_dataViewListColumn19 = self.m_dataView_fact.AppendTextColumn(u"Tanggal Pinjam")
+        self.m_dataViewListColumn20 = self.m_dataView_fact.AppendTextColumn(u"Tanggal Kembali")
+        bSizer27.Add(self.m_dataView_fact, 1, wx.ALL | wx.EXPAND, 5)
 
-        self.m_grid7 = wx.grid.Grid(self.m_panel8, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_button_fact = wx.Button(self.m_panel_fact, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
+        bSizer27.Add(self.m_button_fact, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
-        # Grid
-        self.m_grid7.CreateGrid(20, 8)
-        self.m_grid7.EnableEditing(True)
-        self.m_grid7.EnableGridLines(True)
-        self.m_grid7.EnableDragGridSize(False)
-        self.m_grid7.SetMargins(0, 0)
+        bSizer261.Add(bSizer27, 1, wx.EXPAND, 5)
 
-        # Columns
-        self.m_grid7.SetColSize(0, 100)
-        self.m_grid7.SetColSize(1, 100)
-        self.m_grid7.SetColSize(2, 100)
-        self.m_grid7.SetColSize(3, 100)
-        self.m_grid7.SetColSize(4, 100)
-        self.m_grid7.SetColSize(5, 100)
-        self.m_grid7.SetColSize(6, 100)
-        self.m_grid7.SetColSize(7, 100)
-        self.m_grid7.EnableDragColMove(False)
-        self.m_grid7.EnableDragColSize(True)
-        self.m_grid7.SetColLabelSize(30)
-        self.m_grid7.SetColLabelValue(0, u"Member")
-        self.m_grid7.SetColLabelValue(1, u"Buku")
-        self.m_grid7.SetColLabelValue(2, u"Penulis")
-        self.m_grid7.SetColLabelValue(3, u"Penerbit")
-        self.m_grid7.SetColLabelValue(4, u"Perpus")
-        self.m_grid7.SetColLabelValue(5, u"Pegawai")
-        self.m_grid7.SetColLabelValue(6, u"Tgl_pinjam")
-        self.m_grid7.SetColLabelValue(7, u"Tgl Kembali")
-        self.m_grid7.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
-
-        # Rows
-        self.m_grid7.EnableDragRowSize(True)
-        self.m_grid7.SetRowLabelSize(80)
-        self.m_grid7.SetRowLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
-
-        # Label Appearance
-
-        # Cell Defaults
-        self.m_grid7.SetDefaultCellAlignment(wx.ALIGN_LEFT, wx.ALIGN_TOP)
-        bSizer25.Add(self.m_grid7, 0, wx.ALL, 5)
-
-        bSizer26 = wx.BoxSizer(wx.HORIZONTAL)
-
-        self.button_fact = wx.Button(self.m_panel8, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
-        bSizer26.Add(self.button_fact, 0, wx.ALL, 5)
-
-        bSizer25.Add(bSizer26, 1, wx.ALIGN_RIGHT, 5)
-
-        bSizer24.Add(bSizer25, 0, wx.ALIGN_CENTER_HORIZONTAL, 5)
-
-        self.m_panel8.SetSizer(bSizer24)
-        self.m_panel8.Layout()
-        bSizer24.Fit(self.m_panel8)
-        self.panel_pinjam.AddPage(self.m_panel8, u"Fact Data", False)
+        self.m_panel_fact.SetSizer(bSizer261)
+        self.m_panel_fact.Layout()
+        bSizer261.Fit(self.m_panel_fact)
+        self.panel_pinjam.AddPage(self.m_panel_fact, u"Fact Data", False)
 
         bSizer1.Add(self.panel_pinjam, 1, wx.EXPAND | wx.ALL, 5)
 
