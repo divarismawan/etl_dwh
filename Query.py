@@ -55,7 +55,6 @@ def select_month_int(month):
     elif month == 12:
         return "Desember"
 
-
 def select_library(library):
     if library == "Tianjin Binhai Library":
         return 1
@@ -122,7 +121,7 @@ def show_fact(self):
           "JOIN dim_perpus ON dim_perpus.`id_perpus` = fakta_trans.`id_perpus` " \
           "JOIN dim_penerbit ON dim_penerbit.`id_penerbit` = fakta_trans.`id_penerbit` " \
           "JOIN dim_penulis ON dim_penulis.`id_penulis` = fakta_trans.`id_penulis` " \
-          "JOIN dim_pegawai ON dim_pegawai.`id_pegawai` = fakta_trans.`id_pegawai` ORDER BY tanggal_pinjam ASC"
+          "JOIN dim_pegawai ON dim_pegawai.`id_pegawai` = fakta_trans.`id_pegawai` ORDER BY tanggal_pinjam DESC"
     cursor.execute(sql)
     rows = cursor.fetchall()
     for x, item in enumerate(rows, start=1):

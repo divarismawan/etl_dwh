@@ -33,7 +33,7 @@ CREATE TABLE `tb_buku` (
   KEY `id_penulis` (`id_penulis`),
   CONSTRAINT `tb_buku_ibfk_2` FOREIGN KEY (`id_penerbit`) REFERENCES `tb_penerbit` (`id_penerbit`),
   CONSTRAINT `tb_buku_ibfk_3` FOREIGN KEY (`id_penulis`) REFERENCES `tb_penulis` (`id_penulis`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_buku` */
 
@@ -52,33 +52,80 @@ insert  into `tb_buku`(`id_buku`,`id_penulis`,`id_penerbit`,`title_buku`,`tgl_re
 (12,3,1,'The Last Wish','2016-11-09','J0N K1D','2018-05-23'),
 (13,2,2,'The Lord of the Flie','2017-01-27','KIA O1G','2018-07-26'),
 (14,4,1,'Marmut Merah Jambu','2017-06-15','7G5 WEG','2018-09-13'),
-(15,5,1,'No Rain No Rainbow','2017-10-17','G24 WE1','2018-11-21');
+(15,5,1,'No Rain No Rainbow','2017-10-17','G24 WE1','2018-11-21'),
+(16,2,1,'Laskar Pelangi','2015-07-16','SFF 1K1','2018-12-10'),
+(17,4,1,'Larasati','2018-07-18','DLA GA1','2018-12-10');
+
+/*Table structure for table `tb_detail_buku` */
+
+DROP TABLE IF EXISTS `tb_detail_buku`;
+
+CREATE TABLE `tb_detail_buku` (
+  `id_detail_buku` int(11) NOT NULL AUTO_INCREMENT,
+  `id_buku` int(11) DEFAULT NULL,
+  `id_rak_buku` int(11) DEFAULT NULL,
+  `barcode_buku` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id_detail_buku`),
+  KEY `id_buku` (`id_buku`),
+  KEY `id_rak_buku` (`id_rak_buku`),
+  CONSTRAINT `tb_detail_buku_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `tb_buku` (`id_buku`),
+  CONSTRAINT `tb_detail_buku_ibfk_2` FOREIGN KEY (`id_rak_buku`) REFERENCES `tb_rak_buku` (`id_rak`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_detail_buku` */
+
+insert  into `tb_detail_buku`(`id_detail_buku`,`id_buku`,`id_rak_buku`,`barcode_buku`) values 
+(1,1,1,'BB-R11-1001'),
+(2,1,1,'BB-R11-1002'),
+(3,2,1,'TH-R12-2001'),
+(4,2,1,'TH-R12-2002'),
+(5,3,2,'TM-R12-3001'),
+(6,3,2,'TM-R12-3002'),
+(7,4,2,'CR-R12-4001'),
+(8,4,2,'CR-R12-4002'),
+(9,4,2,'CR-R12-4003'),
+(10,1,3,'BB-R21-1001'),
+(11,1,3,'BB-R21-1002'),
+(12,5,3,'TB-R21-5001'),
+(13,5,3,'TB-R21-5002'),
+(14,5,3,'TB-R21-5003'),
+(15,6,4,'SF-R22-6001'),
+(16,6,4,'SF-R22-6002'),
+(17,6,4,'SF-R22-6003'),
+(18,3,4,'TM-R22-3001'),
+(19,3,4,'TM-R22-3002'),
+(20,5,5,'TB-R31-5001'),
+(21,5,5,'TB-R31-5002'),
+(22,5,5,'TB-R31-5003'),
+(23,7,6,'DN-R32-7001'),
+(24,7,6,'DN-R32-7002'),
+(25,7,6,'DN-R32-7003');
 
 /*Table structure for table `tb_detail_trans` */
 
 DROP TABLE IF EXISTS `tb_detail_trans`;
 
 CREATE TABLE `tb_detail_trans` (
-  `id_detail` int(3) NOT NULL AUTO_INCREMENT,
-  `id_trans` int(3) DEFAULT NULL,
-  `id_buku` int(3) DEFAULT NULL,
+  `id_detail` int(11) NOT NULL AUTO_INCREMENT,
+  `id_trans` int(11) DEFAULT NULL,
+  `id_detail_buku` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_detail`),
   KEY `id_trans` (`id_trans`),
-  KEY `id_buku` (`id_buku`),
-  CONSTRAINT `tb_detail_trans_ibfk_2` FOREIGN KEY (`id_buku`) REFERENCES `tb_buku` (`id_buku`),
+  KEY `id_buku` (`id_detail_buku`),
+  CONSTRAINT `tb_detail_trans_ibfk_2` FOREIGN KEY (`id_detail_buku`) REFERENCES `tb_detail_buku` (`id_detail_buku`),
   CONSTRAINT `tb_detail_trans_ibfk_3` FOREIGN KEY (`id_trans`) REFERENCES `tb_transaksi` (`id_trans`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_detail_trans` */
 
-insert  into `tb_detail_trans`(`id_detail`,`id_trans`,`id_buku`) values 
+insert  into `tb_detail_trans`(`id_detail`,`id_trans`,`id_detail_buku`) values 
 (1,1,11),
 (2,2,9),
 (3,2,3),
 (4,3,5),
 (5,4,10),
 (6,5,10),
-(7,6,5),
+(7,6,4),
 (8,7,13),
 (9,7,1),
 (10,7,6),
@@ -101,7 +148,18 @@ insert  into `tb_detail_trans`(`id_detail`,`id_trans`,`id_buku`) values
 (27,18,14),
 (28,19,1),
 (29,19,3),
-(30,20,11);
+(30,20,11),
+(31,21,14),
+(32,21,16),
+(33,21,12),
+(34,21,20),
+(35,22,23),
+(36,22,17),
+(37,23,25),
+(38,24,18),
+(39,25,23),
+(40,25,14),
+(41,25,13);
 
 /*Table structure for table `tb_member` */
 
@@ -114,7 +172,7 @@ CREATE TABLE `tb_member` (
   `email` varchar(20) DEFAULT NULL,
   `tgl_lahir` date DEFAULT NULL,
   PRIMARY KEY (`id_member`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_member` */
 
@@ -122,10 +180,13 @@ insert  into `tb_member`(`id_member`,`nama`,`tlpn`,`email`,`tgl_lahir`) values
 (1,'Kayla','084354831587','kayla@gmail.com','2009-06-09'),
 (2,'Vanessa','084638414254','vanessa@gmail.com','1998-06-16'),
 (3,'Lisa','087523354325','lisa@gmail.com','2004-10-01'),
-(4,'Katok','087356222695','katok@gmail.com','2010-06-26'),
+(4,'Braham','087356222695','katok@gmail.com','2010-06-26'),
 (5,'Scott','088455452141','scott@gmail.co','2004-06-08'),
 (6,'Amelia','085366623225','amelia@gmaiil.com','1993-07-01'),
-(7,'Maria','085536365415','maria@gmail.com','2011-03-03');
+(7,'Maria','085536365415','maria@gmail.com','2011-03-03'),
+(8,'Tesla','087644653131','tesla@gmail.com','2011-07-01'),
+(9,'Candra','087354258224','can@gmil.com','2009-07-15'),
+(10,'Krisna','081241251515','krisna@gmail.com','2007-07-01');
 
 /*Table structure for table `tb_pegawai` */
 
@@ -133,27 +194,24 @@ DROP TABLE IF EXISTS `tb_pegawai`;
 
 CREATE TABLE `tb_pegawai` (
   `id_pegawai` int(3) NOT NULL AUTO_INCREMENT,
-  `id_perpus` int(11) DEFAULT NULL,
   `nama_pegawai` varchar(30) DEFAULT NULL,
   `alamat` varchar(30) DEFAULT NULL,
   `email` varchar(20) DEFAULT NULL,
   `tlpn` char(12) DEFAULT NULL,
   `tgl_lahir` date DEFAULT NULL,
-  PRIMARY KEY (`id_pegawai`),
-  KEY `id_perpus` (`id_perpus`),
-  CONSTRAINT `tb_pegawai_ibfk_1` FOREIGN KEY (`id_perpus`) REFERENCES `tb_perpus` (`id_perpus`)
+  PRIMARY KEY (`id_pegawai`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_pegawai` */
 
-insert  into `tb_pegawai`(`id_pegawai`,`id_perpus`,`nama_pegawai`,`alamat`,`email`,`tlpn`,`tgl_lahir`) values 
-(1,2,'Madelyn','Kalimantan','Madelyn@gmail.com','084658217564','1992-07-16'),
-(2,1,'Poppy','Papua','Poppy2@gmail.com','085167254943','1988-07-01'),
-(3,1,'Johnson','Sumatra','Johnson@mail.com','084354683513','1993-12-31'),
-(4,3,'Windi','Bali','windi@mail.com','086733587313','1998-05-06'),
-(5,1,'Tole','Jawa','tole@gmail.com','084661334813','1994-07-01'),
-(6,2,'ROBERT','Sulawesi','robert@gmail.com','087643436469','1990-11-30'),
-(7,3,'Risma','Bali','risma@gmail.com','084654317353','1998-02-20');
+insert  into `tb_pegawai`(`id_pegawai`,`nama_pegawai`,`alamat`,`email`,`tlpn`,`tgl_lahir`) values 
+(1,'Madelyn','Kalimantan','Madelyn@gmail.com','084658217564','1992-07-16'),
+(2,'Poppy','Papua','Poppy2@gmail.com','085167254943','1988-07-01'),
+(3,'Johnson','Sumatra','Johnson@mail.com','084354683513','1993-12-31'),
+(4,'Windi','Bali','windi@mail.com','086733587313','1998-05-06'),
+(5,'Tole','Jawa','tole@gmail.com','084661334813','1994-07-01'),
+(6,'ROBERT','Sulawesi','robert@gmail.com','087643436469','1990-11-30'),
+(7,'Risma','Bali','risma@gmail.com','084654317353','1998-02-20');
 
 /*Table structure for table `tb_penerbit` */
 
@@ -216,6 +274,29 @@ insert  into `tb_perpus`(`id_perpus`,`nama_perpus`,`alamat_perpus`,`tgl_berdiri`
 (2,'Seattle Public Library','Washington','2004-05-23'),
 (3,'Library of Birmingham','Inggris','2006-11-01');
 
+/*Table structure for table `tb_rak_buku` */
+
+DROP TABLE IF EXISTS `tb_rak_buku`;
+
+CREATE TABLE `tb_rak_buku` (
+  `id_rak` int(11) NOT NULL AUTO_INCREMENT,
+  `id_perpus` int(11) DEFAULT NULL,
+  `nama_rak` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id_rak`),
+  KEY `id_perpus` (`id_perpus`),
+  CONSTRAINT `tb_rak_buku_ibfk_1` FOREIGN KEY (`id_perpus`) REFERENCES `tb_perpus` (`id_perpus`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tb_rak_buku` */
+
+insert  into `tb_rak_buku`(`id_rak`,`id_perpus`,`nama_rak`) values 
+(1,1,'Tianjin Rak Novel'),
+(2,1,'Tianjin Rak Ilmiah'),
+(3,2,'Seattle Rak Novel'),
+(4,2,'Seattle Rak Ilmiah'),
+(5,3,'Birmingham Rak Novel'),
+(6,3,'Birmingham Rak Ilmiah');
+
 /*Table structure for table `tb_transaksi` */
 
 DROP TABLE IF EXISTS `tb_transaksi`;
@@ -231,31 +312,36 @@ CREATE TABLE `tb_transaksi` (
   KEY `id_pegawai` (`id_pegawai`),
   CONSTRAINT `tb_transaksi_ibfk_1` FOREIGN KEY (`id_member`) REFERENCES `tb_member` (`id_member`),
   CONSTRAINT `tb_transaksi_ibfk_2` FOREIGN KEY (`id_pegawai`) REFERENCES `tb_pegawai` (`id_pegawai`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_transaksi` */
 
 insert  into `tb_transaksi`(`id_trans`,`id_member`,`id_pegawai`,`tgl_pinjam`,`tgl_kembali`) values 
 (1,3,5,'2017-07-11','2017-07-14'),
-(2,4,7,'2017-08-08','2017-08-13'),
-(3,6,6,'2017-08-11','2017-08-16'),
+(2,4,2,'2017-08-08','2017-08-13'),
+(3,5,5,'2017-08-11','2017-08-16'),
 (4,5,2,'2017-09-07','2017-09-12'),
-(5,4,6,'2017-10-11','2017-10-12'),
+(5,4,1,'2017-10-11','2017-10-12'),
 (6,5,5,'2017-10-12','2017-10-14'),
 (7,4,2,'2017-10-19','2017-10-21'),
-(8,6,3,'2017-11-23','2017-11-25'),
-(9,4,7,'2017-12-14','2017-12-16'),
-(10,3,6,'2018-01-08','2018-01-11'),
+(8,2,3,'2017-11-23','2017-11-25'),
+(9,4,1,'2017-12-14','2017-12-16'),
+(10,3,1,'2018-01-08','2018-01-11'),
 (11,1,2,'2018-02-07','2018-02-10'),
 (12,3,2,'2018-02-15','2018-02-20'),
 (13,1,3,'2018-03-08','2018-03-15'),
-(14,4,6,'2018-04-05','2018-04-12'),
+(14,4,2,'2018-04-05','2018-04-12'),
 (15,1,5,'2018-05-06','2018-05-10'),
-(16,2,7,'2018-06-12','2018-06-19'),
+(16,2,3,'2018-06-12','2018-06-19'),
 (17,4,5,'2018-07-15','2018-07-19'),
 (18,1,4,'2018-08-16','2018-08-28'),
 (19,4,3,'2018-09-04','2018-09-13'),
-(20,6,2,'2018-10-20','2018-10-26');
+(20,5,2,'2018-10-20','2018-10-26'),
+(21,2,3,'2018-10-23','2018-10-27'),
+(22,1,5,'2018-10-23','2018-10-27'),
+(23,3,1,'2018-10-26','2018-10-29'),
+(24,4,1,'2018-10-27','2018-10-30'),
+(25,5,3,'2018-11-02','2018-11-04');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -61,31 +61,46 @@ def fun_all(id_rel, tb_rel, id_dim, tb_dim, table_name):
 
 def show_etl(self):
     # ----------------- SQL Query Get Value Max----------------- #
-    val_buku     = fun_all("id_buku", "tb_buku", "id_buku", "dim_buku", "Buku")
+    val_buku     = fun_all("id_detail_buku", "tb_detail_buku", "id_detail_buku", "dim_buku", "Buku")
     val_member   = fun_all("id_member", "tb_member", "id_member", "dim_member", "Member")
     val_pegawai  = fun_all("id_pegawai", "tb_pegawai", "id_pegawai", "dim_pegawai", "Pegawai")
     val_penerbit = fun_all("id_penerbit", "tb_penerbit", "id_penerbit", "dim_penerbit", "Penerbit")
     val_penulis  = fun_all("id_penulis", "tb_penulis", "id_penulis", "dim_penulis", "Penulis")
+    val_rak      = fun_all("id_rak", "tb_rak_buku", "id_rak","dim_rak","Rak Buku")
     val_perpus   = fun_all("id_perpus", "tb_perpus", "id_perpus", "dim_perpus", "Perpus")
     val_trans    = fun_all("id_detail", "tb_detail_trans", "id_detail_trans", "fakta_trans", "Transaksi")
 
     # ----------------- SQL Query SELECT----------------- #
-    sql_buku     = "SELECT id_buku,title_buku, ISBN FROM tb_buku WHERE id_buku > {0}".format(val_buku)
+    sql_buku     = "SELECT tb_detail_buku.`id_detail_buku`, tb_detail_buku.`id_buku`, tb_buku.`title_buku`, " \
+                   "tb_detail_buku.`barcode_buku`, tb_buku.`tgl_release`" \
+                   "FROM tb_detail_buku " \
+                   "JOIN tb_buku ON tb_buku.`id_buku` = tb_detail_buku.`id_buku` " \
+                   "WHERE tb_detail_buku.`id_detail_buku` > {0} " \
+                   "ORDER BY tb_detail_buku.`id_detail_buku`".format(val_buku)
     sql_member   = "SELECT id_member,nama FROM tb_member WHERE id_member >{0}".format(val_member)
     sql_pegawai  = "SELECT id_pegawai,nama_pegawai FROM tb_pegawai WHERE id_pegawai >{0}".format(val_pegawai)
-    sql_penerbit = "SELECT id_penerbit, nama_perusahaan FROM tb_penerbit WHERE id_penerbit >{0}".format(
-        val_penerbit)
+    sql_penerbit = "SELECT id_penerbit, nama_perusahaan FROM tb_penerbit WHERE id_penerbit >{0}".format(val_penerbit)
     sql_penulis  = "SELECT id_penulis,nama_penulis FROM tb_penulis WHERE id_penulis >{0}".format(val_penulis)
-    sql_perpus   = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus WHERE id_perpus >{0}".format(
-        val_perpus)
-    sql_trans = "SELECT tb_detail_trans.`id_detail`, tb_detail_trans.`id_trans`, tb_transaksi.`id_pegawai`, id_member, " \
-                "tb_transaksi.`tgl_pinjam`, tb_transaksi.`tgl_kembali`, tb_pegawai.`id_perpus`, " \
-                "tb_detail_trans.`id_buku`, tb_buku.`id_penerbit`, tb_buku.`id_penulis` " \
-                "FROM tb_transaksi JOIN tb_detail_trans JOIN tb_pegawai " \
-                "JOIN tb_buku WHERE tb_detail_trans.`id_trans` = tb_transaksi.`id_trans` " \
-                "AND tb_transaksi.`id_pegawai` = tb_pegawai.`id_pegawai` " \
-                "AND tb_buku.`id_buku` = tb_detail_trans.`id_buku` " \
-                "AND tb_detail_trans.`id_detail` > {0} ORDER BY tb_detail_trans.`id_detail`".format(val_trans)
+    sql_perpus   = "SELECT id_perpus,nama_perpus, alamat_perpus FROM tb_perpus WHERE id_perpus >{0}".format(val_perpus)
+    sql_rak      = "SELECT id_rak, nama_rak FROM tb_rak_buku WHERE id_rak >{0}".format(val_rak)
+    sql_trans    = "SELECT tb_detail_trans.`id_detail`,tb_detail_trans.`id_trans`,tb_detail_buku.`id_detail_buku`," \
+                   "tb_detail_buku.`id_rak_buku`,tb_rak_buku.`id_perpus`,tb_buku.`id_penerbit`,tb_buku.`id_penulis`," \
+                   "tb_transaksi.`id_member`,tb_transaksi.`id_pegawai`,tb_transaksi.`tgl_pinjam`,tb_transaksi.`tgl_kembali`" \
+                   "FROM tb_detail_trans " \
+                   "JOIN tb_transaksi ON tb_detail_trans.`id_trans` = tb_transaksi.`id_trans` " \
+                   "JOIN tb_detail_buku ON tb_detail_buku.`id_detail_buku` = tb_detail_trans.`id_detail_buku`" \
+                   "JOIN tb_rak_buku ON tb_rak_buku.`id_rak` = tb_detail_buku.`id_rak_buku`" \
+                   "JOIN tb_buku ON tb_detail_buku.`id_buku` = tb_buku.`id_buku`" \
+                   "AND tb_detail_trans.`id_detail` > {0} ORDER BY tb_detail_trans.`id_detail` ".format(val_trans)
+
+    # sql_trans = "SELECT tb_detail_trans.`id_detail`, tb_detail_trans.`id_trans`, tb_transaksi.`id_pegawai`, id_member, " \
+    #             "tb_transaksi.`tgl_pinjam`, tb_transaksi.`tgl_kembali`, tb_pegawai.`id_perpus`, " \
+    #             "tb_detail_trans.`id_buku`, tb_buku.`id_penerbit`, tb_buku.`id_penulis` " \
+    #             "FROM tb_transaksi JOIN tb_detail_trans JOIN tb_pegawai " \
+    #             "JOIN tb_buku WHERE tb_detail_trans.`id_trans` = tb_transaksi.`id_trans` " \
+    #             "AND tb_transaksi.`id_pegawai` = tb_pegawai.`id_pegawai` " \
+    #             "AND tb_buku.`id_buku` = tb_detail_trans.`id_buku` " \
+    #             "AND tb_detail_trans.`id_detail` > {0} ORDER BY tb_detail_trans.`id_detail`".format(val_trans)
 
     # ----------------- Count -----------------#
     # Buku
@@ -161,20 +176,21 @@ def show_etl(self):
 
 
     # ----------------- Use function SELECT -----------------#
-    select_buku = function_select(db_perpus, sql_buku)
-    select_member = function_select(db_perpus, sql_member)
-    select_pegawai = function_select(db_perpus, sql_pegawai)
+    select_buku     = function_select(db_perpus, sql_buku)
+    select_member   = function_select(db_perpus, sql_member)
+    select_pegawai  = function_select(db_perpus, sql_pegawai)
     select_penerbit = function_select(db_perpus, sql_penerbit)
-    select_penulis = function_select(db_perpus, sql_penulis)
-    select_perpus = function_select(db_perpus, sql_perpus)
-    select_trans = function_select(db_perpus, sql_trans)
+    select_penulis  = function_select(db_perpus, sql_penulis)
+    select_rak      = function_select(db_perpus, sql_rak)
+    select_perpus   = function_select(db_perpus, sql_perpus)
+    select_trans    = function_select(db_perpus, sql_trans)
 
     # ----------------- INSERT data to Data Warehouse -----------------#
     print("Loading...")
     for x in select_buku:
-        val_a, val_b, val_c = x
-        query_insert = (
-            "INSERT INTO dim_buku SET id_buku = {0}, nama_buku = '{1}', ISBN = '{2}'".format(val_a, val_b, val_c))
+        val_a, val_b, val_c, val_d, val_e = x
+        query_insert = ("INSERT INTO dim_buku SET id_detail_buku = {0}, id_buku = {1}, title_buku = '{2}', "
+                        "barcode_buku = '{3}', tanggal_release = '{4}'".format(val_a, val_b, val_c, val_d,val_e))
         function_instert(db_dimension, query_insert)
 
     for x in select_member:
@@ -198,6 +214,11 @@ def show_etl(self):
         query_insert = ("INSERT INTO dim_penulis SET id_penulis = {0}, nama_penulis='{1}'".format(val_a, val_b))
         function_instert(db_dimension, query_insert)
 
+    for x in select_rak:
+        val_a, val_b = x
+        query_insert = ("INSERT INTO dim_rak SET id_rak ={0}, nama_rak = '{1}'".format(val_a,val_b))
+        function_instert(db_dimension,query_insert)
+
     for x in select_perpus:
         val_a, val_b, val_c = x
         query_insert = (
@@ -207,14 +228,15 @@ def show_etl(self):
         function_instert(db_dimension, query_insert)
 
     for x in select_trans:
-        val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i, val_j = x
-        query_insert = "INSERT INTO fakta_trans SET id_detail_trans = {0}, id_trans = {1}, id_pegawai = '{2}', " \
-                       "id_member = '{3}', tanggal_pinjam = '{4}', tanggal_kembali = '{5}', id_perpus = '{6}', " \
-                       "id_buku = '{7}', id_penerbit = '{8}', id_penulis = '{9}'".format(
-            val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i, val_j)
+        val_a, val_b, val_c, val_d, val_e, val_f, val_g, val_h, val_i, val_j, val_k = x
+        query_insert = "INSERT INTO fakta_trans SET id_detail_trans = {0}, id_trans = {1}, id_detail_buku = {2}, id_rak = {3}," \
+                       "id_perpus = {4}, id_penerbit = {5}, id_penulis = {6}, id_member ={7}, id_pegawai = {8}," \
+                       "tanggal_pinjam = '{9}', tanggal_kembali = '{10}'".format(val_a,val_b,val_c,val_d,val_e,val_f,val_g,val_h,val_i,val_j,val_k)
         function_instert(db_dimension, query_insert)
     print("Sukses")
-    #
+
     # # disconnect from server
+    db_perpus.rollback()
+    db_dimension.rollback()
     # db_perpus.close()
     # db_dimension.close()
