@@ -124,6 +124,10 @@ class GUI_DWH(wx.Frame):
         self.m_button_member = wx.Button(self.m_panel_member, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
         bSizer33.Add(self.m_button_member, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
+        self.m_button_save_member = wx.Button(self.m_panel_member, wx.ID_ANY, u"Save ", wx.DefaultPosition,
+                                              wx.DefaultSize, 0)
+        bSizer33.Add(self.m_button_save_member, 0, wx.ALL, 5)
+
         bSizer32.Add(bSizer33, 0, 0, 5)
 
         self.m_dataViewList_member = wx.dataview.DataViewListCtrl(self.m_panel_member, wx.ID_ANY, wx.DefaultPosition,
@@ -142,14 +146,14 @@ class GUI_DWH(wx.Frame):
         self.m_panel_member.SetSizer(bSizer31)
         self.m_panel_member.Layout()
         bSizer31.Fit(self.m_panel_member)
-        self.m_notebook4.AddPage(self.m_panel_member, u"Member", False)
+        self.m_notebook4.AddPage(self.m_panel_member, u"Member", True)
         self.m_panel_peminjaman1 = wx.Panel(self.m_notebook4, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
                                             wx.TAB_TRAVERSAL)
         bSizer21 = wx.BoxSizer(wx.VERTICAL)
 
         bSizer22 = wx.BoxSizer(wx.VERTICAL)
 
-        bSizer241 = wx.BoxSizer(wx.VERTICAL)
+        bSizer241 = wx.BoxSizer(wx.HORIZONTAL)
 
         gSizer1 = wx.GridSizer(0, 2, 0, 0)
 
@@ -178,9 +182,17 @@ class GUI_DWH(wx.Frame):
 
         bSizer241.Add(gSizer1, 1, wx.EXPAND, 5)
 
+        bSizer271 = wx.BoxSizer(wx.VERTICAL)
+
         self.m_button_peminjaman = wx.Button(self.m_panel_peminjaman1, wx.ID_ANY, u"Show", wx.DefaultPosition,
                                              wx.DefaultSize, 0)
-        bSizer241.Add(self.m_button_peminjaman, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+        bSizer271.Add(self.m_button_peminjaman, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+
+        self.m_button_save_month = wx.Button(self.m_panel_peminjaman1, wx.ID_ANY, u"Save", wx.DefaultPosition,
+                                             wx.DefaultSize, 0)
+        bSizer271.Add(self.m_button_save_month, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+
+        bSizer241.Add(bSizer271, 1, wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, 5)
 
         bSizer22.Add(bSizer241, 0, 0, 5)
 
@@ -218,10 +230,14 @@ class GUI_DWH(wx.Frame):
         self.m_choice_tahunan.SetSelection(0)
         bSizer191.Add(self.m_choice_tahunan, 0, wx.ALL, 5)
 
-        bSizer30.Add(bSizer191, 0, 0, 5)
-
         self.m_button_tahunan = wx.Button(self.m_panel_tahun, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
-        bSizer30.Add(self.m_button_tahunan, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+        bSizer191.Add(self.m_button_tahunan, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+
+        self.m_button_save_year = wx.Button(self.m_panel_tahun, wx.ID_ANY, u"Save", wx.DefaultPosition, wx.DefaultSize,
+                                            0)
+        bSizer191.Add(self.m_button_save_year, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+
+        bSizer30.Add(bSizer191, 0, 0, 5)
 
         bSizer29.Add(bSizer30, 0, 0, 5)
 
@@ -238,14 +254,14 @@ class GUI_DWH(wx.Frame):
         self.m_panel_tahun.SetSizer(bSizer28)
         self.m_panel_tahun.Layout()
         bSizer28.Fit(self.m_panel_tahun)
-        self.m_notebook4.AddPage(self.m_panel_tahun, u"Tahunan", True)
+        self.m_notebook4.AddPage(self.m_panel_tahun, u"Tahunan", False)
 
         bSizer23.Add(self.m_notebook4, 1, wx.EXPAND | wx.ALL, 5)
 
         self.m_panel_peminjaman.SetSizer(bSizer23)
         self.m_panel_peminjaman.Layout()
         bSizer23.Fit(self.m_panel_peminjaman)
-        self.panel_pinjam.AddPage(self.m_panel_peminjaman, u"Periode Peminjaman", False)
+        self.panel_pinjam.AddPage(self.m_panel_peminjaman, u"Periode Peminjaman", True)
         self.m_panel11 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer25 = wx.BoxSizer(wx.VERTICAL)
 
@@ -271,6 +287,9 @@ class GUI_DWH(wx.Frame):
 
         self.m_button_bookTitle = wx.Button(self.m_panel12, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
         bSizer281.Add(self.m_button_bookTitle, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+
+        self.m_button_save_book = wx.Button(self.m_panel12, wx.ID_ANY, u"Save", wx.DefaultPosition, wx.DefaultSize, 0)
+        bSizer281.Add(self.m_button_save_book, 0, wx.ALL, 5)
 
         bSizer26.Add(bSizer281, 0, 0, 5)
 
@@ -305,6 +324,10 @@ class GUI_DWH(wx.Frame):
         self.m_button_allBook = wx.Button(self.m_panel13, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
         bSizer301.Add(self.m_button_allBook, 0, wx.ALL, 5)
 
+        self.m_button_save_allBook = wx.Button(self.m_panel13, wx.ID_ANY, u"Save", wx.DefaultPosition, wx.DefaultSize,
+                                               0)
+        bSizer301.Add(self.m_button_save_allBook, 0, wx.ALL, 5)
+
         bSizer291.Add(bSizer301, 0, 0, 5)
 
         self.m_dataView_allBook = wx.dataview.DataViewListCtrl(self.m_panel13, wx.ID_ANY, wx.DefaultPosition,
@@ -319,7 +342,7 @@ class GUI_DWH(wx.Frame):
         self.m_panel13.SetSizer(bSizer291)
         self.m_panel13.Layout()
         bSizer291.Fit(self.m_panel13)
-        self.m_notebook5.AddPage(self.m_panel13, u"All Book", True)
+        self.m_notebook5.AddPage(self.m_panel13, u"All Book", False)
         self.m_panel_perpus = wx.Panel(self.m_notebook5, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
                                        wx.TAB_TRAVERSAL)
         bSizer17 = wx.BoxSizer(wx.VERTICAL)
@@ -350,10 +373,14 @@ class GUI_DWH(wx.Frame):
         self.m_choice_tahun.SetSelection(0)
         bSizer18.Add(self.m_choice_tahun, 0, wx.ALL, 5)
 
-        bSizer20.Add(bSizer18, 0, wx.EXPAND, 5)
-
         self.m_button_perpus = wx.Button(self.m_panel_perpus, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
-        bSizer20.Add(self.m_button_perpus, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, 5)
+        bSizer18.Add(self.m_button_perpus, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, 5)
+
+        self.m_button_save_perpus = wx.Button(self.m_panel_perpus, wx.ID_ANY, u"Save", wx.DefaultPosition,
+                                              wx.DefaultSize, 0)
+        bSizer18.Add(self.m_button_save_perpus, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+
+        bSizer20.Add(bSizer18, 0, wx.EXPAND, 5)
 
         bSizer17.Add(bSizer20, 0, 0, 5)
 
@@ -371,14 +398,14 @@ class GUI_DWH(wx.Frame):
         self.m_panel_perpus.SetSizer(bSizer17)
         self.m_panel_perpus.Layout()
         bSizer17.Fit(self.m_panel_perpus)
-        self.m_notebook5.AddPage(self.m_panel_perpus, u"Perpustakaan", False)
+        self.m_notebook5.AddPage(self.m_panel_perpus, u"Perpustakaan", True)
 
         bSizer25.Add(self.m_notebook5, 1, wx.EXPAND | wx.ALL, 5)
 
         self.m_panel11.SetSizer(bSizer25)
         self.m_panel11.Layout()
         bSizer25.Fit(self.m_panel11)
-        self.panel_pinjam.AddPage(self.m_panel11, u"Book", True)
+        self.panel_pinjam.AddPage(self.m_panel11, u"Book", False)
         self.m_panel_fact = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer261 = wx.BoxSizer(wx.VERTICAL)
 
@@ -397,8 +424,16 @@ class GUI_DWH(wx.Frame):
         self.m_dataViewListColumn20 = self.m_dataView_fact.AppendTextColumn(u"Tanggal Kembali")
         bSizer27.Add(self.m_dataView_fact, 1, wx.ALL | wx.EXPAND, 5)
 
+        bSizer282 = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.m_button_save_fact = wx.Button(self.m_panel_fact, wx.ID_ANY, u"Save", wx.DefaultPosition, wx.DefaultSize,
+                                            0)
+        bSizer282.Add(self.m_button_save_fact, 0, wx.ALL, 5)
+
         self.m_button_fact = wx.Button(self.m_panel_fact, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
-        bSizer27.Add(self.m_button_fact, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+        bSizer282.Add(self.m_button_fact, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+
+        bSizer27.Add(bSizer282, 0, wx.ALIGN_RIGHT, 5)
 
         bSizer261.Add(bSizer27, 1, wx.EXPAND, 5)
 
@@ -416,5 +451,3 @@ class GUI_DWH(wx.Frame):
 
     def __del__(self):
         pass
-
-
