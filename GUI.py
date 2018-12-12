@@ -23,7 +23,7 @@ class GUI_DWH(wx.Frame):
 
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, id=wx.ID_ANY, title=wx.EmptyString, pos=wx.DefaultPosition,
-                          size=wx.Size(828, 426), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
+                          size=wx.Size(843, 426), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.SetSizeHintsSz(wx.DefaultSize, wx.DefaultSize)
 
@@ -41,7 +41,7 @@ class GUI_DWH(wx.Frame):
         self.m_grid3 = wx.grid.Grid(self.m_panel_ETL, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
 
         # Grid
-        self.m_grid3.CreateGrid(3, 7)
+        self.m_grid3.CreateGrid(3, 8)
         self.m_grid3.EnableEditing(True)
         self.m_grid3.EnableGridLines(True)
         self.m_grid3.EnableDragGridSize(False)
@@ -63,9 +63,9 @@ class GUI_DWH(wx.Frame):
         self.m_grid3.SetColLabelValue(2, u"Penerbit")
         self.m_grid3.SetColLabelValue(3, u"Member")
         self.m_grid3.SetColLabelValue(4, u"Pegawai")
-        self.m_grid3.SetColLabelValue(5, u"Perpus")
-        self.m_grid3.SetColLabelValue(6, u"Transaksi")
-        self.m_grid3.SetColLabelValue(7, wx.EmptyString)
+        self.m_grid3.SetColLabelValue(5, u"Rak Buku")
+        self.m_grid3.SetColLabelValue(6, u"Perpus")
+        self.m_grid3.SetColLabelValue(7, u"Transaksi")
         self.m_grid3.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
 
         # Rows
@@ -261,7 +261,7 @@ class GUI_DWH(wx.Frame):
         self.m_panel_peminjaman.SetSizer(bSizer23)
         self.m_panel_peminjaman.Layout()
         bSizer23.Fit(self.m_panel_peminjaman)
-        self.panel_pinjam.AddPage(self.m_panel_peminjaman, u"Periode Peminjaman", True)
+        self.panel_pinjam.AddPage(self.m_panel_peminjaman, u"Periode Peminjaman", False)
         self.m_panel11 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer25 = wx.BoxSizer(wx.VERTICAL)
 
@@ -305,7 +305,7 @@ class GUI_DWH(wx.Frame):
         self.m_panel12.SetSizer(bSizer26)
         self.m_panel12.Layout()
         bSizer26.Fit(self.m_panel12)
-        self.m_notebook5.AddPage(self.m_panel12, u"Book Name", False)
+        self.m_notebook5.AddPage(self.m_panel12, u"Book Name", True)
         self.m_panel13 = wx.Panel(self.m_notebook5, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer291 = wx.BoxSizer(wx.VERTICAL)
 
@@ -391,6 +391,7 @@ class GUI_DWH(wx.Frame):
         self.m_dataViewListColumn1 = self.m_dataViewList_perpus.AppendTextColumn(u"No")
         self.m_dataViewListColumn2 = self.m_dataViewList_perpus.AppendTextColumn(u"Buku")
         self.m_dataViewListColumn3 = self.m_dataViewList_perpus.AppendTextColumn(u"Jumlah Peminjaman")
+        self.m_dataViewListColumn39 = self.m_dataViewList_perpus.AppendTextColumn(u"Bulan")
         bSizer19.Add(self.m_dataViewList_perpus, 1, wx.ALIGN_CENTER_HORIZONTAL | wx.ALL | wx.EXPAND, 5)
 
         bSizer17.Add(bSizer19, 1, wx.EXPAND, 5)
@@ -398,7 +399,7 @@ class GUI_DWH(wx.Frame):
         self.m_panel_perpus.SetSizer(bSizer17)
         self.m_panel_perpus.Layout()
         bSizer17.Fit(self.m_panel_perpus)
-        self.m_notebook5.AddPage(self.m_panel_perpus, u"Perpustakaan", True)
+        self.m_notebook5.AddPage(self.m_panel_perpus, u"Perpustakaan", False)
 
         bSizer25.Add(self.m_notebook5, 1, wx.EXPAND | wx.ALL, 5)
 
@@ -418,6 +419,7 @@ class GUI_DWH(wx.Frame):
         self.m_dataViewListColumn14 = self.m_dataView_fact.AppendTextColumn(u"Buku")
         self.m_dataViewListColumn15 = self.m_dataView_fact.AppendTextColumn(u"Penulis")
         self.m_dataViewListColumn16 = self.m_dataView_fact.AppendTextColumn(u"Penerbit")
+        self.m_dataViewListColumn391 = self.m_dataView_fact.AppendTextColumn(u"Rak  Buku")
         self.m_dataViewListColumn17 = self.m_dataView_fact.AppendTextColumn(u"Perpustakann")
         self.m_dataViewListColumn18 = self.m_dataView_fact.AppendTextColumn(u"Pegawai")
         self.m_dataViewListColumn19 = self.m_dataView_fact.AppendTextColumn(u"Tanggal Pinjam")
@@ -440,7 +442,7 @@ class GUI_DWH(wx.Frame):
         self.m_panel_fact.SetSizer(bSizer261)
         self.m_panel_fact.Layout()
         bSizer261.Fit(self.m_panel_fact)
-        self.panel_pinjam.AddPage(self.m_panel_fact, u"Fact Data", False)
+        self.panel_pinjam.AddPage(self.m_panel_fact, u"Fact Data", True)
 
         bSizer1.Add(self.panel_pinjam, 1, wx.EXPAND | wx.ALL, 5)
 
@@ -451,3 +453,5 @@ class GUI_DWH(wx.Frame):
 
     def __del__(self):
         pass
+
+

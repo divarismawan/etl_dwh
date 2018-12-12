@@ -23,40 +23,46 @@ DROP TABLE IF EXISTS `dim_buku`;
 CREATE TABLE `dim_buku` (
   `id_detail_buku` int(11) NOT NULL,
   `id_buku` int(11) DEFAULT NULL,
+  `id_rak` int(11) DEFAULT NULL,
+  `id_perpus` int(11) DEFAULT NULL,
   `title_buku` varchar(30) DEFAULT NULL,
   `barcode_buku` varchar(30) DEFAULT NULL,
   `tanggal_release` date DEFAULT NULL,
-  PRIMARY KEY (`id_detail_buku`)
+  PRIMARY KEY (`id_detail_buku`),
+  KEY `id_rak` (`id_rak`),
+  KEY `id_perpus` (`id_perpus`),
+  CONSTRAINT `dim_buku_ibfk_1` FOREIGN KEY (`id_rak`) REFERENCES `dim_rak` (`id_rak`),
+  CONSTRAINT `dim_buku_ibfk_2` FOREIGN KEY (`id_perpus`) REFERENCES `dim_perpus` (`id_perpus`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `dim_buku` */
 
-insert  into `dim_buku`(`id_detail_buku`,`id_buku`,`title_buku`,`barcode_buku`,`tanggal_release`) values 
-(1,1,'Bitterblue ','BB-R11-1001','2001-07-09'),
-(2,1,'Bitterblue ','BB-R11-1002','2001-07-09'),
-(3,2,'The Hobbit','TH-R12-2001','2006-07-09'),
-(4,2,'The Hobbit','TH-R12-2002','2006-07-09'),
-(5,3,'The Martian','TM-R12-3001','2010-12-02'),
-(6,3,'The Martian','TM-R12-3002','2010-12-02'),
-(7,4,'Carrie ','CR-R12-4001','2011-11-09'),
-(8,4,'Carrie ','CR-R12-4002','2011-11-09'),
-(9,4,'Carrie ','CR-R12-4003','2011-11-09'),
-(10,1,'Bitterblue ','BB-R21-1001','2001-07-09'),
-(11,1,'Bitterblue ','BB-R21-1002','2001-07-09'),
-(12,5,'The Book Thief ','TB-R21-5001','2015-08-28'),
-(13,5,'The Book Thief ','TB-R21-5002','2015-08-28'),
-(14,5,'The Book Thief ','TB-R21-5003','2015-08-28'),
-(15,6,'The Sound and The Fu','SF-R22-6001','2014-11-01'),
-(16,6,'The Sound and The Fu','SF-R22-6002','2014-11-01'),
-(17,6,'The Sound and The Fu','SF-R22-6003','2014-11-01'),
-(18,3,'The Martian','TM-R22-3001','2010-12-02'),
-(19,3,'The Martian','TM-R22-3002','2010-12-02'),
-(20,5,'The Book Thief ','TB-R31-5001','2015-08-28'),
-(21,5,'The Book Thief ','TB-R31-5002','2015-08-28'),
-(22,5,'The Book Thief ','TB-R31-5003','2015-08-28'),
-(23,7,'Darkness at Noon','DN-R32-7001','2015-03-09'),
-(24,7,'Darkness at Noon','DN-R32-7002','2015-03-09'),
-(25,7,'Darkness at Noon','DN-R32-7003','2015-03-09');
+insert  into `dim_buku`(`id_detail_buku`,`id_buku`,`id_rak`,`id_perpus`,`title_buku`,`barcode_buku`,`tanggal_release`) values 
+(1,1,1,1,'Bitterblue ','BB-R11-1001','2001-07-09'),
+(2,1,1,1,'Bitterblue ','BB-R11-1002','2001-07-09'),
+(3,2,1,1,'The Hobbit','TH-R12-2001','2006-07-09'),
+(4,2,1,1,'The Hobbit','TH-R12-2002','2006-07-09'),
+(5,3,2,1,'The Martian','TM-R12-3001','2010-12-02'),
+(6,3,2,1,'The Martian','TM-R12-3002','2010-12-02'),
+(7,4,2,1,'Carrie ','CR-R12-4001','2011-11-09'),
+(8,4,2,1,'Carrie ','CR-R12-4002','2011-11-09'),
+(9,4,2,1,'Carrie ','CR-R12-4003','2011-11-09'),
+(10,1,3,2,'Bitterblue ','BB-R21-1001','2001-07-09'),
+(11,1,3,2,'Bitterblue ','BB-R21-1002','2001-07-09'),
+(12,5,3,2,'The Book Thief ','TB-R21-5001','2015-08-28'),
+(13,5,3,2,'The Book Thief ','TB-R21-5002','2015-08-28'),
+(14,5,3,2,'The Book Thief ','TB-R21-5003','2015-08-28'),
+(15,6,4,2,'The Sound and The Fu','SF-R22-6001','2014-11-01'),
+(16,6,4,2,'The Sound and The Fu','SF-R22-6002','2014-11-01'),
+(17,6,4,2,'The Sound and The Fu','SF-R22-6003','2014-11-01'),
+(18,3,4,2,'The Martian','TM-R22-3001','2010-12-02'),
+(19,3,4,2,'The Martian','TM-R22-3002','2010-12-02'),
+(20,5,5,3,'The Book Thief ','TB-R31-5001','2015-08-28'),
+(21,5,5,3,'The Book Thief ','TB-R31-5002','2015-08-28'),
+(22,5,5,3,'The Book Thief ','TB-R31-5003','2015-08-28'),
+(23,7,6,3,'Darkness at Noon','DN-R32-7001','2015-03-09'),
+(24,7,6,3,'Darkness at Noon','DN-R32-7002','2015-03-09'),
+(25,7,6,3,'Darkness at Noon','DN-R32-7003','2015-03-09');
 
 /*Table structure for table `dim_member` */
 

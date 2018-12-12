@@ -21,6 +21,7 @@ class GuiShow(GUI.GUI_DWH):
         self.m_button_save_member.Bind((wx.EVT_BUTTON),self.save_member)
         self.m_button_save_month.Bind((wx.EVT_BUTTON),self.save_month)
         self.m_button_save_year.Bind((wx.EVT_BUTTON),self.save_year)
+        self.m_button_save_fact.Bind(wx.EVT_BUTTON,self.save_fact)
 
     # --------Show data-------- #
     def show_etl(self,event):
@@ -60,6 +61,9 @@ class GuiShow(GUI.GUI_DWH):
         Show_data.save_year(self)
         wx.MessageBox('Data pertahun tersimpan', 'Sukses', wx.OK)
 
+    def save_fact(self, event):
+        Show_data.save_fact()
+        wx.MessageBox('Data pertahun tersimpan', 'Sukses', wx.OK)
 class OpenGui(wx.App):
 
     def OnInit(self):

@@ -6,6 +6,7 @@ import SQL
 db_dimension = Connection.connect('db_dimensional_perpus')
 cursor = db_dimension.cursor()
 
+
 # ---------------------- Show GUI ---------------------- #
 def select_month(month):
     if month   == "Januari":
@@ -120,8 +121,8 @@ def show_fact(self):
     for x, item in enumerate(rows, start=1):
         y = list(item)
         y.insert(0,x)
-        y[7] = str(y[7])
         y[8] = str(y[8])
+        y[9] = str(y[9])
         self.m_dataView_fact.AppendItem(y)
 
 # ---------------------- Save GUI ---------------------- #
@@ -147,3 +148,9 @@ def save_year(self):
     cursor.execute(sql)
     rows = cursor.fetchall()
     Excels.excel_year(rows)
+
+def save_fact():
+    sql = SQL.sql_fact()
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    Excels.excel_fact(rows)

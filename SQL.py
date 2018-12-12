@@ -35,12 +35,16 @@ def sql_perpus(year,library):
     return sql
 
 def sql_fact():
-    sql = "SELECT dim_member.`nama_member`, dim_buku.`nama_buku`, dim_penulis.`nama_penulis`, " \
-          "dim_penerbit.`nama_perusahaan`,  dim_perpus.`nama_perpus`, dim_pegawai.`nama_pegawai`, " \
-          "tanggal_pinjam, tanggal_kembali FROM fakta_trans  JOIN dim_buku ON dim_buku.`id_buku` = fakta_trans.`id_buku` " \
+    sql = "SELECT dim_member.`nama_member`, dim_buku.`title_buku`, dim_penulis.`nama_penulis`, " \
+          "dim_penerbit.`nama_perusahaan` AS penerbit, dim_rak.`nama_rak`, dim_perpus.`nama_perpus`, " \
+          "dim_pegawai.`nama_pegawai`, tanggal_pinjam, tanggal_kembali " \
+          "FROM fakta_trans  " \
+          "JOIN dim_buku ON dim_buku.`id_detail_buku` = fakta_trans.`id_detail_buku` " \
           "JOIN dim_member ON dim_member.`id_member` = fakta_trans.`id_member` " \
+          "JOIN dim_rak ON dim_rak.`id_rak` = fakta_trans.`id_rak` " \
           "JOIN dim_perpus ON dim_perpus.`id_perpus` = fakta_trans.`id_perpus` " \
           "JOIN dim_penerbit ON dim_penerbit.`id_penerbit` = fakta_trans.`id_penerbit` " \
           "JOIN dim_penulis ON dim_penulis.`id_penulis` = fakta_trans.`id_penulis` " \
-          "JOIN dim_pegawai ON dim_pegawai.`id_pegawai` = fakta_trans.`id_pegawai` ORDER BY tanggal_pinjam DESC"
+          "JOIN dim_pegawai ON dim_pegawai.`id_pegawai` = fakta_trans.`id_pegawai` " \
+          "ORDER BY tanggal_pinjam DESC"
     return  sql
