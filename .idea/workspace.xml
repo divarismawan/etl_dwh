@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/Main.py" line="69" />
+    <bookmark url="file://$PROJECT_DIR$/Main.py" line="74" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e341d25-1bf8-49fd-808a-2efe3f052745" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ETL.py" beforeDir="false" afterPath="$PROJECT_DIR$/ETL.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Excels.py" beforeDir="false" afterPath="$PROJECT_DIR$/Excels.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Show_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Show_data.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,27 +50,27 @@
     <session id="-1319626843">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="11" />
+          <entry key="project.closed" value="12" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.4" value="7" />
-          <entry key="project.open.time.5" value="5" />
+          <entry key="project.open.time.5" value="6" />
           <entry key="project.open.time.6" value="2" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="18" />
+          <entry key="project.opened" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="14" />
-          <entry key="py" value="12590" />
-          <entry key="txt" value="238" />
+          <entry key="py" value="13198" />
+          <entry key="txt" value="340" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="252" />
-          <entry key="Python" value="12590" />
+          <entry key="PLAIN_TEXT" value="354" />
+          <entry key="Python" value="13198" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -89,14 +87,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="566">
-              <caret line="539" lean-forward="true" selection-start-line="539" selection-end-line="539" />
-              <folding>
-                <element signature="e#316#325#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="413">
+              <caret line="384" column="73" selection-start-line="384" selection-start-column="73" selection-end-line="384" selection-end-column="73" />
             </state>
           </provider>
         </entry>
@@ -121,14 +116,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Excels.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1291">
-              <caret line="180" column="16" selection-start-line="180" selection-start-column="16" selection-end-line="180" selection-end-column="16" />
+            <state relative-caret-position="269">
+              <caret line="103" column="20" selection-start-line="103" selection-start-column="4" selection-end-line="103" selection-end-column="20" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
-                <marker date="1544669969425" expanded="true" signature="37:38" ph="..." />
-                <marker date="1544669969425" expanded="true" signature="910:1435" ph="..." />
-                <marker date="1544669969425" expanded="true" signature="1456:2017" ph="..." />
-                <marker date="1544669969425" expanded="true" signature="2042:2043" ph="..." />
+                <element signature="e#1459#2017#0" />
               </folding>
             </state>
           </provider>
@@ -137,34 +129,36 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="59" column="32" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
+            <state relative-caret-position="205">
+              <caret line="99" selection-start-line="99" selection-end-line="99" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1544687988193" expanded="true" signature="1528:1534" ph="..." />
-                <marker date="1544687988193" expanded="true" signature="1826:2298" ph="..." />
-                <marker date="1544687988193" expanded="true" signature="2076:2172" ph="..." />
-                <marker date="1544687988193" expanded="true" signature="2203:2298" ph="..." />
-                <marker date="1544687988193" expanded="true" signature="2874:2982" ph="..." />
+                <marker date="1544724886718" expanded="true" signature="2043:2515" ph="..." />
+                <marker date="1544724886718" expanded="true" signature="2293:2389" ph="..." />
+                <marker date="1544724886718" expanded="true" signature="2420:2515" ph="..." />
+                <marker date="1544724886718" expanded="true" signature="3091:3666" ph="..." />
+                <marker date="1544724886718" expanded="true" signature="3543:3666" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Show_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="139" column="42" selection-start-line="139" selection-start-column="42" selection-end-line="139" selection-end-column="42" />
+            <state relative-caret-position="380">
+              <caret line="215" column="25" selection-start-line="215" selection-start-column="25" selection-end-line="215" selection-end-column="25" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
                 <element signature="e#225#766#0" />
                 <element signature="e#801#982#0" />
                 <element signature="e#1017#1556#0" />
-                <marker date="1544687878791" expanded="true" signature="3507:3926" ph="..." />
-                <marker date="1544687878791" expanded="true" signature="3951:4274" ph="..." />
-                <marker date="1544687878791" expanded="true" signature="4639:4800" ph="..." />
-                <marker date="1544687878791" expanded="true" signature="5102:5103" ph="..." />
+                <marker date="1544725182570" expanded="true" signature="3507:3931" ph="..." />
+                <marker date="1544725182570" expanded="true" signature="3956:4279" ph="..." />
+                <marker date="1544725182570" expanded="true" signature="4644:4805" ph="..." />
+                <marker date="1544725182570" expanded="true" signature="5107:5108" ph="..." />
+                <marker date="1544725182570" expanded="true" signature="5593:5819" ph="..." />
+                <marker date="1544725182570" expanded="true" signature="6147:6323" ph="..." />
               </folding>
             </state>
           </provider>
@@ -189,9 +183,17 @@
       <find>3id_perpus</find>
       <find>Exce</find>
       <find>tgl_release</find>
+      <find>Summary</find>
+      <find>Buku</find>
+      <find>Nama member</find>
+      <find>Day</find>
     </findStrings>
     <replaceStrings>
       <replace>show_by_month</replace>
+      <replace>Total</replace>
+      <replace>Title Book</replace>
+      <replace>Bookshilf</replace>
+      <replace>Date</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -203,12 +205,12 @@
         <option value="$PROJECT_DIR$/../ETL.py" />
         <option value="$PROJECT_DIR$/Excel.py" />
         <option value="$PROJECT_DIR$/Query.py" />
-        <option value="$PROJECT_DIR$/Excels.py" />
         <option value="$PROJECT_DIR$/ETL.py" />
         <option value="$PROJECT_DIR$/SQL.py" />
-        <option value="$PROJECT_DIR$/Show_data.py" />
-        <option value="$PROJECT_DIR$/Main.py" />
         <option value="$PROJECT_DIR$/GUI.py" />
+        <option value="$PROJECT_DIR$/Main.py" />
+        <option value="$PROJECT_DIR$/Excels.py" />
+        <option value="$PROJECT_DIR$/Show_data.py" />
       </list>
     </option>
   </component>
@@ -284,7 +286,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Excel" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Excels" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="etl_dwh" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -296,28 +298,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Excel.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="GUI" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="etl_dwh" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GUI.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Excels.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -368,20 +349,41 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Show_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="etl_dwh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Show_data.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.ETL" />
-      <item itemvalue="Python.GUI" />
       <item itemvalue="Python.Main" />
       <item itemvalue="Python.Query" />
-      <item itemvalue="Python.Excel" />
+      <item itemvalue="Python.Excels" />
+      <item itemvalue="Python.Show_data" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Main" />
+        <item itemvalue="Python.Show_data" />
+        <item itemvalue="Python.Excels" />
         <item itemvalue="Python.ETL" />
         <item itemvalue="Python.Query" />
-        <item itemvalue="Python.Excel" />
-        <item itemvalue="Python.GUI" />
       </list>
     </recent_temporary>
   </component>
@@ -522,7 +524,14 @@
       <option name="project" value="LOCAL" />
       <updated>1544640005545</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="add select book by month">
+      <created>1544688359817</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1544688359817</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -584,7 +593,8 @@
     <MESSAGE value="ganti query" />
     <MESSAGE value="ssave to excel" />
     <MESSAGE value="rework table" />
-    <option name="LAST_COMMIT_MESSAGE" value="rework table" />
+    <MESSAGE value="add select book by month" />
+    <option name="LAST_COMMIT_MESSAGE" value="add select book by month" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -648,25 +658,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3692">
           <caret line="87" column="122" selection-start-line="87" selection-start-column="122" selection-end-line="87" selection-end-column="122" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="99" selection-start-line="99" selection-end-line="99" />
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
-            <marker date="1544683433620" expanded="true" signature="643:796" ph="..." />
-            <marker date="1544683433620" expanded="true" signature="1778:1779" ph="..." />
+            <element signature="e#0#9#0" expanded="true" />
+            <marker date="1544724886718" expanded="true" signature="2043:2515" ph="..." />
+            <marker date="1544724886718" expanded="true" signature="2293:2389" ph="..." />
+            <marker date="1544724886718" expanded="true" signature="2420:2515" ph="..." />
+            <marker date="1544724886718" expanded="true" signature="3091:3666" ph="..." />
+            <marker date="1544724886718" expanded="true" signature="3543:3666" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Excels.py">
+    <entry file="file://$PROJECT_DIR$/GUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1291">
-          <caret line="180" column="16" selection-start-line="180" selection-start-column="16" selection-end-line="180" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-            <marker date="1544669969425" expanded="true" signature="37:38" ph="..." />
-            <marker date="1544669969425" expanded="true" signature="910:1435" ph="..." />
-            <marker date="1544669969425" expanded="true" signature="1456:2017" ph="..." />
-            <marker date="1544669969425" expanded="true" signature="2042:2043" ph="..." />
-          </folding>
+        <state relative-caret-position="413">
+          <caret line="384" column="73" selection-start-line="384" selection-start-column="73" selection-end-line="384" selection-end-column="73" />
         </state>
       </provider>
     </entry>
@@ -685,44 +698,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Excels.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="103" column="20" selection-start-line="103" selection-start-column="4" selection-end-line="103" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+            <element signature="e#1459#2017#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Show_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="139" column="42" selection-start-line="139" selection-start-column="42" selection-end-line="139" selection-end-column="42" />
+        <state relative-caret-position="380">
+          <caret line="215" column="25" selection-start-line="215" selection-start-column="25" selection-end-line="215" selection-end-column="25" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
             <element signature="e#225#766#0" />
             <element signature="e#801#982#0" />
             <element signature="e#1017#1556#0" />
-            <marker date="1544687878791" expanded="true" signature="3507:3926" ph="..." />
-            <marker date="1544687878791" expanded="true" signature="3951:4274" ph="..." />
-            <marker date="1544687878791" expanded="true" signature="4639:4800" ph="..." />
-            <marker date="1544687878791" expanded="true" signature="5102:5103" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="59" column="32" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <marker date="1544687988193" expanded="true" signature="1528:1534" ph="..." />
-            <marker date="1544687988193" expanded="true" signature="1826:2298" ph="..." />
-            <marker date="1544687988193" expanded="true" signature="2076:2172" ph="..." />
-            <marker date="1544687988193" expanded="true" signature="2203:2298" ph="..." />
-            <marker date="1544687988193" expanded="true" signature="2874:2982" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GUI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="566">
-          <caret line="539" lean-forward="true" selection-start-line="539" selection-end-line="539" />
-          <folding>
-            <element signature="e#316#325#0" expanded="true" />
+            <marker date="1544725182570" expanded="true" signature="3507:3931" ph="..." />
+            <marker date="1544725182570" expanded="true" signature="3956:4279" ph="..." />
+            <marker date="1544725182570" expanded="true" signature="4644:4805" ph="..." />
+            <marker date="1544725182570" expanded="true" signature="5107:5108" ph="..." />
+            <marker date="1544725182570" expanded="true" signature="5593:5819" ph="..." />
+            <marker date="1544725182570" expanded="true" signature="6147:6323" ph="..." />
           </folding>
         </state>
       </provider>

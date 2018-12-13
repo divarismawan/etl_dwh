@@ -131,7 +131,7 @@ def show_book_month(self):
     month = self.m_choice_month_book.GetStringSelection()
     month = select_month(month)
     year = self.m_choice_year_book.GetStringSelection()
-    sql = SQL.sql_month(month, year)
+    sql = SQL.sql_book_month(month, year)
     cursor.execute(sql)
     rows = cursor.fetchall()
     for x, item in enumerate(rows, start=1):
@@ -181,7 +181,6 @@ def save_month(self):
 
 def save_year(self):
     year = self.m_choice_tahunan.GetStringSelection()
-
     sql = SQL.sql_year(year)
     cursor.execute(sql)
     rows = cursor.fetchall()
@@ -196,6 +195,30 @@ def save_perpus(self):
     cursor.execute(sql)
     rows = cursor.fetchall()
     Excels.excel_perpus(rows)
+
+def save_title_book(self):
+    title = self.m_text_member.GetValue()
+    year = self.m_choice_bookTitle.GetStringSelection()
+    sql = SQL.sql_book_title(title,year)
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    Excels.excel_by_title(rows)
+
+def save_book_month(self):
+    month = self.m_choice_month_book.GetStringSelection()
+    month = select_month(month)
+    year = self.m_choice_year_book.GetStringSelection()
+    sql = SQL.sql_book_month(month, year)
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    Excels.excel_book_month(rows)
+
+def save_book_year(self):
+    year = self.m_choice_allBook.GetStringSelection()
+    sql = SQL.sql_book_year(year)
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    Excels.excel_book_year(rows)
 
 def save_fact():
     sql = SQL.sql_fact()

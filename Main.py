@@ -29,6 +29,11 @@ class GuiShow(GUI.GUI_DWH):
         self.m_button_save_month.Bind((wx.EVT_BUTTON),self.save_month)
         self.m_button_save_year.Bind((wx.EVT_BUTTON),self.save_year)
         self.m_button_save_perpus.Bind(wx.EVT_BUTTON,self.save_perpus)
+        self.m_button_save_book.Bind(wx.EVT_BUTTON,self.save_book_title)
+        self.m_button_save_month_book.Bind(wx.EVT_BUTTON,self.save_book_month)
+        self.m_panel13.Bind(wx.EVT_BUTTON,self.save_book_year)
+
+
         self.m_button_save_fact.Bind(wx.EVT_BUTTON,self.save_fact)
 
     # --------Show data-------- #
@@ -85,6 +90,19 @@ class GuiShow(GUI.GUI_DWH):
     def save_perpus(self, event):
         Show_data.save_perpus(self)
         wx.MessageBox('Data pertahun tersimpan', 'Sukses', wx.OK)
+
+
+    def save_book_title(self,event):
+        Show_data.save_title_book(self)
+        wx.MessageBox('Data Peminjaman Buku tersimpan', 'Sukses', wx.OK)
+
+    def save_book_month(self,event):
+        Show_data.save_book_month(self)
+        wx.MessageBox('Data Peminjaman  buku perbulan tersimpan', 'Sukses', wx.OK)
+
+    def save_book_year(self,event):
+        Show_data.save_year(self)
+        wx.MessageBox('Data Peminjaman  buku pertahun tersimpan', 'Sukses', wx.OK)
 
     def save_fact(self, event):
         Show_data.save_fact()
