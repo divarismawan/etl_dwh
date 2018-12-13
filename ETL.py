@@ -84,13 +84,13 @@ def show_etl(self):
 
     sql_rak      = "SELECT id_rak, nama_rak FROM tb_rak_buku WHERE id_rak >{0}".format(val_rak)
 
-    sql_buku = "SELECT tb_detail_buku.`id_detail_buku`, tb_detail_buku.`id_buku`, tb_rak_buku.`id_rak`, " \
-               "tb_rak_buku.`id_perpus`, tb_buku.`title_buku`, tb_detail_buku.`barcode_buku`, tb_buku.`tgl_release` " \
-               "FROM tb_detail_buku " \
-               "JOIN tb_buku ON tb_buku.`id_buku` = tb_detail_buku.`id_buku` " \
-               "JOIN tb_rak_buku ON tb_detail_buku.`id_rak_buku` = tb_rak_buku.`id_rak` " \
-               "WHERE tb_detail_buku.`id_detail_buku` > {0} " \
-               "ORDER BY tb_detail_buku.`id_detail_buku`".format(val_buku)
+    sql_buku     = "SELECT tb_detail_buku.`id_detail_buku`, tb_detail_buku.`id_buku`, tb_rak_buku.`id_rak`, " \
+                   "tb_rak_buku.`id_perpus`, tb_buku.`title_buku`, tb_detail_buku.`barcode_buku`, tb_buku.`time_update` " \
+                   "FROM tb_detail_buku " \
+                   "JOIN tb_buku ON tb_buku.`id_buku` = tb_detail_buku.`id_buku` " \
+                   "JOIN tb_rak_buku ON tb_detail_buku.`id_rak_buku` = tb_rak_buku.`id_rak` " \
+                   "WHERE tb_detail_buku.`id_detail_buku` > {0} " \
+                   "ORDER BY tb_detail_buku.`id_detail_buku`".format(val_buku)
 
     sql_trans    = "SELECT tb_detail_trans.`id_detail`,tb_detail_trans.`id_trans`,tb_detail_buku.`id_detail_buku`," \
                    "tb_detail_buku.`id_rak_buku`,tb_rak_buku.`id_perpus`,tb_buku.`id_penerbit`,tb_buku.`id_penulis`," \
@@ -101,8 +101,6 @@ def show_etl(self):
                    "JOIN tb_rak_buku ON tb_rak_buku.`id_rak` = tb_detail_buku.`id_rak_buku`" \
                    "JOIN tb_buku ON tb_detail_buku.`id_buku` = tb_buku.`id_buku`" \
                    "AND tb_detail_trans.`id_detail` > {0} ORDER BY tb_detail_trans.`id_detail` ".format(val_trans)
-
-
 
     # ----------------- Count -----------------#
     # Buku
@@ -239,7 +237,7 @@ def show_etl(self):
         val_a, val_b, val_c, val_d, val_e, val_f, val_g = x
         query_insert = ("INSERT INTO dim_buku SET id_detail_buku = {0}, id_buku = {1}, id_rak = {2}, "
                         "id_perpus = {3}, title_buku = '{4}', "
-                        "barcode_buku = '{5}', tanggal_release = '{6}'".format(val_a, val_b, val_c, val_d, val_e, val_f, val_g))
+                        "barcode_buku = '{5}', time_update = '{6}'".format(val_a, val_b, val_c, val_d, val_e, val_f, val_g))
         function_instert(db_dimension, query_insert)
 
     for x in select_trans:
@@ -253,6 +251,13 @@ def show_etl(self):
     # reload from server
     db_perpus.rollback()
     db_dimension.rollback()
+
+def fun_trancate_database():
+        cursor = db_dimension.cursor()
+        sql = "CALL clear()"
+        cursor.execute(sql)
+        pass
+        wx.MessageBox("Data berhasil Dihapus", "Message", wx.OK | wx.ICON_INFORMATION)
 
 
 

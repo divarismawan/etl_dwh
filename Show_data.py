@@ -112,7 +112,44 @@ def show_data_perpus(self):
     for x, item in enumerate(rows, start=1):
         y = list(item)
         y.insert(0,x)
+        y[3] = str(select_month_int(y[3]))
         self.m_dataViewList_perpus.AppendItem(y)
+
+def show_by_title(self):
+    title = self.m_textCtrl2.GetValue()
+    year = self.m_choice_bookTitle.GetStringSelection()
+    sql = SQL.sql_book_title(title,year)
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    for x, item in enumerate(rows, start=1):
+        y = list(item)
+        y.insert(0,x)
+        y[5] = str(select_month_int(y[5]))
+        self.m_dataViewListCtrl6.AppendItem(y)
+
+def show_book_month(self):
+    month = self.m_choice_month_book.GetStringSelection()
+    month = select_month(month)
+    year = self.m_choice_year_book.GetStringSelection()
+    sql = SQL.sql_month(month, year)
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    for x, item in enumerate(rows, start=1):
+        y = list(item)
+        y.insert(0, x)
+        y[5] = str(select_month_int(y[5]))
+        self.m_dataViewListCtrl9.AppendItem(y)
+
+def show_book_year(self):
+    year = self.m_choice_allBook.GetStringSelection()
+    sql = SQL.sql_book_year(year)
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    for x, item in enumerate(rows, start=1):
+        y = list(item)
+        y.insert(0, x)
+        y[4] = str(select_month_int(y[4]))
+        self.m_dataView_allBook.AppendItem(y)
 
 def show_fact(self):
     sql  = SQL.sql_fact()
@@ -144,10 +181,21 @@ def save_month(self):
 
 def save_year(self):
     year = self.m_choice_tahunan.GetStringSelection()
+
     sql = SQL.sql_year(year)
     cursor.execute(sql)
     rows = cursor.fetchall()
     Excels.excel_year(rows)
+
+def save_perpus(self):
+    library = self.m_choice_library.GetStringSelection()
+    library = select_library(library)
+
+    year = self.m_choice_tahun.GetStringSelection()
+    sql = SQL.sql_perpus(year,library)
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    Excels.excel_perpus(rows)
 
 def save_fact():
     sql = SQL.sql_fact()

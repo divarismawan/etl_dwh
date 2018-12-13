@@ -1,5 +1,4 @@
 import xlsxwriter
-import xlrd
 import Show_data
 
 
@@ -45,6 +44,7 @@ def excel_month(data):
     # Body
     row = 1
     col = 0
+
     for val_a, val_b, val_c in (data):
         sheet.write(row, col, row)
         sheet.write(row, col + 1, val_a)

@@ -23,7 +23,7 @@ class GUI_DWH(wx.Frame):
 
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, id=wx.ID_ANY, title=wx.EmptyString, pos=wx.DefaultPosition,
-                          size=wx.Size(843, 426), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
+                          size=wx.Size(883, 426), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.SetSizeHintsSz(wx.DefaultSize, wx.DefaultSize)
 
@@ -58,14 +58,16 @@ class GUI_DWH(wx.Frame):
         self.m_grid3.EnableDragColMove(False)
         self.m_grid3.EnableDragColSize(True)
         self.m_grid3.SetColLabelSize(40)
-        self.m_grid3.SetColLabelValue(0, u"Buku")
-        self.m_grid3.SetColLabelValue(1, u"Penulis")
-        self.m_grid3.SetColLabelValue(2, u"Penerbit")
+        self.m_grid3.SetColLabelValue(0, u"Book")
+        self.m_grid3.SetColLabelValue(1, u"Author")
+        self.m_grid3.SetColLabelValue(2, u"Publisher")
         self.m_grid3.SetColLabelValue(3, u"Member")
-        self.m_grid3.SetColLabelValue(4, u"Pegawai")
-        self.m_grid3.SetColLabelValue(5, u"Rak Buku")
-        self.m_grid3.SetColLabelValue(6, u"Perpus")
-        self.m_grid3.SetColLabelValue(7, u"Transaksi")
+        self.m_grid3.SetColLabelValue(4, u"Employee")
+        self.m_grid3.SetColLabelValue(5, u"Bookshelf")
+        self.m_grid3.SetColLabelValue(6, u"Library")
+        self.m_grid3.SetColLabelValue(7, u"Transaction")
+        self.m_grid3.SetColLabelValue(8, u"Bronning")
+        self.m_grid3.SetColLabelValue(9, u"Bookshief")
         self.m_grid3.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
 
         # Rows
@@ -73,10 +75,10 @@ class GUI_DWH(wx.Frame):
         self.m_grid3.SetRowSize(1, 30)
         self.m_grid3.SetRowSize(2, 30)
         self.m_grid3.EnableDragRowSize(True)
-        self.m_grid3.SetRowLabelSize(90)
-        self.m_grid3.SetRowLabelValue(0, u"Data awal")
-        self.m_grid3.SetRowLabelValue(1, u"Penambahan")
-        self.m_grid3.SetRowLabelValue(2, u"Total")
+        self.m_grid3.SetRowLabelSize(70)
+        self.m_grid3.SetRowLabelValue(0, u"Preview")
+        self.m_grid3.SetRowLabelValue(1, u"Added")
+        self.m_grid3.SetRowLabelValue(2, u"Curent")
         self.m_grid3.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
 
         # Label Appearance
@@ -87,9 +89,17 @@ class GUI_DWH(wx.Frame):
 
         bSizer12 = wx.BoxSizer(wx.VERTICAL)
 
+        bSizer292 = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.m_button_truncate = wx.Button(self.m_panel_ETL, wx.ID_ANY, u"Truncate", wx.DefaultPosition, wx.DefaultSize,
+                                           0)
+        bSizer292.Add(self.m_button_truncate, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+
         self.m_buttonSmt = wx.Button(self.m_panel_ETL, wx.ID_ANY, u"Extract and Load", wx.DefaultPosition,
                                      wx.DefaultSize, 0)
-        bSizer12.Add(self.m_buttonSmt, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+        bSizer292.Add(self.m_buttonSmt, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+
+        bSizer12.Add(bSizer292, 1, wx.EXPAND, 5)
 
         bSizer10.Add(bSizer12, 0, wx.ALIGN_RIGHT, 5)
 
@@ -98,7 +108,7 @@ class GUI_DWH(wx.Frame):
         self.m_panel_ETL.SetSizer(bSizer9)
         self.m_panel_ETL.Layout()
         bSizer9.Fit(self.m_panel_ETL)
-        self.panel_pinjam.AddPage(self.m_panel_ETL, u"ETL", False)
+        self.panel_pinjam.AddPage(self.m_panel_ETL, u"ETL", True)
         self.m_panel_peminjaman = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
                                            wx.TAB_TRAVERSAL)
         bSizer23 = wx.BoxSizer(wx.VERTICAL)
@@ -112,7 +122,7 @@ class GUI_DWH(wx.Frame):
 
         bSizer33 = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.m_staticText8 = wx.StaticText(self.m_panel_member, wx.ID_ANY, u"Nama Member", wx.DefaultPosition,
+        self.m_staticText8 = wx.StaticText(self.m_panel_member, wx.ID_ANY, u"Member Name", wx.DefaultPosition,
                                            wx.Size(100, -1), 0)
         self.m_staticText8.Wrap(-1)
         bSizer33.Add(self.m_staticText8, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -124,7 +134,7 @@ class GUI_DWH(wx.Frame):
         self.m_button_member = wx.Button(self.m_panel_member, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
         bSizer33.Add(self.m_button_member, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
-        self.m_button_save_member = wx.Button(self.m_panel_member, wx.ID_ANY, u"Save ", wx.DefaultPosition,
+        self.m_button_save_member = wx.Button(self.m_panel_member, wx.ID_ANY, u"Export to Excel", wx.DefaultPosition,
                                               wx.DefaultSize, 0)
         bSizer33.Add(self.m_button_save_member, 0, wx.ALL, 5)
 
@@ -133,12 +143,12 @@ class GUI_DWH(wx.Frame):
         self.m_dataViewList_member = wx.dataview.DataViewListCtrl(self.m_panel_member, wx.ID_ANY, wx.DefaultPosition,
                                                                   wx.DefaultSize, 0)
         self.m_dataViewListColumn26 = self.m_dataViewList_member.AppendTextColumn(u"No")
-        self.m_dataViewListColumn35 = self.m_dataViewList_member.AppendTextColumn(u"Kode Buku")
-        self.m_dataViewListColumn27 = self.m_dataViewList_member.AppendTextColumn(u"Buku")
-        self.m_dataViewListColumn28 = self.m_dataViewList_member.AppendTextColumn(u"Perpustakaan")
-        self.m_dataViewListColumn29 = self.m_dataViewList_member.AppendTextColumn(u"Tanggal")
-        self.m_dataViewListColumn30 = self.m_dataViewList_member.AppendTextColumn(u"Bulam")
-        self.m_dataViewListColumn31 = self.m_dataViewList_member.AppendTextColumn(u"Tahun")
+        self.m_dataViewListColumn35 = self.m_dataViewList_member.AppendTextColumn(u"Barcode")
+        self.m_dataViewListColumn27 = self.m_dataViewList_member.AppendTextColumn(u"Title Book")
+        self.m_dataViewListColumn28 = self.m_dataViewList_member.AppendTextColumn(u"Library")
+        self.m_dataViewListColumn29 = self.m_dataViewList_member.AppendTextColumn(u"Day")
+        self.m_dataViewListColumn30 = self.m_dataViewList_member.AppendTextColumn(u"Month")
+        self.m_dataViewListColumn31 = self.m_dataViewList_member.AppendTextColumn(u"Year")
         bSizer32.Add(self.m_dataViewList_member, 1, wx.ALL | wx.EXPAND, 5)
 
         bSizer31.Add(bSizer32, 1, wx.EXPAND, 5)
@@ -157,7 +167,7 @@ class GUI_DWH(wx.Frame):
 
         gSizer1 = wx.GridSizer(0, 2, 0, 0)
 
-        self.m_staticText3 = wx.StaticText(self.m_panel_peminjaman1, wx.ID_ANY, u"Bulan", wx.DefaultPosition,
+        self.m_staticText3 = wx.StaticText(self.m_panel_peminjaman1, wx.ID_ANY, u"Month", wx.DefaultPosition,
                                            wx.DefaultSize, 0)
         self.m_staticText3.Wrap(-1)
         gSizer1.Add(self.m_staticText3, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -169,7 +179,7 @@ class GUI_DWH(wx.Frame):
         self.m_choice_month.SetSelection(0)
         gSizer1.Add(self.m_choice_month, 0, wx.ALL, 5)
 
-        self.m_staticText4 = wx.StaticText(self.m_panel_peminjaman1, wx.ID_ANY, u"Tahun", wx.DefaultPosition,
+        self.m_staticText4 = wx.StaticText(self.m_panel_peminjaman1, wx.ID_ANY, u"Year", wx.DefaultPosition,
                                            wx.DefaultSize, 0)
         self.m_staticText4.Wrap(-1)
         gSizer1.Add(self.m_staticText4, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -185,11 +195,11 @@ class GUI_DWH(wx.Frame):
         bSizer271 = wx.BoxSizer(wx.VERTICAL)
 
         self.m_button_peminjaman = wx.Button(self.m_panel_peminjaman1, wx.ID_ANY, u"Show", wx.DefaultPosition,
-                                             wx.DefaultSize, 0)
+                                             wx.Size(100, -1), 0)
         bSizer271.Add(self.m_button_peminjaman, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
-        self.m_button_save_month = wx.Button(self.m_panel_peminjaman1, wx.ID_ANY, u"Save", wx.DefaultPosition,
-                                             wx.DefaultSize, 0)
+        self.m_button_save_month = wx.Button(self.m_panel_peminjaman1, wx.ID_ANY, u"Export to Excel",
+                                             wx.DefaultPosition, wx.Size(100, -1), 0)
         bSizer271.Add(self.m_button_save_month, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
         bSizer241.Add(bSizer271, 1, wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, 5)
@@ -199,9 +209,9 @@ class GUI_DWH(wx.Frame):
         self.m_dataViewList_peminjaman = wx.dataview.DataViewListCtrl(self.m_panel_peminjaman1, wx.ID_ANY,
                                                                       wx.DefaultPosition, wx.DefaultSize, 0)
         self.m_dataViewListColumn6 = self.m_dataViewList_peminjaman.AppendTextColumn(u"No")
-        self.m_dataViewListColumn36 = self.m_dataViewList_peminjaman.AppendTextColumn(u"Kode Buku")
-        self.m_dataViewListColumn7 = self.m_dataViewList_peminjaman.AppendTextColumn(u"Buku")
-        self.m_dataViewListColumn8 = self.m_dataViewList_peminjaman.AppendTextColumn(u"Jumlah")
+        self.m_dataViewListColumn36 = self.m_dataViewList_peminjaman.AppendTextColumn(u"Barcode")
+        self.m_dataViewListColumn7 = self.m_dataViewList_peminjaman.AppendTextColumn(u"Title Book")
+        self.m_dataViewListColumn8 = self.m_dataViewList_peminjaman.AppendTextColumn(u"Total")
         bSizer22.Add(self.m_dataViewList_peminjaman, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.EXPAND, 5)
 
         bSizer21.Add(bSizer22, 1, wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 5)
@@ -209,7 +219,7 @@ class GUI_DWH(wx.Frame):
         self.m_panel_peminjaman1.SetSizer(bSizer21)
         self.m_panel_peminjaman1.Layout()
         bSizer21.Fit(self.m_panel_peminjaman1)
-        self.m_notebook4.AddPage(self.m_panel_peminjaman1, u"Bulanan", False)
+        self.m_notebook4.AddPage(self.m_panel_peminjaman1, u"Month", False)
         self.m_panel_tahun = wx.Panel(self.m_notebook4, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer28 = wx.BoxSizer(wx.VERTICAL)
 
@@ -219,10 +229,10 @@ class GUI_DWH(wx.Frame):
 
         bSizer191 = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.m_staticText5 = wx.StaticText(self.m_panel_tahun, wx.ID_ANY, u"Tahun", wx.DefaultPosition, wx.Size(80, -1),
+        self.m_staticText5 = wx.StaticText(self.m_panel_tahun, wx.ID_ANY, u"Year", wx.DefaultPosition, wx.Size(80, -1),
                                            0)
         self.m_staticText5.Wrap(-1)
-        bSizer191.Add(self.m_staticText5, 0, wx.ALL, 5)
+        bSizer191.Add(self.m_staticText5, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         m_choice_tahunanChoices = [u"2017", u"2018"]
         self.m_choice_tahunan = wx.Choice(self.m_panel_tahun, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
@@ -233,8 +243,8 @@ class GUI_DWH(wx.Frame):
         self.m_button_tahunan = wx.Button(self.m_panel_tahun, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
         bSizer191.Add(self.m_button_tahunan, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
-        self.m_button_save_year = wx.Button(self.m_panel_tahun, wx.ID_ANY, u"Save", wx.DefaultPosition, wx.DefaultSize,
-                                            0)
+        self.m_button_save_year = wx.Button(self.m_panel_tahun, wx.ID_ANY, u"Export to Excel", wx.DefaultPosition,
+                                            wx.DefaultSize, 0)
         bSizer191.Add(self.m_button_save_year, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
         bSizer30.Add(bSizer191, 0, 0, 5)
@@ -244,9 +254,9 @@ class GUI_DWH(wx.Frame):
         self.m_dataViewList_tahun = wx.dataview.DataViewListCtrl(self.m_panel_tahun, wx.ID_ANY, wx.DefaultPosition,
                                                                  wx.DefaultSize, 0)
         self.m_dataViewListColumn22 = self.m_dataViewList_tahun.AppendTextColumn(u"No")
-        self.m_dataViewListColumn23 = self.m_dataViewList_tahun.AppendTextColumn(u"Buku")
-        self.m_dataViewListColumn24 = self.m_dataViewList_tahun.AppendTextColumn(u"Jumlah")
-        self.m_dataViewListColumn25 = self.m_dataViewList_tahun.AppendTextColumn(u"Bulan")
+        self.m_dataViewListColumn23 = self.m_dataViewList_tahun.AppendTextColumn(u"Title Book")
+        self.m_dataViewListColumn24 = self.m_dataViewList_tahun.AppendTextColumn(u"Total")
+        self.m_dataViewListColumn25 = self.m_dataViewList_tahun.AppendTextColumn(u"Month")
         bSizer29.Add(self.m_dataViewList_tahun, 1, wx.ALL | wx.EXPAND, 5)
 
         bSizer28.Add(bSizer29, 1, wx.EXPAND, 5)
@@ -254,14 +264,14 @@ class GUI_DWH(wx.Frame):
         self.m_panel_tahun.SetSizer(bSizer28)
         self.m_panel_tahun.Layout()
         bSizer28.Fit(self.m_panel_tahun)
-        self.m_notebook4.AddPage(self.m_panel_tahun, u"Tahunan", False)
+        self.m_notebook4.AddPage(self.m_panel_tahun, u"Year", False)
 
         bSizer23.Add(self.m_notebook4, 1, wx.EXPAND | wx.ALL, 5)
 
         self.m_panel_peminjaman.SetSizer(bSizer23)
         self.m_panel_peminjaman.Layout()
         bSizer23.Fit(self.m_panel_peminjaman)
-        self.panel_pinjam.AddPage(self.m_panel_peminjaman, u"Periode Peminjaman", False)
+        self.panel_pinjam.AddPage(self.m_panel_peminjaman, u"Loan Period", False)
         self.m_panel11 = wx.Panel(self.panel_pinjam, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer25 = wx.BoxSizer(wx.VERTICAL)
 
@@ -288,7 +298,8 @@ class GUI_DWH(wx.Frame):
         self.m_button_bookTitle = wx.Button(self.m_panel12, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
         bSizer281.Add(self.m_button_bookTitle, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.m_button_save_book = wx.Button(self.m_panel12, wx.ID_ANY, u"Save", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_button_save_book = wx.Button(self.m_panel12, wx.ID_ANY, u"Export to Excel", wx.DefaultPosition,
+                                            wx.DefaultSize, 0)
         bSizer281.Add(self.m_button_save_book, 0, wx.ALL, 5)
 
         bSizer26.Add(bSizer281, 0, 0, 5)
@@ -296,22 +307,93 @@ class GUI_DWH(wx.Frame):
         self.m_dataViewListCtrl6 = wx.dataview.DataViewListCtrl(self.m_panel12, wx.ID_ANY, wx.DefaultPosition,
                                                                 wx.DefaultSize, 0 | wx.NO_BORDER)
         self.m_dataViewListColumn261 = self.m_dataViewListCtrl6.AppendTextColumn(u"No")
-        self.m_dataViewListColumn37 = self.m_dataViewListCtrl6.AppendTextColumn(u"Kode Buku")
-        self.m_dataViewListColumn291 = self.m_dataViewListCtrl6.AppendTextColumn(u"Jumlah Peminjaman")
-        self.m_dataViewListColumn271 = self.m_dataViewListCtrl6.AppendTextColumn(u"Perpustakaan")
-        self.m_dataViewListColumn281 = self.m_dataViewListCtrl6.AppendTextColumn(u"Bulan")
+        self.m_dataViewListColumn41 = self.m_dataViewListCtrl6.AppendTextColumn(u"Book Title")
+        self.m_dataViewListColumn37 = self.m_dataViewListCtrl6.AppendTextColumn(u"Barcode")
+        self.m_dataViewListColumn291 = self.m_dataViewListCtrl6.AppendTextColumn(u"Total")
+        self.m_dataViewListColumn271 = self.m_dataViewListCtrl6.AppendTextColumn(u"Library")
+        self.m_dataViewListColumn281 = self.m_dataViewListCtrl6.AppendTextColumn(u"Month")
         bSizer26.Add(self.m_dataViewListCtrl6, 1, wx.ALL | wx.EXPAND, 5)
 
         self.m_panel12.SetSizer(bSizer26)
         self.m_panel12.Layout()
         bSizer26.Fit(self.m_panel12)
-        self.m_notebook5.AddPage(self.m_panel12, u"Book Name", True)
+        self.m_notebook5.AddPage(self.m_panel12, u"Title", True)
+        self.m_panel_month = wx.Panel(self.m_notebook5, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        bSizer302 = wx.BoxSizer(wx.VERTICAL)
+
+        bSizer311 = wx.BoxSizer(wx.VERTICAL)
+
+        bSizer321 = wx.BoxSizer(wx.HORIZONTAL)
+
+        bSizer2411 = wx.BoxSizer(wx.HORIZONTAL)
+
+        gSizer11 = wx.GridSizer(0, 2, 0, 0)
+
+        self.m_staticText31 = wx.StaticText(self.m_panel_month, wx.ID_ANY, u"Month", wx.DefaultPosition, wx.DefaultSize,
+                                            0)
+        self.m_staticText31.Wrap(-1)
+        gSizer11.Add(self.m_staticText31, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+
+        m_choice_month_bookChoices = [u"Januari", u"Februari", u"Maret", u"April", u"Mei", u"Juni", u"Juli", u"Agustus",
+                                      u"September", u"Oktober", u"November", u"Desember"]
+        self.m_choice_month_book = wx.Choice(self.m_panel_month, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                             m_choice_month_bookChoices, 0)
+        self.m_choice_month_book.SetSelection(0)
+        gSizer11.Add(self.m_choice_month_book, 0, wx.ALL, 5)
+
+        self.m_staticText41 = wx.StaticText(self.m_panel_month, wx.ID_ANY, u"Year", wx.DefaultPosition, wx.DefaultSize,
+                                            0)
+        self.m_staticText41.Wrap(-1)
+        gSizer11.Add(self.m_staticText41, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+
+        m_choice_year_bookChoices = [u"2017", u"2018"]
+        self.m_choice_year_book = wx.Choice(self.m_panel_month, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
+                                            m_choice_year_bookChoices, 0)
+        self.m_choice_year_book.SetSelection(1)
+        gSizer11.Add(self.m_choice_year_book, 0, wx.ALL, 5)
+
+        bSizer2411.Add(gSizer11, 1, wx.EXPAND, 5)
+
+        bSizer2711 = wx.BoxSizer(wx.VERTICAL)
+
+        self.m_button_book_month = wx.Button(self.m_panel_month, wx.ID_ANY, u"Show Data", wx.DefaultPosition,
+                                             wx.Size(100, -1), 0)
+        bSizer2711.Add(self.m_button_book_month, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+
+        self.m_button_save_month_book = wx.Button(self.m_panel_month, wx.ID_ANY, u"Export to Excel", wx.DefaultPosition,
+                                                  wx.Size(100, -1), 0)
+        bSizer2711.Add(self.m_button_save_month_book, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+
+        bSizer2411.Add(bSizer2711, 1, wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, 5)
+
+        bSizer321.Add(bSizer2411, 1, wx.EXPAND, 5)
+
+        bSizer311.Add(bSizer321, 0, 0, 5)
+
+        bSizer302.Add(bSizer311, 0, 0, 5)
+
+        self.m_dataViewListCtrl9 = wx.dataview.DataViewListCtrl(self.m_panel_month, wx.ID_ANY, wx.DefaultPosition,
+                                                                wx.DefaultSize, 0)
+        self.m_dataViewListColumn411 = self.m_dataViewListCtrl9.AppendTextColumn(u"No")
+        self.m_dataViewListColumn42 = self.m_dataViewListCtrl9.AppendTextColumn(u"Book Title")
+        self.m_dataViewListColumn43 = self.m_dataViewListCtrl9.AppendTextColumn(u"Barcode")
+        self.m_dataViewListColumn44 = self.m_dataViewListCtrl9.AppendTextColumn(u"Library")
+        self.m_dataViewListColumn45 = self.m_dataViewListCtrl9.AppendTextColumn(u"Day")
+        self.m_dataViewListColumn46 = self.m_dataViewListCtrl9.AppendTextColumn(u"Month")
+        self.m_dataViewListColumn47 = self.m_dataViewListCtrl9.AppendTextColumn(u"Year")
+        self.m_dataViewListColumn48 = self.m_dataViewListCtrl9.AppendTextColumn(u"Member")
+        bSizer302.Add(self.m_dataViewListCtrl9, 1, wx.ALL | wx.EXPAND, 5)
+
+        self.m_panel_month.SetSizer(bSizer302)
+        self.m_panel_month.Layout()
+        bSizer302.Fit(self.m_panel_month)
+        self.m_notebook5.AddPage(self.m_panel_month, u"Month", False)
         self.m_panel13 = wx.Panel(self.m_notebook5, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
         bSizer291 = wx.BoxSizer(wx.VERTICAL)
 
         bSizer301 = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.m_staticText9 = wx.StaticText(self.m_panel13, wx.ID_ANY, u"Tahun", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_staticText9 = wx.StaticText(self.m_panel13, wx.ID_ANY, u"Year", wx.DefaultPosition, wx.DefaultSize, 0)
         self.m_staticText9.Wrap(-1)
         bSizer301.Add(self.m_staticText9, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
@@ -324,8 +406,8 @@ class GUI_DWH(wx.Frame):
         self.m_button_allBook = wx.Button(self.m_panel13, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
         bSizer301.Add(self.m_button_allBook, 0, wx.ALL, 5)
 
-        self.m_button_save_allBook = wx.Button(self.m_panel13, wx.ID_ANY, u"Save", wx.DefaultPosition, wx.DefaultSize,
-                                               0)
+        self.m_button_save_allBook = wx.Button(self.m_panel13, wx.ID_ANY, u"Export to Excel", wx.DefaultPosition,
+                                               wx.DefaultSize, 0)
         bSizer301.Add(self.m_button_save_allBook, 0, wx.ALL, 5)
 
         bSizer291.Add(bSizer301, 0, 0, 5)
@@ -334,15 +416,15 @@ class GUI_DWH(wx.Frame):
                                                                wx.DefaultSize, 0)
         self.m_dataViewListColumn301 = self.m_dataView_allBook.AppendTextColumn(u"No")
         self.m_dataViewListColumn311 = self.m_dataView_allBook.AppendTextColumn(u"Book Title")
-        self.m_dataViewListColumn32 = self.m_dataView_allBook.AppendTextColumn(u"Perpustakaan")
-        self.m_dataViewListColumn33 = self.m_dataView_allBook.AppendTextColumn(u"Jumlah")
-        self.m_dataViewListColumn34 = self.m_dataView_allBook.AppendTextColumn(u"Bulan")
+        self.m_dataViewListColumn32 = self.m_dataView_allBook.AppendTextColumn(u"Library")
+        self.m_dataViewListColumn33 = self.m_dataView_allBook.AppendTextColumn(u"Total")
+        self.m_dataViewListColumn34 = self.m_dataView_allBook.AppendTextColumn(u"Month")
         bSizer291.Add(self.m_dataView_allBook, 1, wx.ALL | wx.EXPAND, 5)
 
         self.m_panel13.SetSizer(bSizer291)
         self.m_panel13.Layout()
         bSizer291.Fit(self.m_panel13)
-        self.m_notebook5.AddPage(self.m_panel13, u"All Book", False)
+        self.m_notebook5.AddPage(self.m_panel13, u"Year", False)
         self.m_panel_perpus = wx.Panel(self.m_notebook5, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,
                                        wx.TAB_TRAVERSAL)
         bSizer17 = wx.BoxSizer(wx.VERTICAL)
@@ -351,7 +433,7 @@ class GUI_DWH(wx.Frame):
 
         bSizer18 = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.m_staticText7 = wx.StaticText(self.m_panel_perpus, wx.ID_ANY, u"Nama Perpustakaan", wx.DefaultPosition,
+        self.m_staticText7 = wx.StaticText(self.m_panel_perpus, wx.ID_ANY, u"Library", wx.DefaultPosition,
                                            wx.DefaultSize, 0)
         self.m_staticText7.Wrap(-1)
         bSizer18.Add(self.m_staticText7, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -362,8 +444,8 @@ class GUI_DWH(wx.Frame):
         self.m_choice_library.SetSelection(0)
         bSizer18.Add(self.m_choice_library, 0, wx.ALL, 5)
 
-        self.m_staticText1 = wx.StaticText(self.m_panel_perpus, wx.ID_ANY, u"Tahun", wx.DefaultPosition,
-                                           wx.Size(50, -1), 0)
+        self.m_staticText1 = wx.StaticText(self.m_panel_perpus, wx.ID_ANY, u"Year", wx.DefaultPosition, wx.Size(50, -1),
+                                           0)
         self.m_staticText1.Wrap(-1)
         bSizer18.Add(self.m_staticText1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
@@ -373,10 +455,10 @@ class GUI_DWH(wx.Frame):
         self.m_choice_tahun.SetSelection(0)
         bSizer18.Add(self.m_choice_tahun, 0, wx.ALL, 5)
 
-        self.m_button_perpus = wx.Button(self.m_panel_perpus, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
-        bSizer18.Add(self.m_button_perpus, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, 5)
+        self.m_btn_perpus = wx.Button(self.m_panel_perpus, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
+        bSizer18.Add(self.m_btn_perpus, 0, wx.ALL, 5)
 
-        self.m_button_save_perpus = wx.Button(self.m_panel_perpus, wx.ID_ANY, u"Save", wx.DefaultPosition,
+        self.m_button_save_perpus = wx.Button(self.m_panel_perpus, wx.ID_ANY, u"Export to Excel", wx.DefaultPosition,
                                               wx.DefaultSize, 0)
         bSizer18.Add(self.m_button_save_perpus, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
@@ -389,9 +471,9 @@ class GUI_DWH(wx.Frame):
         self.m_dataViewList_perpus = wx.dataview.DataViewListCtrl(self.m_panel_perpus, wx.ID_ANY, wx.DefaultPosition,
                                                                   wx.DefaultSize, 0)
         self.m_dataViewListColumn1 = self.m_dataViewList_perpus.AppendTextColumn(u"No")
-        self.m_dataViewListColumn2 = self.m_dataViewList_perpus.AppendTextColumn(u"Buku")
-        self.m_dataViewListColumn3 = self.m_dataViewList_perpus.AppendTextColumn(u"Jumlah Peminjaman")
-        self.m_dataViewListColumn39 = self.m_dataViewList_perpus.AppendTextColumn(u"Bulan")
+        self.m_dataViewListColumn2 = self.m_dataViewList_perpus.AppendTextColumn(u"Book")
+        self.m_dataViewListColumn3 = self.m_dataViewList_perpus.AppendTextColumn(u"Total")
+        self.m_dataViewListColumn39 = self.m_dataViewList_perpus.AppendTextColumn(u"Month")
         bSizer19.Add(self.m_dataViewList_perpus, 1, wx.ALIGN_CENTER_HORIZONTAL | wx.ALL | wx.EXPAND, 5)
 
         bSizer17.Add(bSizer19, 1, wx.EXPAND, 5)
@@ -399,7 +481,7 @@ class GUI_DWH(wx.Frame):
         self.m_panel_perpus.SetSizer(bSizer17)
         self.m_panel_perpus.Layout()
         bSizer17.Fit(self.m_panel_perpus)
-        self.m_notebook5.AddPage(self.m_panel_perpus, u"Perpustakaan", False)
+        self.m_notebook5.AddPage(self.m_panel_perpus, u"Library", False)
 
         bSizer25.Add(self.m_notebook5, 1, wx.EXPAND | wx.ALL, 5)
 
@@ -416,20 +498,20 @@ class GUI_DWH(wx.Frame):
                                                             wx.DefaultSize, 0)
         self.m_dataViewListColumn12 = self.m_dataView_fact.AppendTextColumn(u"No")
         self.m_dataViewListColumn13 = self.m_dataView_fact.AppendTextColumn(u"Member")
-        self.m_dataViewListColumn14 = self.m_dataView_fact.AppendTextColumn(u"Buku")
-        self.m_dataViewListColumn15 = self.m_dataView_fact.AppendTextColumn(u"Penulis")
-        self.m_dataViewListColumn16 = self.m_dataView_fact.AppendTextColumn(u"Penerbit")
-        self.m_dataViewListColumn391 = self.m_dataView_fact.AppendTextColumn(u"Rak  Buku")
-        self.m_dataViewListColumn17 = self.m_dataView_fact.AppendTextColumn(u"Perpustakann")
-        self.m_dataViewListColumn18 = self.m_dataView_fact.AppendTextColumn(u"Pegawai")
-        self.m_dataViewListColumn19 = self.m_dataView_fact.AppendTextColumn(u"Tanggal Pinjam")
-        self.m_dataViewListColumn20 = self.m_dataView_fact.AppendTextColumn(u"Tanggal Kembali")
+        self.m_dataViewListColumn14 = self.m_dataView_fact.AppendTextColumn(u"Book")
+        self.m_dataViewListColumn15 = self.m_dataView_fact.AppendTextColumn(u"Author")
+        self.m_dataViewListColumn16 = self.m_dataView_fact.AppendTextColumn(u"Publisher")
+        self.m_dataViewListColumn391 = self.m_dataView_fact.AppendTextColumn(u"Bookshelf")
+        self.m_dataViewListColumn17 = self.m_dataView_fact.AppendTextColumn(u"Library")
+        self.m_dataViewListColumn18 = self.m_dataView_fact.AppendTextColumn(u"Employee")
+        self.m_dataViewListColumn19 = self.m_dataView_fact.AppendTextColumn(u"Date of Load")
+        self.m_dataViewListColumn20 = self.m_dataView_fact.AppendTextColumn(u"Date of Return")
         bSizer27.Add(self.m_dataView_fact, 1, wx.ALL | wx.EXPAND, 5)
 
         bSizer282 = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.m_button_save_fact = wx.Button(self.m_panel_fact, wx.ID_ANY, u"Save", wx.DefaultPosition, wx.DefaultSize,
-                                            0)
+        self.m_button_save_fact = wx.Button(self.m_panel_fact, wx.ID_ANY, u"Export to Excel", wx.DefaultPosition,
+                                            wx.DefaultSize, 0)
         bSizer282.Add(self.m_button_save_fact, 0, wx.ALL, 5)
 
         self.m_button_fact = wx.Button(self.m_panel_fact, wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
@@ -442,7 +524,7 @@ class GUI_DWH(wx.Frame):
         self.m_panel_fact.SetSizer(bSizer261)
         self.m_panel_fact.Layout()
         bSizer261.Fit(self.m_panel_fact)
-        self.panel_pinjam.AddPage(self.m_panel_fact, u"Fact Data", True)
+        self.panel_pinjam.AddPage(self.m_panel_fact, u"Fact Data", False)
 
         bSizer1.Add(self.panel_pinjam, 1, wx.EXPAND | wx.ALL, 5)
 
